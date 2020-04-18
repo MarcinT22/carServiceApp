@@ -26,6 +26,11 @@ class CreateEventsTable extends Migration
             $table->float('price', 6, 2);
             $table->boolean('completed')->default(0);
             $table->timestamps();
+
+
+            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('calendar_id')->references('id')->on('calendars')->onDelete('cascade');
+            $table->foreign('reported_cars_id')->references('id')->on('reported_cars')->onDelete('cascade');
         });
     }
 

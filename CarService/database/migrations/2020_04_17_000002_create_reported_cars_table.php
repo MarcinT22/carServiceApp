@@ -21,6 +21,8 @@ class CreateReportedCarsTable extends Migration
             $table->boolean('is_delivered')->default(0);
             $table->boolean('is_accepted')->default(0);
             $table->timestamps();
+
+            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
         });
     }
 
