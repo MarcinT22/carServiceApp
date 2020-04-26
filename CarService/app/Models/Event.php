@@ -21,7 +21,6 @@ class Event extends Model
         'calendar_id',
         'reported_cars_id',
         'price',
-        'completed'
     ];
 
     public function reportedCar()

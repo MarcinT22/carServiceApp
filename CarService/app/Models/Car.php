@@ -16,6 +16,7 @@ class Car extends Model
         'model',
         'year',
         'engine',
+        'fuel',
         'registration_number',
         'vin'
     ];

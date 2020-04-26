@@ -17,7 +17,7 @@ class CreateReportedCarsTable extends Migration
             $table->id();
             $table->bigInteger('car_id')->unsigned();
             $table->string('description');
-            $table->dateTime('reported_car_date');
+            $table->string('reported_car_date');
             $table->boolean('is_delivered')->default(0);
             $table->boolean('is_accepted')->default(0);
             $table->timestamps();

@@ -18,9 +18,10 @@ class CreateCarsTable extends Migration
             $table->string('brand');
             $table->string('model');
             $table->integer('year');
-            $table->integer('engine');
-            $table->integer('registration_number');
-            $table->integer('vin');
+            $table->string('engine');
+            $table->string('fuel');
+            $table->string('registration_number')->unique();
+            $table->string('vin')->unique();
             $table->timestamps();
         });
     }

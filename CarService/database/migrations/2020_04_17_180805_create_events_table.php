@@ -19,12 +19,10 @@ class CreateEventsTable extends Migration
             $table->text('description');
             $table->string('start');
             $table->string('end');
-            $table->string('backgroundColor')->nullable();
             $table->bigInteger('status_id')->unsigned();
             $table->bigInteger('calendar_id')->unsigned();
             $table->bigInteger('reported_cars_id')->unsigned();
-            $table->float('price', 6, 2);
-            $table->boolean('completed')->default(0);
+            $table->float('price', 6, 2)->default(0.00);
             $table->timestamps();
 
 

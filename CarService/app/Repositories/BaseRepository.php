@@ -22,7 +22,7 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function update(array $data, $id)
     {
-        return $this->model->where("id", '=', $id)->update($data);
+        return $this->model->where("id", $id)->update($data);
     }
 
     public function delete($id)

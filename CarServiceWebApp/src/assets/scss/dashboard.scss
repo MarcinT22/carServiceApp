@@ -1,0 +1,36 @@
+.dashboard{
+  padding:20px 0;
+
+
+
+  &__container{
+    padding:0 15px;
+    max-width:$container;
+    width:100%;
+    margin:0 auto;
+    box-sizing: border-box;
+  }
+
+  &__row{
+    display: flex;
+    flex-wrap: wrap;
+    margin:0 -15px;
+  }
+
+  &__col{
+    padding:0 15px;
+    box-sizing: border-box;
+    width:33.33%;
+    display: flex;
+    padding-bottom:30px;
+
+    @media (max-width:$screen-md)
+    {
+      width:50%;
+    }
+    @media (max-width:$screen-sm)
+    {
+      width:100%;
+    }
+  }
+}
