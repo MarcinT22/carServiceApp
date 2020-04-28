@@ -33,7 +33,7 @@ class LoginUser extends FormRequest
     public function messages()
     {
         return [
-            'email.required'=>'Prawidłpwy adres e-mail jest wymagany',
+            'email.required'=>'Prawidłowy adres e-mail jest wymagany',
             'password.required'=>'Prawidłowe hasło jest wymagane',
         ];
     }
