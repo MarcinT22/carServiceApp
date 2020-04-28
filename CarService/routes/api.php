@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'Api\UserApiController@login');
 Route::post('register', 'Api\UserApiController@register');
 
+Route::group([
+    'middleware' => 'auth:api'
+], function() {
+    Route::get('logout', 'Api\UserApiController@logout');
+    Route::get('user', 'Api\UserApiController@user');
+});
+
 Route::get('cars','Api\CarApiController@list');
 Route::post('cars','Api\CarApiController@store');
 Route::put('cars/{id}','Api\CarApiController@update');
