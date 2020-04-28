@@ -100,17 +100,7 @@
                 }
             }
         },
-        created() {
-            axios.post('http://127.0.0.1:8000/api/login',this.data, {
-                headers: headers
-            })
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(e => {
-                    alert(error)
-                })
-        }
+
 
     }
 </script>
