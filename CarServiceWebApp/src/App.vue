@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div v-if="$route.name != 'Login'" class="main">
+        <div v-if="isUserLogged" class="main">
             <Menu></Menu>
             <router-view>
             </router-view>
@@ -12,10 +12,26 @@
 
 <script>
     import Menu from "./components/Menu";
-
+    import store from './store'
     export default {
         name: 'App',
-        components: {Menu}
+        store,
+        components: {Menu},
+
+        computed : {
+            isUserLogged : function(){ return this.$store.getters.isUserLogged}
+        },
+        created: function () {
+            this.$http.interceptors.response.use(undefined, function (err) {
+                return new Promise(function (resolve, reject) {
+                    if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+                        this.$store.dispatch('logout')
+                    }
+                    throw err;
+                });
+            });
+        }
+
     }
 </script>
 <style lang="scss">

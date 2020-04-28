@@ -24,10 +24,11 @@
                     </a>
                 </li>
             </ul>
-            <a href="#" class="menu__logout">
+            <a href="#" class="menu__logout" @click="logout" v-if="isUserLogged">
                 <i class="fas fa-power-off"></i>
                 Wyloguj
             </a>
+
         </div>
         <a href="#" class="menuButton" :class="{active:visibleMenu}"  v-on:click.prevent="showMenu">
             <span></span>
@@ -49,8 +50,18 @@
             showMenu(){
                 this.visibleMenu = !this.visibleMenu;
                 document.body.classList.toggle("overflow");
+            },
+            logout()
+            {
+                this.$store.dispatch('logout')
+                    .then(()=>{
+                        this.$router.push('/login')
+                    })
             }
-        }
+        },
+        computed : {
+            isUserLogged : function(){ return this.$store.getters.isUserLogged}
+        },
     }
 </script>
 

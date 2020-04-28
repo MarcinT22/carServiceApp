@@ -37,7 +37,7 @@
                 <div class="dashboard__col">
                     <div class="block">
                         <h2>
-                           Nowe zlecenia:
+                            Nowe zlecenia:
                         </h2>
                         <div class="block__count">
                             7
@@ -85,15 +85,40 @@
 </template>
 
 <script>
+    import axios from 'axios'
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+    }
     export default {
-        name: "Home"
+        name: "Home",
+        data(){
+            return{
+                data:{
+                    email: "admin@test.com",
+                    password: "admin"
+                }
+            }
+        },
+        created() {
+            axios.post('http://127.0.0.1:8000/api/login',this.data, {
+                headers: headers
+            })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(e => {
+                    alert(error)
+                })
+        }
+
     }
 </script>
 
 <style scoped lang="scss">
-@import "../assets/scss/config";
-@import "../assets/scss/dashboard";
-@import "../assets/scss/block";
+    @import "../assets/scss/config";
+    @import "../assets/scss/dashboard";
+    @import "../assets/scss/block";
 
 
 </style>
