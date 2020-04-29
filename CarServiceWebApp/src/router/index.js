@@ -25,7 +25,7 @@ let router = new Router({
       }
     },
     { path: "*",
-      component: Login
+      component: Home
     }
   ]
 })

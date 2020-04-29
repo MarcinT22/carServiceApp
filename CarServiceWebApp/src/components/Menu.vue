@@ -24,7 +24,7 @@
                     </a>
                 </li>
             </ul>
-            <a href="#" class="menu__logout" @click="logout" v-if="isUserLogged">
+            <a href="#" class="menu__logout" @click="logout">
                 <i class="fas fa-power-off"></i>
                 Wyloguj
             </a>
@@ -61,7 +61,7 @@
             },
 
         },
-        computed : mapGetters(['isUserLogged'])
+
 
     }
 </script>

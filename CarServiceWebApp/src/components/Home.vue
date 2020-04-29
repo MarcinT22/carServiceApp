@@ -8,7 +8,7 @@
                             Zgłoszenia oczekujące:
                         </h2>
                         <div class="block__count">
-                            14
+                            {{data.amountNotAcceptedReportedCars}}
                         </div>
                         <a href="#">
                             Zarządzaj
@@ -24,9 +24,9 @@
                             <span class="block__text">
                                 dziś:
                             </span>
-                            14
+                            ---
                             <span class="block__text block__text--light">
-                                Łącznie: 24
+                                Łącznie: {{data.amountAcceptedReportedCars}}
                             </span>
                         </div>
                         <a href="#">
@@ -40,7 +40,7 @@
                             Nowe zlecenia:
                         </h2>
                         <div class="block__count">
-                            7
+                            {{data.amountDeliveredReportedCars}}
                         </div>
                         <a href="#">
                             Zarządzaj
@@ -56,9 +56,9 @@
                             <span class="block__text">
                                 dziś:
                             </span>
-                            3
+                            ---
                             <span class="block__text block__text--light">
-                                Łącznie: 17 <span>|</span>W trakcie: 2
+                                Łącznie: {{data.amountEvents}} <span>|</span>W trakcie: {{ data.amountInProgressEvents}}
                             </span>
                         </div>
                         <a href="#">
@@ -72,7 +72,7 @@
                             Pojazdy do wydania:
                         </h2>
                         <div class="block__count">
-                            6
+                            {{data.amountReadyCars}}
                         </div>
                         <a href="#">
                             Zarządzaj
@@ -86,24 +86,38 @@
 
 <script>
     import axios from 'axios'
+
     const headers = {
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
     }
     export default {
         name: "Home",
-        data(){
-            return{
-                data:{
+        data() {
+            return {
+                data: {
+                    amountNotAcceptedReportedCars: 0,
+                    amountAcceptedReportedCars: 0,
+                    amountDeliveredReportedCars: 0,
+                    amountEvents: 0,
+                    amountInProgressEvents: 0,
+                    amountReadyCars: 0,
                 }
             }
         },
-        mounted(){
-            axios.get('/user',{headers:{
-                'Authorization':'Bearer '+this.$store.state.token
-                }})
+        mounted() {
+            axios.get('/getStatistics', {
+                headers: {
+                    'Authorization': 'Bearer ' + this.$store.state.token
+                }
+            })
                 .then(response => {
-                    this.$store.commit('SET_USER',response.data)
+                    this.data.amountNotAcceptedReportedCars=response.data.amountNotAcceptedReportedCars
+                    this.data.amountAcceptedReportedCars=response.data.amountAcceptedReportedCars
+                    this.data.amountDeliveredReportedCars=response.data.amountDeliveredReportedCars
+                    this.data.amountEvents=response.data.amountEvents
+                    this.data.amountInProgressEvents=response.data.amountInProgressEvents
+                    this.data.amountReadyCars=response.data.amountReadyCars
                 })
                 .catch(error => {
                     console.log(error)

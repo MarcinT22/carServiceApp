@@ -10,6 +10,7 @@ export default new Vuex.Store({
         status: null,
 
 
+
     },
 
     mutations: {
@@ -70,5 +71,7 @@ export default new Vuex.Store({
     getters: {
         isUserLogged: state => !!state.token,
         authStatus: state => state.status,
+        getUser: state => state.user.name,
+
     }
 })
