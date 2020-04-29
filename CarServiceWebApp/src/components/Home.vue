@@ -95,11 +95,20 @@
         data(){
             return{
                 data:{
-                    email: "admin@test.com",
-                    password: "admin"
                 }
             }
         },
+        mounted(){
+            axios.get('/user',{headers:{
+                'Authorization':'Bearer '+this.$store.state.token
+                }})
+                .then(response => {
+                    this.$store.commit('SET_USER',response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
 
 
     }

@@ -39,6 +39,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     export default {
         name: "Menu",
         data(){
@@ -57,11 +58,11 @@
                     .then(()=>{
                         this.$router.push('/login')
                     })
-            }
+            },
+
         },
-        computed : {
-            isUserLogged : function(){ return this.$store.getters.isUserLogged}
-        },
+        computed : mapGetters(['isUserLogged'])
+
     }
 </script>
 

@@ -23,9 +23,14 @@ let router = new Router({
       meta:{
         auth: true
       }
+    },
+    { path: "*",
+      component: Login
     }
   ]
 })
+
+
 
 router.beforeEach((to, from, next)=>{
   if (to.matched.some(record => record.meta.auth)){

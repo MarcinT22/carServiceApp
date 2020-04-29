@@ -23,9 +23,10 @@ Route::group([
 ], function() {
     Route::get('logout', 'Api\UserApiController@logout');
     Route::get('user', 'Api\UserApiController@user');
+    Route::get('cars','Api\CarApiController@list');
 });
 
-Route::get('cars','Api\CarApiController@list');
+
 Route::post('cars','Api\CarApiController@store');
 Route::put('cars/{id}','Api\CarApiController@update');
 Route::delete('cars/{id}','Api\CarApiController@destroy');

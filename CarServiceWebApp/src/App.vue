@@ -13,14 +13,11 @@
 <script>
     import Menu from "./components/Menu";
     import store from './store'
+    import {mapGetters} from 'vuex'
     export default {
         name: 'App',
         store,
         components: {Menu},
-
-        computed : {
-            isUserLogged : function(){ return this.$store.getters.isUserLogged}
-        },
         created: function () {
             this.$http.interceptors.response.use(undefined, function (err) {
                 return new Promise(function (resolve, reject) {
@@ -30,7 +27,9 @@
                     throw err;
                 });
             });
-        }
+
+        },
+        computed : mapGetters(['isUserLogged'])
 
     }
 </script>

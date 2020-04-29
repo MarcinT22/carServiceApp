@@ -38,18 +38,13 @@ class UserApiController extends Controller
         $tokenResult = $user->createToken('User Access Token');
         $token = $tokenResult->token;
 
-        if ($request->remember_me) {
-            $token->expires_at = Carbon::now()->addWeeks(1);
-        }
 
         $token->save();
         return response()->json([
             'message' => 'User is logged',
             'access_token' => $tokenResult->accessToken,
+            'user'=>$user,
             'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
         ]);
 
 
