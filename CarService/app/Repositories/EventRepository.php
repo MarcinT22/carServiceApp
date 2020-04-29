@@ -1,11 +1,30 @@
 <?php
+
 namespace App\Repositories;
+
 use App\Models\Event;
 
-class EventRepository extends BaseRepository{
+class EventRepository extends BaseRepository
+{
 
     public function __construct(Event $model)
     {
-        $this->model=$model;
+        $this->model = $model;
+    }
+
+
+    public function getAmountAll()
+    {
+        return $this->model->whereIn('status_id', [1, 2, 3])->get()->count();
+    }
+
+    public function getAmountInProgressEvents()
+    {
+        return $this->model->whereIn('status_id', [2])->get()->count();
+    }
+
+    public function getAmountReadyCars()
+    {
+        return $this->model->whereIn('status_id', [4])->get()->count();
     }
 }

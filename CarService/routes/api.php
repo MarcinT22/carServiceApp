@@ -33,11 +33,12 @@ Route::delete('cars/{id}','Api\CarApiController@destroy');
 Route::get('cars/{id}','Api\CarApiController@find');
 
 
-Route::get('reported-cars','Api\ReportedCarApiController@list');
-Route::post('reported-cars','Api\ReportedCarApiController@store');
-Route::put('reported-cars/{id}','Api\ReportedCarApiController@update');
-Route::delete('reported-cars/{id}','Api\ReportedCarApiController@destroy');
-Route::get('reported-cars/{id}','Api\ReportedCarApiController@find');
+Route::get('reportedCars','Api\ReportedCarApiController@list');
+Route::post('reportedCars','Api\ReportedCarApiController@store');
+Route::put('reportedCars/{id}','Api\ReportedCarApiController@update');
+Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
+Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');
+
 
 Route::get('statuses','Api\StatusApiController@list');
 Route::post('statuses','Api\StatusApiController@store');
@@ -51,6 +52,8 @@ Route::put('events/{id}','Api\EventApiController@update');
 Route::delete('events/{id}','Api\EventApiController@destroy');
 Route::get('events/{id}','Api\EventApiController@find');
 
+
+
 Route::get('alerts','Api\AlertApiController@list');
 Route::post('alerts','Api\AlertApiController@store');
 Route::put('alerts/{id}','Api\AlertApiController@update');
@@ -62,3 +65,7 @@ Route::post('calendars','Api\CalendarApiController@store');
 Route::put('calendars/{id}','Api\CalendarApiController@update');
 Route::delete('calendars/{id}','Api\CalendarApiController@destroy');
 Route::get('calendars/{id}','Api\CalendarApiController@find');
+
+Route::get('getStatistics','Api\StatisticsApiController@getStatistics');
+
+

@@ -29,7 +29,8 @@ class EventApiController extends Controller
         return new EventCollectionResource($this->eventRepository->getAll());
     }
 
-    public function store(StoreEvent $request){
+    public function store(StoreEvent $request)
+    {
         $data = $request->all();
         $event = $this->eventRepository->create($data);
         return new EventResource($event);
@@ -40,12 +41,33 @@ class EventApiController extends Controller
 
         $data = $request->all();
         $this->eventRepository->update($data, $id);
-        return array("message"=>"success");
+        return array("message" => "success");
     }
 
     public function destroy($id)
     {
         $this->eventRepository->delete($id);
-        return array("message"=>"success");
+        return array("message" => "success");
+    }
+
+    public function getAmountAll()
+    {
+        $amount = $this->eventRepository->getAmountAll();
+
+        return array("amount" => "$amount");
+    }
+
+    public function getAmountInProgressEvents()
+    {
+        $amount = $this->eventRepository->getAmountInProgressEvents();
+
+        return array("amount" => "$amount");
+    }
+
+    public function getAmountReadyCars()
+    {
+        $amount = $this->eventRepository->getAmountReadyCars();
+
+        return array("amount" => "$amount");
     }
 }

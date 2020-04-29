@@ -74,4 +74,25 @@ class ReportedCarApiController extends Controller
         $this->reportedCarRepository->delete($id);
         return array("message"=>"success");
     }
+
+    public function getAmountNotAccepted()
+    {
+        $amount = $this->reportedCarRepository->getNotAccepted();
+
+        return array("amount"=>"$amount");
+    }
+
+    public function getAmountAccepted()
+    {
+        $amount = $this->reportedCarRepository->getAccepted();
+
+        return array("amount"=>"$amount");
+    }
+
+    public function getAmountDelivered()
+    {
+        $amount = $this->reportedCarRepository->getDelivered();
+
+        return array("amount"=>"$amount");
+    }
 }
