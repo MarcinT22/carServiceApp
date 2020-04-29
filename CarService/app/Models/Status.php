@@ -18,6 +18,6 @@ class Status extends Model
 
     public function events()
     {
-        $this->hasMany('App\Models\Event');
+        return $this->hasMany('App\Models\Event');
     }
 }

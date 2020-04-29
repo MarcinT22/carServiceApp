@@ -5,7 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreReportedCar extends FormRequest
+
 {
+
+    use CommonRules;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,10 +27,12 @@ class StoreReportedCar extends FormRequest
      */
     public function rules()
     {
-        return [
+        return array_merge($this->carRules(), [
             'car_id'=>'required',
 			'description'=>'required',
 			'reported_car_date'=>'required',
-        ];
+        ]);
     }
+
+
 }

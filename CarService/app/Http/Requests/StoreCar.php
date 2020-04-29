@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCar extends FormRequest
 {
+    use CommonRules;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,13 +24,8 @@ class StoreCar extends FormRequest
      */
     public function rules()
     {
-        return [
-            'brand'=>'required|max:255',
-            'model'=>'required|max:255',
-            'year'=>'required|integer',
-            'engine'=>'required',
-            'registration_number'=>'required|unique:cars',
-            'vin'=>'required|unique:cars'
-        ];
+
+            return array_merge($this->carRules());
+
     }
 }

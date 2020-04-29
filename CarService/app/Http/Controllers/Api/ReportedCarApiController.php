@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreReportedCar;
+use App\Models\Car;
 use App\Repositories\ReportedCarRepository;
 use App\Http\Resources\ReportedCar as ReportedCarResource;
 use App\Http\Resources\ReportedCarCollection as ReportedCarCollectionResource;
@@ -32,8 +33,32 @@ class ReportedCarApiController extends Controller
 
     public function store(StoreReportedCar $request){
         $data = $request->all();
-        $reportedCar = $this->reportedCarRepository->create($data);
-        return new ReportedCarResource($reportedCar);
+
+        $car = Car::create([
+            'brand'=>$data['brand'],
+            'model'=>$data['model'],
+            'year'=>$data['year'],
+            'fuel'=>$data['fuel'],
+            'engine'=>$data['engine'],
+            'registration_number'=>$data['registration_number'],
+            'vin'=>$data['vin']
+        ]);
+
+        $reportedCardata =[
+            'car_id'=>$car['id'],
+            'description'=>$data['description'],
+            'reported_car_date'=>$data['reported_car_date'],
+            'is_delivered'=>$data['is_delivered'],
+            'is_accepted'=>$data['is_accepted'],
+        ];
+
+        $reportedCar = $this->reportedCarRepository->create($reportedCardata);
+
+
+        return new ReportedCarResource([
+            'car'=>$car,
+            'reportedCar'=>$reportedCar
+        ]);
     }
 
     public function update(Request $request, $id)

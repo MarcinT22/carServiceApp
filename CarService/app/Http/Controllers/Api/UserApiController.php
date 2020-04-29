@@ -7,6 +7,7 @@ use App\Http\Requests\LoginUser;
 use App\Http\Requests\RegisterUser;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Calendar;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -18,7 +19,11 @@ class UserApiController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
 
-        User::create($data);
+        $user = User::create($data);
+        Calendar::create([
+            'user_id'=>$user['id']
+        ]);
+
 
         return response()->json(['message' => 'User successfully created'], 201);
     }
@@ -44,7 +49,7 @@ class UserApiController extends Controller
             'message' => 'User is logged',
             'access_token' => $tokenResult->accessToken,
             'user'=>$user,
-            'token_type' => 'Bearer',
+            'calendar_id'=>$user->calendar->id,
         ]);
 
 

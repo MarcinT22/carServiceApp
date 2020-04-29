@@ -35,11 +35,11 @@ class Event extends Model
 
     public function alerts()
     {
-        $this->hasMany('App\Models\Alert');
+        return $this->hasMany('App\Models\Alert');
     }
     
     public function calendar()
     {
-        $this->belongsTo('App\Models\Calendar');
+       return  $this->belongsTo('App\Models\Calendar');
     }
 }

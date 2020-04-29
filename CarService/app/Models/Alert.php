@@ -19,6 +19,6 @@ class Alert extends Model
 
     public function event()
     {
-        $this->belongsTo('App\Models\Event');
+        return $this->belongsTo('App\Models\Event');
     }
 }

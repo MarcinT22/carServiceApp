@@ -41,6 +41,6 @@ class User extends Authenticatable
 
     public function calendar()
     {
-        $this->hasOne('App\Models\Calendar');
+        return $this->hasOne('App\Models\Calendar');
     }
 }
