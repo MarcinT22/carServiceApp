@@ -106,11 +106,7 @@
             }
         },
         mounted() {
-            axios.get('/getStatistics', {
-                headers: {
-                    'Authorization': 'Bearer ' + this.$store.state.token
-                }
-            })
+            axios.get('/getStatistics')
                 .then(response => {
                     this.data.amountNotAcceptedReportedCars=response.data.amountNotAcceptedReportedCars
                     this.data.amountAcceptedReportedCars=response.data.amountAcceptedReportedCars

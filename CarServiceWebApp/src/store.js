@@ -17,21 +17,18 @@ export default new Vuex.Store({
         AUTH_REQUEST(state) {
             state.status = 'loading'
         },
-        AUTH_SUCCESS(state, token) {
+        LOGIN_SUCCESS(state, token) {
             state.status = 'success'
             state.token = token
         },
-        AUTH_ERROR(state) {
+        LOGIN_ERROR(state) {
             state.status = 'error'
         },
         LOGOUT(state) {
             state.status = ''
             state.token = ''
         },
-        SET_USER(state, user)
-        {
-            state.user = user
-        }
+
     },
 
     actions: {
@@ -43,12 +40,12 @@ export default new Vuex.Store({
                         const token = response.data.access_token;
                         localStorage.setItem('token', token)
                         axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
-                        commit('AUTH_SUCCESS', token)
+                        commit('LOGIN_SUCCESS', token)
                         resolve(response)
 
                     })
                     .catch(error => {
-                        commit('AUTH_ERROR')
+                        commit('LOGIN_ERROR')
                         localStorage.removeItem('token')
                         reject(error)
                     })
@@ -66,12 +63,15 @@ export default new Vuex.Store({
 
         },
 
+
+
+
     },
 
     getters: {
         isUserLogged: state => !!state.token,
         authStatus: state => state.status,
-        getUser: state => state.user.name,
+
 
     }
 })
