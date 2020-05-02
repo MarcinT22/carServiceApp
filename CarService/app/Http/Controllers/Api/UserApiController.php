@@ -42,8 +42,6 @@ class UserApiController extends Controller
         $user = $request->user();
         $tokenResult = $user->createToken('User Access Token');
         $token = $tokenResult->token;
-
-
         $token->save();
         return response()->json([
             'message' => 'User is logged',

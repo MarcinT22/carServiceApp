@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
-class Car extends Model
+class Car extends Authenticatable
 {
+
+    use HasApiTokens;
+    protected $guard = 'cars';
     /**
      * The attributes that are mass assignable.
      *
@@ -18,8 +23,14 @@ class Car extends Model
         'engine',
         'fuel',
         'registration_number',
-        'vin'
+        'vin',
+        'password'
     ];
+
+    protected $hidden = [
+        'password',
+    ];
+
 
 
     public function reportedCars()

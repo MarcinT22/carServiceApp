@@ -23,9 +23,18 @@ Route::group([
 ], function() {
     Route::get('logout', 'Api\UserApiController@logout');
     Route::get('user', 'Api\UserApiController@user');
-    Route::get('cars','Api\CarApiController@list');
 });
 
+
+Route::group([
+    'middleware' => 'auth:cars-api'
+], function() {
+
+    Route::get('cars','Api\CarApiController@list');
+
+});
+
+Route::post('cars/login', 'Api\CarApiController@login');
 
 Route::post('cars','Api\CarApiController@store');
 Route::put('cars/{id}','Api\CarApiController@update');
