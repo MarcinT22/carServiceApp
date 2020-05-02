@@ -45,6 +45,17 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+
+        'cars-api' => [
+            'driver' => 'passport',
+            'provider' => 'cars',
+        ],
+
+        'cars' => [
+            'driver' => 'session',
+            'provider' => 'cars',
+        ],
+
     ],
 
     /*
@@ -74,6 +85,11 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'cars' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Car::class,
+        ],
     ],
 
     /*
@@ -95,6 +111,12 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'cars' => [
+            'provider' => 'cars',
             'expire' => 60,
             'throttle' => 60,
         ],
