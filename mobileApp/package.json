@@ -18,7 +18,6 @@
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-touch-ripple": "^3.0.0",
-    "vuetify": "^2.2.26",
     "vuex": "^3.3.0"
   },
   "devDependencies": {

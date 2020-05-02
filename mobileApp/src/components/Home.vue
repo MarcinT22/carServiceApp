@@ -24,8 +24,8 @@
         <div class="home__buttons">
             <touch-ripple class="home__button home__button--large">
                 <a href="#">
-                    <i class="far fa-check-circle"></i>
-                    Sprawdź status
+                    <i class="fas fa-project-diagram"></i>
+                    Sprawdź status naprawy
                 </a>
             </touch-ripple>
         </div>
@@ -90,7 +90,6 @@
 
             &--large{
                 width: 100%;
-                max-width:290px;
                 margin-top:10px;
                 padding-left:0;
                 padding-right:0;
@@ -104,7 +103,9 @@
                     background:url('../assets/image/background_1.jpg')no-repeat;
                     background-position: right center;
                     background-size: cover;
-
+                    i{
+                        font-size:20px;
+                    }
                 }
             }
         }

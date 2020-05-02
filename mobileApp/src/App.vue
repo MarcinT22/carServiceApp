@@ -1,9 +1,13 @@
 <template>
     <div id="app">
-        <header>
-            <img src="./assets/image/logo.png"/>
-        </header>
-        <router-view/>
+        <div class="container">
+            <header>
+                <img src="./assets/image/logo.png"/>
+            </header>
+            <router-view>
+            </router-view>
+
+        </div>
     </div>
 </template>
 
@@ -13,7 +17,6 @@
     import 'vue-touch-ripple/dist/vue-touch-ripple.css'
 
     Vue.use(VueTouchRipple, {
-        // default global options
         opacity: 0.2,
         speed: 2,
         color: '#f7f7f7'
@@ -21,11 +24,6 @@
 
     export default {
         name: 'App',
-        data() {
-            return {
-                isClicked: false
-            }
-        },
     }
 </script>
 
@@ -42,6 +40,7 @@
         background: #f7f7f7;
         position: relative;
         height: 100%;
+
 
         &::before {
             content: '';
@@ -67,20 +66,61 @@
             right: -10px;
             z-index: 0;
             transform: scale(0.9);
-            opacity: 0.075;
+            opacity: 0.05;
         }
     }
 
     #app {
         position: relative;
         z-index: 1;
-        padding: 0 20px;
+
+        font-family: 'Open Sans', sans-serif;
+
+        .v-application {
+            background: rgba(0, 0, 0, 0);
+
+        }
     }
 
     a {
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         -webkit-tap-highlight-color: transparent;
     }
+
+    .container{
+        padding: 0 30px;
+        padding-bottom:50px;
+        max-width:350px;
+    }
+
+    h1 {
+        color: $mainColor;
+        font-size: 22px;
+        text-align: center;
+        margin: 20px 0;
+        margin-top:0;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        flex-direction: column;
+        font-weight: 400;
+
+        i {
+            margin-bottom: 5px;
+        }
+    }
+
+    h2{
+        color: $mainColor;
+        font-size: 16px;
+        margin: 20px 0;
+        font-weight: 400;
+        border-bottom:1px solid $mainColor;
+        padding-bottom:5px;
+        font-weight: 600;
+    }
+
+
 
     header {
         text-align: center;
