@@ -88,6 +88,7 @@
     }
 
     .container{
+        margin: 0 auto;
         padding: 0 30px;
         padding-bottom:50px;
         max-width:350px;
