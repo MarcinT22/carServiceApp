@@ -11,17 +11,17 @@
                 <label for="registration_number">
                     Numer rejestracyjny
                 </label>
-                <input type="text" id="registration_number" class="form__input">
+                <input type="text" autocomplete="off" id="registration_number" class="form__input">
             </div>
             <div class="form__field">
                 <label for="vin">
                     5 ostatnich znaków VIN
                 </label>
-                <input type="text" id="vin" maxlength="5" class="form__input">
+                <input type="text" id="vin" autocomplete="off" maxlength="5" class="form__input">
             </div>
-            <touch-ripple class="form__button">
+            <div class="form__button tap-effect">
                 <input type="submit" value="Zaloguj">
-            </touch-ripple>
+            </div>
         </form>
 
 
@@ -74,7 +74,7 @@
 
                 &:focus {
                     border-color: $mainColor;
-                    background: rgba(255, 255, 255, 0.5);
+                    background: rgba(255, 255, 255, 1);
                 }
             }
 
@@ -92,11 +92,12 @@
                     text-align: center;
                     font-size: 16px;
                     color: #fff;
-                    background: url('../assets/image/background_2.jpg') no-repeat;
+                    background: url('../img/background_2.jpg') no-repeat;
                     background-size: cover;
                     display: block;
                     padding: 15px 10px;
-                    border-radius: 15px;
+                    border-radius: 5px;
+                    margin-top:30px;
                 }
             }
         }

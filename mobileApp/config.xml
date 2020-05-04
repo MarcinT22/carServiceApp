@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="pl.marcin-topolski" version="1.0.1" xmlns="http://www.w3.org/ns/widgets"     xmlns:gap="http://phonegap.com/ns/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android" >
+    <name>Car Service App</name>
+    <description>
+        Car Service App
+    </description>
+    <author email="marcin.topolski96@gmail.com" href="http://marcin-topolski.pl">
+        Marcin Topolski
+    </author>
+
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <icon src="icon.png" />
+    <splash src="splash.png" />
+
+    <gap:config-file platform="android" parent="/manifest">
+        <application android:theme="@android:style/Theme.NoTitleBar" >
+        </application>
+    </gap:config-file>
+
+
+    <preference name="SplashScreenBackgroundColor" value="#FFFFFF" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+
+
+
+    <preference name="target-device"   value="handset" />
+    <preference name="fullscreen"   value="false" />
+    <preference name="permissions" value="none"/>
+
+    <preference name="android-minSdkVersion" value="21" />
+    <preference name="android-targetSdkVersion" value="28" />
+
+    <preference name="orientation" value="portrait" />
+
+    <preference name="BackgroundColor" value="#ffffff"/>
+    <preference name="StatusBarBackgroundColor" value="#1D5176" />
+    <preference name="HeaderColor" value="#1D5176" />
+
+
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="HeaderColor" value="#1D5176" />
+
+
+
+    <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
+</widget>

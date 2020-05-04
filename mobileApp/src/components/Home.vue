@@ -1,33 +1,33 @@
 <template>
     <div class="home">
-        <div class="home__text">
+        <h1>
             <i class="far fa-calendar-alt"></i>
             Umów wizytę
-        </div>
+        </h1>
         <div class="home__buttons">
-            <touch-ripple class="home__button">
-                <a href="#">
+            <div class="home__button">
+                <router-link :to="{ path: 'login' }" class="tap-effect">
                     <i class="fas fa-car"></i>
                     Mój samochód
-                </a>
-            </touch-ripple>
-            <touch-ripple class="home__button">
-                <a href="#">
+                </router-link>
+            </div>
+            <div class="home__button">
+                <router-link :to="{ path: 'visit' }"  class="tap-effect">
                     <i class="fas fa-plus-circle"></i>
                     Nowy samochód
-                </a>
-            </touch-ripple>
+                </router-link>
+            </div>
         </div>
         <div class="home__text">
             lub
         </div>
         <div class="home__buttons">
-            <touch-ripple class="home__button home__button--large">
-                <a href="#">
+            <div class="home__button home__button--large">
+                <a href="#"  class="tap-effect">
                     <i class="fas fa-project-diagram"></i>
                     Sprawdź status naprawy
                 </a>
-            </touch-ripple>
+            </div>
         </div>
     </div>
 </template>
@@ -52,6 +52,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            margin:20px 0;
 
             i {
                 font-size: 25px;
@@ -78,7 +79,7 @@
                 align-items: center;
                 color:#fff;
                 border-radius: 100%;
-                background:url('../assets/image/background_2.jpg')no-repeat;
+                background:url('../img/background_2.jpg')no-repeat;
                 background-size: cover;
                 width:120px;
                 height:120px;
@@ -94,13 +95,13 @@
                 padding-left:0;
                 padding-right:0;
                 a{
-                    border-radius: 15px;
+                    border-radius: 5px;
                     width: 100%;
                     height:auto;
                     padding:15px 10px;
                     box-sizing: border-box;
                     font-size:16px;
-                    background:url('../assets/image/background_1.jpg')no-repeat;
+                    background:url('../img/background_1.jpg')no-repeat;
                     background-position: right center;
                     background-size: cover;
                     i{

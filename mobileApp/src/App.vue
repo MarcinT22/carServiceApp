@@ -2,7 +2,7 @@
     <div id="app">
         <div class="container">
             <header>
-                <img src="./assets/image/logo.png"/>
+                <img src="./img/logo.png"/>
             </header>
             <router-view>
             </router-view>
@@ -13,14 +13,7 @@
 
 <script>
     import Vue from 'vue'
-    import VueTouchRipple from 'vue-touch-ripple'
-    import 'vue-touch-ripple/dist/vue-touch-ripple.css'
 
-    Vue.use(VueTouchRipple, {
-        opacity: 0.2,
-        speed: 2,
-        color: '#f7f7f7'
-    })
 
     export default {
         name: 'App',
@@ -40,7 +33,15 @@
         background: #f7f7f7;
         position: relative;
         height: 100%;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-tap-highlight-color: transparent;
 
+        form{
+            font-family: 'Open Sans', sans-serif;
+        }
+        textarea{
+            font-family: 'Open Sans', sans-serif;
+        }
 
         &::before {
             content: '';
@@ -59,7 +60,7 @@
         }
 
         &::after {
-            content: url('assets/image/background_3.jpg');
+            content: url('img/background_3.jpg');
             display: block;
             position: fixed;
             bottom: -25px;
@@ -92,21 +93,22 @@
         padding: 0 30px;
         padding-bottom:50px;
         max-width:350px;
+        box-sizing: border-box;
     }
 
     h1 {
         color: $mainColor;
-        font-size: 22px;
+        font-size: 18px;
         text-align: center;
-        margin: 20px 0;
-        margin-top:0;
         display: flex;
         align-items: center;
-        justify-items: center;
+        justify-content: center;
         flex-direction: column;
         font-weight: 400;
+        margin-bottom:20px;
 
         i {
+            font-size: 25px;
             margin-bottom: 5px;
         }
     }
@@ -135,4 +137,35 @@
         }
     }
 
+    .tap-effect{
+        position: relative;
+        overflow: hidden;
+        overflow: hidden;
+
+
+        &::after{
+            content:'';
+            display: block;
+            width:500px;
+            height:500px;
+            border-radius: 100%;
+            background:rgb(255,255,255);
+            position: absolute;
+            top:0;
+            bottom:0;
+            right:0;
+            left:0;
+            margin:auto;
+            opacity:0;
+            transition:opacity 0.1s;
+
+        }
+
+        &:active{
+            &::after{
+                opacity: 0.2;
+
+            }
+        }
+    }
 </style>
