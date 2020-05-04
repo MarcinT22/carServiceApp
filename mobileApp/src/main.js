@@ -4,7 +4,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-Vue.config.productionTip = false
+import store from './store'
+import axios from 'axios'
+
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+
+const token = localStorage.getItem('token')
+if (token) {
+  axios.defaults.headers.common['Authorization'] = token
+}
 
 /* eslint-disable no-new */
 new Vue({

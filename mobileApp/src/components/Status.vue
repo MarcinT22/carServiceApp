@@ -17,7 +17,10 @@
 
 <script>
     export default {
-        name: "Status"
+        name: "Status",
+        created(){
+            setTimeout(() => this.$store.state.isLoading=false, 500);
+        },
     }
 </script>
 

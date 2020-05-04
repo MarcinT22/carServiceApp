@@ -5,8 +5,7 @@
             <i class="far fa-calendar-alt"></i>
             Umów wizytę
         </h1>
-        <form class="form">
-            <div>
+        <form class="form" action="visit" @submit.prevent="setVisitWithNewCar" v-if="getZone == 'newCar'">
                 <h2>
                     Dane pojazdu
                 </h2>
@@ -14,7 +13,7 @@
                     <label for="brand">
                         Marka
                     </label>
-                    <select name="" id="brand" class="form__input">
+                    <select v-model="brand" id="brand" class="form__input">
                         <option value="" selected disabled hidden>Wybierz markę</option>
                         <option>
                             Audi
@@ -31,16 +30,16 @@
                     <label for="model">
                         Model
                     </label>
-                    <select name="" id="model" class="form__input">
+                    <select v-model="model" id="model" class="form__input">
                         <option value="" selected disabled hidden>Wybierz model</option>
                         <option>
                             A6
                         </option>
                         <option>
-                           E36
+                            E36
                         </option>
                         <option>
-                           C180
+                            C180
                         </option>
                     </select>
                 </div>
@@ -48,19 +47,19 @@
                     <label for="year">
                         Rok produkcji
                     </label>
-                    <input type="text" autocomplete="off" id="year" class="form__input">
+                    <input type="text" v-model="year" autocomplete="off" id="year" class="form__input">
                 </div>
                 <div class="form__field">
                     <label for="engine">
                         Pojemność silnika
                     </label>
-                    <input type="text" id="engine" class="form__input">
+                    <input type="text" id="engine" v-model="engine" class="form__input">
                 </div>
                 <div class="form__field">
                     <label for="fuel">
                         Rodzaj paliwa
                     </label>
-                    <select name="" id="fuel" class="form__input">
+                    <select v-model="fuel" id="fuel" class="form__input">
                         <option>
                             Benzyna
                         </option>
@@ -68,13 +67,13 @@
                             Diezel
                         </option>
                         <option>
-                           Benzyna + LPG
+                            Benzyna + LPG
                         </option>
                         <option>
-                           Hybryda
+                            Hybryda
                         </option>
                         <option>
-                          Elektryczny
+                            Elektryczny
                         </option>
                     </select>
                 </div>
@@ -82,16 +81,16 @@
                     <label for="registration_number">
                         Numer rejestracyjny
                     </label>
-                    <input type="text" autocomplete="off" id="registration_number"
+                    <input type="text" v-model="registration_number" autocomplete="off" id="registration_number"
                            class="form__input form__input--uppercase">
                 </div>
                 <div class="form__field">
                     <label for="vin">
                         VIN
                     </label>
-                    <input type="text" autocomplete="off" id="vin" class="form__input form__input--uppercase">
+                    <input type="text" v-model="vin" autocomplete="off" id="vin"
+                           class="form__input form__input--uppercase">
                 </div>
-            </div>
             <h2>
                 Opis usterki / wymiany podzespołu
             </h2>
@@ -99,26 +98,61 @@
                 <label for="description">
                     Opis usterki pojazdu
                 </label>
-                <textarea id="description" class="form__input form__input--textarea"></textarea>
+                <textarea id="description" v-model="description" class="form__input form__input--textarea"></textarea>
             </div>
 
             <h2>
                 Data dostarczenia pojazdu
             </h2>
-            <div class="form__field">
+            <div class="form__field" id="dateField">
                 <label for="date">
                     Wybierz datę
                 </label>
-                <date-picker v-model="date" input-class="form__date" :editable="false" :disabled-date="disabledDates"
+                <date-picker v-model="reported_car_date" input-class="form__date" :editable="false"
+                             :disabled-date="disabledDates"
                              type="date" format="DD.MM.YYYY" :lang="lang"
                              id="date"></date-picker>
             </div>
 
-            <div class="form__button tap-effect">
-                <input type="submit" value="Umów wizytę">
-            </div>
-        </form>
+            <button class="form__button tap-effect">Umów wizytę</button>
 
+        </form>
+        <form class="form" action="visit" @submit.prevent="setVisit" v-else>
+            <h2 v-if="getZone == 'newCar'">
+                Dane pojazdu
+            </h2>
+            <h2 else>
+                Pojazd
+            </h2>
+            <p>
+                {{getCar.brand}} {{getCar.model}} {{getCar.registration_number}}
+            </p>
+            <h2>
+                Opis usterki / wymiany podzespołu
+            </h2>
+            <div class="form__field">
+                <label for="description">
+                    Opis usterki pojazdu
+                </label>
+                <textarea id="description" v-model="description" class="form__input form__input--textarea"></textarea>
+            </div>
+
+            <h2>
+                Data dostarczenia pojazdu
+            </h2>
+            <div class="form__field" id="dateField">
+                <label for="date">
+                    Wybierz datę
+                </label>
+                <date-picker v-model="reported_car_date" input-class="form__date" :editable="false"
+                             :disabled-date="disabledDates"
+                             type="date" format="DD.MM.YYYY" :lang="lang"
+                             id="date"></date-picker>
+            </div>
+
+            <button class="form__button tap-effect">Umów wizytę</button>
+
+        </form>
     </div>
 </template>
 
@@ -127,13 +161,26 @@
     import 'vue2-datepicker/index.css';
     import 'vue2-datepicker/locale/pl';
 
+    import {mapGetters} from 'vuex'
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     export default {
         name: "Visit",
+        computed:mapGetters(['getZone','getCar']),
         data() {
             return {
-                date: null,
+                zone:this.$store.getters.getZone,
+                car_id:7,
+                brand: '',
+                model: '',
+                year: '',
+                fuel: '',
+                engine: '',
+                registration_number: '',
+                vin: '',
+                description: '',
+                reported_car_date: null,
                 lang: {
                     formatLocale: {
                         firstDayOfWeek: 1,
@@ -148,11 +195,129 @@
                 const day = new Date(date).getDay()
                 return day === 0 || day === 6 || date < today;
 
+            },
+            setVisitWithNewCar() {
+                this.$store.state.isLoading=true
+                let brand = this.brand
+                let model = this.model
+                let year = this.year
+                let fuel = this.fuel
+                let engine = this.engine
+                let registration_number = this.registration_number.toUpperCase()
+                let vin = this.vin.toUpperCase()
+                let description = this.description
+                let reported_car_date =this.reported_car_date
+                this.$store.dispatch('setVisitWithNewCar', {
+                        brand,
+                        model,
+                        year,
+                        fuel,
+                        engine,
+                        registration_number,
+                        vin,
+                        description,
+                        reported_car_date
+                    }
+                )
+                    .then(() => this.$router.push('/message'))
+                    .catch(error => {
+                            this.$store.state.isLoading = false
+                            var errorsLabel = document.querySelectorAll(".form__error");
+
+                            for (var i = 0; i < errorsLabel.length; i++) {
+                                errorsLabel[i].parentElement.classList.remove('error');
+                                errorsLabel[i].remove();
+
+                            }
+
+                            let errors = error.response.data.errors;
+                            for (let error in errors) {
+                                if (error != 'reported_car_date') {
+                                    let field = document.getElementById(error);
+                                    field.parentElement.insertAdjacentHTML('beforeend', "<div class='form__error'>Proszę wprowadzić prawidłowe dane</div>");
+                                    field.parentElement.classList.add('error');
+                                }else{
+                                    let datefield = document.getElementById('dateField')
+                                    datefield.classList.add('error')
+                                    var errorText = document.createElement("div")
+                                    errorText.classList.add('form__error')
+                                    errorText.appendChild(document.createTextNode('Proszę wybrać datę'));
+                                    datefield.appendChild(errorText);
+                                }
+                            }
+
+                        }
+                    )
+            },
+            setVisit() {
+                this.$store.state.isLoading=true
+                let car_id = this.car_id
+                let description = this.description
+                let reported_car_date =this.reported_car_date
+                this.$store.dispatch('setVisitWithMyCar', {
+                       car_id,
+                        description,
+                        reported_car_date
+                    }
+                )
+                    .then(() => this.$router.push('/message'))
+                    .catch(error => {
+                            this.$store.state.isLoading = false
+                            var errorsLabel = document.querySelectorAll(".form__error");
+
+                            for (var i = 0; i < errorsLabel.length; i++) {
+                                errorsLabel[i].parentElement.classList.remove('error');
+                                errorsLabel[i].remove();
+
+                            }
+
+                            let errors = error.response.data.errors;
+                            for (let error in errors) {
+                                if (error != 'reported_car_date') {
+                                    let field = document.getElementById(error);
+                                    field.parentElement.insertAdjacentHTML('beforeend', "<div class='form__error'>Proszę wprowadzić prawidłowe dane</div>");
+                                    field.parentElement.classList.add('error');
+                                }else{
+                                    let datefield = document.getElementById('dateField')
+                                    datefield.classList.add('error')
+                                    var errorText = document.createElement("div")
+                                    errorText.classList.add('form__error')
+                                    errorText.appendChild(document.createTextNode('Proszę wybrać datę'));
+                                    datefield.appendChild(errorText);
+                                }
+                            }
+
+                        }
+                    )
             }
+        },
+        created() {
+            setTimeout(() => this.$store.state.isLoading = false, 500);
         },
         components: {DatePicker},
     }
 </script>
+<style lang="scss">
+
+    .form {
+
+        &__error {
+            font-size: 13px;
+            color: #ff3e61;
+            margin-top: 3px;
+        }
+
+        &__field {
+            &.error {
+                input,select {
+                    border-color: #ff3e61 !important;
+                }
+            }
+
+        }
+    }
+
+</style>
 <style lang="scss">
     @import "../assets/scss/config";
 
@@ -281,32 +446,30 @@
                     font-size: 14px;
                 }
 
-                option{
-                    border:0;
+                option {
+                    border: 0;
                     box-shadow: none;
                 }
             }
 
             &__button {
                 width: 100%;
+                margin-top: 10px;
+                outline: none;
+                border: 0;
+                width: 100%;
+                max-width: 290px;
+                box-sizing: border-box;
+                margin: 0 auto;
+                text-align: center;
+                font-size: 16px;
+                color: #fff;
+                background: url('../img/background_2.jpg') no-repeat;
+                background-size: cover;
+                display: block;
+                padding: 15px 10px;
+                border-radius: 5px;
                 margin-top: 30px;
-
-                input {
-                    outline: none;
-                    border: 0;
-                    width: 100%;
-                    max-width: 290px;
-                    box-sizing: border-box;
-                    margin: 0 auto;
-                    text-align: center;
-                    font-size: 16px;
-                    color: #fff;
-                    background: url('../img/background_2.jpg') no-repeat;
-                    background-size: cover;
-                    display: block;
-                    padding: 15px 10px;
-                    border-radius: 5px;
-                }
             }
         }
     }

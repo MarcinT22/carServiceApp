@@ -6,16 +6,16 @@
         </h1>
         <div class="home__buttons">
             <div class="home__button">
-                <router-link :to="{ path: 'login' }" class="tap-effect">
+                <a href="#" @click.prevent="goToVisitWithMyCar" class="tap-effect">
                     <i class="fas fa-car"></i>
                     Mój samochód
-                </router-link>
+                </a>
             </div>
             <div class="home__button">
-                <router-link :to="{ path: 'visit' }"  class="tap-effect">
+                <a href="#" @click.prevent="goToVisit" class="tap-effect">
                     <i class="fas fa-plus-circle"></i>
                     Nowy samochód
-                </router-link>
+                </a>
             </div>
         </div>
         <div class="home__text">
@@ -23,7 +23,7 @@
         </div>
         <div class="home__buttons">
             <div class="home__button home__button--large">
-                <a href="#"  class="tap-effect">
+                <a href="#" @click.prevent="goToStatus" class="tap-effect">
                     <i class="fas fa-project-diagram"></i>
                     Sprawdź status naprawy
                 </a>
@@ -33,9 +33,36 @@
 </template>
 
 <script>
-
     export default {
         name: "Home",
+        created(){
+            setTimeout(() => this.$store.state.isLoading=false, 500);
+        },
+        methods:
+        {
+            changeZone(zone)
+            {
+              this.$store.commit('CHANGE_ZONE', zone)
+            },
+
+            goToStatus()
+            {
+                this.changeZone('status')
+                this.$router.push('/login')
+            },
+
+            goToVisitWithMyCar()
+            {
+                this.changeZone('myCar')
+                this.$router.push('/login')
+            },
+
+            goToVisit()
+            {
+                this.changeZone('newCar')
+                this.$router.push('/visit')
+            }
+        }
 
     }
 </script>

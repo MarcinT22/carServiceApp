@@ -1,22 +1,31 @@
 <template>
-    <div id="app">
+    <div id="app" class="app">
         <div class="container">
             <header>
                 <img src="./img/logo.png"/>
             </header>
             <router-view>
             </router-view>
-
+        </div>
+        <div class="loading" :class="{'active':this.$store.state.isLoading}">
+            <span></span>
         </div>
     </div>
 </template>
 
 <script>
     import Vue from 'vue'
-
+    import axios from "axios"
+    import store from './store'
 
     export default {
         name: 'App',
+        store,
+        created(){
+            setTimeout(() => this.$store.state.isLoading=false, 200);
+        }
+
+
     }
 </script>
 
@@ -33,13 +42,14 @@
         background: #f7f7f7;
         position: relative;
         height: 100%;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         -webkit-tap-highlight-color: transparent;
 
-        form{
+        form {
             font-family: 'Open Sans', sans-serif;
         }
-        textarea{
+
+        textarea {
             font-family: 'Open Sans', sans-serif;
         }
 
@@ -71,7 +81,50 @@
         }
     }
 
-    #app {
+    .loading {
+       position: fixed;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        background:rgba(255,255,255,0.6);
+        z-index: -1;
+        opacity: 0;
+        visibility: hidden;
+        transition:opacity 0.3s, visiblity 0.3s;
+
+        &.active{
+            opacity:1;
+            visibility: visible;
+            z-index: 100;
+        }
+        span{
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+            border-radius: 100%;
+            width: 30px;
+            height: 30px;
+            border: 4px solid $mainColor;
+            border-top-color: rgba(0, 0, 0, 0);
+            animation: loading 0.7s linear infinite;
+        }
+    }
+
+    @keyframes loading {
+        0% {
+            transform: rotate(0);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .app {
         position: relative;
         z-index: 1;
 
@@ -88,11 +141,11 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    .container{
+    .container {
         margin: 0 auto;
         padding: 0 30px;
-        padding-bottom:50px;
-        max-width:350px;
+        padding-bottom: 50px;
+        max-width: 350px;
         box-sizing: border-box;
     }
 
@@ -105,7 +158,7 @@
         justify-content: center;
         flex-direction: column;
         font-weight: 400;
-        margin-bottom:20px;
+        margin-bottom: 20px;
 
         i {
             font-size: 25px;
@@ -113,16 +166,15 @@
         }
     }
 
-    h2{
+    h2 {
         color: $mainColor;
         font-size: 16px;
         margin: 20px 0;
         font-weight: 400;
-        border-bottom:1px solid $mainColor;
-        padding-bottom:5px;
+        border-bottom: 1px solid $mainColor;
+        padding-bottom: 5px;
         font-weight: 600;
     }
-
 
 
     header {
@@ -137,32 +189,32 @@
         }
     }
 
-    .tap-effect{
+    .tap-effect {
         position: relative;
         overflow: hidden;
         overflow: hidden;
 
 
-        &::after{
-            content:'';
+        &::after {
+            content: '';
             display: block;
-            width:500px;
-            height:500px;
+            width: 500px;
+            height: 500px;
             border-radius: 100%;
-            background:rgb(255,255,255);
+            background: rgb(255, 255, 255);
             position: absolute;
-            top:0;
-            bottom:0;
-            right:0;
-            left:0;
-            margin:auto;
-            opacity:0;
-            transition:opacity 0.1s;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            margin: auto;
+            opacity: 0;
+            transition: opacity 0.1s;
 
         }
 
-        &:active{
-            &::after{
+        &:active {
+            &::after {
                 opacity: 0.2;
 
             }
