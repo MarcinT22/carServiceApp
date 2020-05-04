@@ -65,7 +65,7 @@
             left: 0;
             background: #fff;
             transform: skewY(-25deg);
-            top: -25vw;
+            top: -31vw;
             z-index: 0;
         }
 

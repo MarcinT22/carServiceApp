@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\StoreExistingReportedCar;
 use App\Http\Requests\StoreReportedCar;
 use App\Models\Car;
 use App\Repositories\ReportedCarRepository;
@@ -31,7 +32,7 @@ class ReportedCarApiController extends Controller
         return new ReportedCarCollectionResource($this->reportedCarRepository->getAll());
     }
 
-    public function store(StoreReportedCar $request){
+    public function storeWithNewCars(StoreReportedCar $request){
         $data = $request->all();
 
         $car = Car::create([
@@ -41,15 +42,16 @@ class ReportedCarApiController extends Controller
             'fuel'=>$data['fuel'],
             'engine'=>$data['engine'],
             'registration_number'=>$data['registration_number'],
-            'vin'=>$data['vin']
+            'vin'=>$data['vin'],
+            'password' => bcrypt(substr($data['vin'], -5))
         ]);
 
         $reportedCardata =[
             'car_id'=>$car['id'],
             'description'=>$data['description'],
             'reported_car_date'=>$data['reported_car_date'],
-            'is_delivered'=>$data['is_delivered'],
-            'is_accepted'=>$data['is_accepted'],
+            'is_delivered'=>$data['is_delivered'] ?? 0,
+            'is_accepted'=>$data['is_accepted'] ?? 0,
         ];
 
         $reportedCar = $this->reportedCarRepository->create($reportedCardata);
@@ -60,7 +62,24 @@ class ReportedCarApiController extends Controller
             'reportedCar'=>$reportedCar
         ]);
     }
+    public function storeWithMyCar(StoreExistingReportedCar $request){
+        $data = $request->all();
 
+        $reportedCardata =[
+            'car_id'=>$data['car_id'],
+            'description'=>$data['description'],
+            'reported_car_date'=>$data['reported_car_date'],
+            'is_delivered'=>$data['is_delivered'] ?? 0,
+            'is_accepted'=>$data['is_accepted'] ?? 0,
+        ];
+
+        $reportedCar = $this->reportedCarRepository->create($reportedCardata);
+
+
+        return new ReportedCarResource([
+            'reportedCar'=>$reportedCar
+        ]);
+    }
     public function update(Request $request, $id)
     {
 

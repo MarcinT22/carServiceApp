@@ -43,7 +43,8 @@ Route::get('cars/{id}','Api\CarApiController@find');
 
 
 Route::get('reportedCars','Api\ReportedCarApiController@list');
-Route::post('reportedCars','Api\ReportedCarApiController@store');
+Route::post('reportedNewCar','Api\ReportedCarApiController@storeWithNewCars');
+Route::post('reportedMyCar','Api\ReportedCarApiController@storeWithMyCar');
 Route::put('reportedCars/{id}','Api\ReportedCarApiController@update');
 Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
 Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');

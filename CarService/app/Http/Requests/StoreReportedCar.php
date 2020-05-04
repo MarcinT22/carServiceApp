@@ -28,7 +28,6 @@ class StoreReportedCar extends FormRequest
     public function rules()
     {
         return array_merge($this->carRules(), [
-            'car_id'=>'required',
 			'description'=>'required',
 			'reported_car_date'=>'required',
         ]);

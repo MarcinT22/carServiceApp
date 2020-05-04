@@ -42,7 +42,7 @@
                         password,
                     }
                 )
-                    .then(() => this.$router.push('/'))
+                    .then(() => this.$router.push('/visit'))
                     .catch(error => console.log(error.response.data.errors))
             }
         }
