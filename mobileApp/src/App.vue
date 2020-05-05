@@ -14,6 +14,18 @@
 </template>
 
 <script>
+    document.addEventListener("deviceReady", deviceReady, false);
+
+    function deviceReady() {
+        document.addEventListener("backbutton", onBackKeyDown, false);
+
+        function onBackKeyDown() {
+            alert('test')
+            navigator.notification.alert('Hello', ok, 'Title', 'Button!');
+        }
+    }
+
+
     import Vue from 'vue'
     import axios from "axios"
     import store from './store'
@@ -23,6 +35,10 @@
         store,
         created(){
             setTimeout(() => this.$store.state.isLoading=false, 200);
+
+
+
+
         }
 
 
@@ -145,7 +161,7 @@
         margin: 0 auto;
         padding: 0 30px;
         padding-bottom: 50px;
-        max-width: 350px;
+        max-width: 380px;
         box-sizing: border-box;
     }
 
@@ -219,5 +235,27 @@
 
             }
         }
+    }
+
+    button.btn{
+        width: 100%;
+        margin-top: 10px;
+        outline: none;
+        border: 0;
+        width: 100%;
+        max-width: 150px;
+        box-sizing: border-box;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 16px;
+        color: #fff;
+        background: url('./img/background_2.jpg') no-repeat;
+        background-size: cover;
+        display: block;
+        padding: 15px 10px;
+        border-radius: 5px;
+        margin-top: 30px;
+
+
     }
 </style>

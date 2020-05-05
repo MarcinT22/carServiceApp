@@ -48,7 +48,7 @@ let router = new Router({
       name: 'Message',
       component: Message,
       meta:{
-        auth: true
+        auth: false
       }
     },
     { path: "*",

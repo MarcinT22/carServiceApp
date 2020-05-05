@@ -6,7 +6,7 @@
             <p>Zgłoszenie jest w trakcie przetwarzania.</p>
             <p>Prosimy na bieżąco sprawdzać status zlecenia.</p>
         </div>
-        <button class="tap-effect" @click="logout">
+        <button class="btn tap-effect" @click="logout">
             OK
         </button>
 
@@ -49,27 +49,7 @@
             }
         }
 
-        button{
-            width: 100%;
-            margin-top: 10px;
-            outline: none;
-            border: 0;
-            width: 100%;
-            max-width: 150px;
-            box-sizing: border-box;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 16px;
-            color: #fff;
-            background: url('../img/background_2.jpg') no-repeat;
-            background-size: cover;
-            display: block;
-            padding: 15px 10px;
-            border-radius: 5px;
-            margin-top: 30px;
 
-
-        }
 
 
     }

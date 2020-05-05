@@ -114,7 +114,7 @@
                              id="date"></date-picker>
             </div>
 
-            <button class="form__button tap-effect">Umów wizytę</button>
+            <button class="btn tap-effect">Umów wizytę</button>
 
         </form>
         <form class="form" action="visit" @submit.prevent="setVisit" v-else>
@@ -150,7 +150,7 @@
                              id="date"></date-picker>
             </div>
 
-            <button class="form__button tap-effect">Umów wizytę</button>
+            <button class="btn tap-effect">Umów wizytę</button>
 
         </form>
     </div>
@@ -171,7 +171,7 @@
         data() {
             return {
                 zone:this.$store.getters.getZone,
-                car_id:7,
+                car_id:this.$store.getters.getCar.id || null,
                 brand: '',
                 model: '',
                 year: '',

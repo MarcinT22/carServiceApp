@@ -20,7 +20,7 @@
                 </label>
                 <input type="text" id="vin" autocomplete="off" maxlength="5" v-model="vin" class="form__input">
             </div>
-            <button class="form__button tap-effect">Zaloguj</button>
+            <button class="btn tap-effect">Zaloguj</button>
         </form>
     </div>
 </template>

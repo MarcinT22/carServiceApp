@@ -7,43 +7,62 @@ export default new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || null,
         car: null,
-        status: null,
+        reportedCar:null,
+        status:null,
+        eventStatus: null,
         isLoading:true,
-        zone:null
+        zone:null,
 
     },
 
     mutations: {
-        AUTH_REQUEST(state) {
+        authRequest(state) {
             state.status = 'loading'
         },
-        LOGIN_SUCCESS(state, token) {
+        loginSuccess(state, token) {
             state.status = 'success'
             state.token = token
         },
-        LOGIN_ERROR(state) {
+        loginError(state) {
             state.status = 'error'
         },
-        LOGOUT(state) {
-            state.status = ''
-            state.token = ''
+        logout(state) {
+            state.status = null
+            state.token = null
+            state.car=null,
+            state.reportedCar=null
         },
 
-        REPORTED_CAR_SUCCESS(state) {
+        reportedCarSuccess(state) {
             state.status = 'success'
         },
-        REPORTED_CAR_ERROR(state) {
+        reportedCarError(state) {
             state.status = 'error'
         },
 
-        CHANGE_ZONE(state, zone){
+        changeZone(state, zone){
             state.zone = zone
         },
 
-        SET_CAR(state, car)
+        setCar(state, car)
         {
             state.car = car
-        }
+        },
+
+        setReportedCar(state, reportedCar){
+            state.reportedCar = reportedCar
+        },
+
+        setStatus(state, status)
+        {
+            state.eventStatus = status
+        },
+
+        setStatusError(){
+            state.status = 'error'
+        },
+
+
 
 
     },
@@ -51,20 +70,20 @@ export default new Vuex.Store({
     actions: {
         login({commit}, car) {
             return new Promise((resolve, reject) => {
-                commit('AUTH_REQUEST')
+                commit('authRequest')
                 axios.post('/cars/login', car)
                     .then(response => {
                         const token = response.data.access_token;
                         localStorage.setItem('token', token)
                         axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
-                        commit('LOGIN_SUCCESS', token)
-                        console.log(response.data.car)
-                        commit('SET_CAR', response.data.car)
+                        commit('loginSuccess', token)
+                        commit('setCar', response.data.car)
+                        commit('setReportedCar',response.data.car.reported_cars[0])
                         resolve(response)
 
                     })
                     .catch(error => {
-                        commit('LOGIN_ERROR')
+                        commit('loginError')
                         localStorage.removeItem('token')
                         reject(error)
                     })
@@ -74,7 +93,7 @@ export default new Vuex.Store({
 
         logout({commit}) {
             return new Promise((resolve, reject) => {
-                commit('LOGOUT');
+                commit('logout');
                 localStorage.removeItem('token');
                 delete axios.defaults.headers.common['Authorization']
                 resolve()
@@ -84,18 +103,18 @@ export default new Vuex.Store({
 
         setVisitWithMyCar({commit}, data) {
             return new Promise((resolve, reject) => {
-                commit('AUTH_REQUEST')
+                commit('authRequest')
                 axios.post('/reportedMyCar', data)
                     .then(response => {
                         const token = response.data.access_token;
                         localStorage.setItem('token', token)
                         axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
-                        commit('REPORTED_CAR_SUCCESS')
+                        commit('reportedCarSuccess')
                         resolve(response)
 
                     })
                     .catch(error => {
-                        commit('REPORTED_CAR_ERROR')
+                        commit('reportedCarError')
                         reject(error)
                     })
             })
@@ -104,18 +123,30 @@ export default new Vuex.Store({
 
         setVisitWithNewCar({commit}, data) {
             return new Promise((resolve, reject) => {
-                commit('AUTH_REQUEST')
+                commit('authRequest')
                 axios.post('/reportedNewCar', data)
                     .then(response => {
-                        const token = response.data.access_token;
-                        localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
-                        commit('REPORTED_CAR_SUCCESS')
+                        commit('reportedCarSuccess')
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('reportedCarError')
+                        reject(error)
+                    })
+            })
+
+        },
+
+        getStatus({commit}, reportedCarId) {
+            return new Promise((resolve, reject) => {
+                axios.get('/getEventStatus/'+reportedCarId)
+                    .then(response => {
+                        commit('setStatus', response.data[0])
                         resolve(response)
 
                     })
                     .catch(error => {
-                        commit('REPORTED_CAR_ERROR')
+                        commit('setStatusError')
                         reject(error)
                     })
             })
@@ -127,9 +158,11 @@ export default new Vuex.Store({
 
     getters: {
         isCarLogged: state => !!state.token,
-        authStatus: state => state.status,
         getZone: state => state.zone,
-        getCar:state => state.car
+        getCar:state => state.car,
+        getEventStatus:state => state.eventStatus,
+        getReportedCar:state => state.reportedCar,
+        isLoading:state => state.isLoading
 
     }
 })

@@ -29,6 +29,7 @@
                 </a>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -42,7 +43,7 @@
         {
             changeZone(zone)
             {
-              this.$store.commit('CHANGE_ZONE', zone)
+              this.$store.commit('changeZone', zone)
             },
 
             goToStatus()
@@ -100,7 +101,7 @@
             a{
                 display: flex;
                 flex-direction: column;
-                font-size:13px;
+                font-size:15px;
                 text-decoration: none;
                 justify-content: center;
                 align-items: center;
@@ -108,8 +109,8 @@
                 border-radius: 100%;
                 background:url('../img/background_2.jpg')no-repeat;
                 background-size: cover;
-                width:120px;
-                height:120px;
+                width:135px;
+                height:135px;
                 i{
                     font-size:24px;
                     margin-bottom:5px;
@@ -124,8 +125,9 @@
                 a{
                     border-radius: 5px;
                     width: 100%;
+
                     height:auto;
-                    padding:15px 10px;
+                    padding:20px 10px;
                     box-sizing: border-box;
                     font-size:16px;
                     background:url('../img/background_1.jpg')no-repeat;
