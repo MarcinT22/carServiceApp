@@ -27,4 +27,9 @@ class EventRepository extends BaseRepository
     {
         return $this->model->whereIn('status_id', [4])->get()->count();
     }
+
+    public function getLastStatusId($reportedCarId)
+    {
+        return $this->model->where('reported_cars_id',$reportedCarId)->orderBy('id','desc')->first();
+    }
 }

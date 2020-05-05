@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEvent;
 use App\Repositories\EventRepository;
+use App\Repositories\StatusRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\EventCollection as EventCollectionResource;
@@ -12,10 +13,12 @@ use App\Http\Resources\EventCollection as EventCollectionResource;
 class EventApiController extends Controller
 {
     protected $eventRepository;
+    protected $statusRepository;
 
-    public function __construct(EventRepository $eventRepository)
+    public function __construct(EventRepository $eventRepository, StatusRepository $statusRepository)
     {
         $this->eventRepository = $eventRepository;
+        $this->statusRepository = $statusRepository;
     }
 
     public function find($id)
@@ -54,20 +57,28 @@ class EventApiController extends Controller
     {
         $amount = $this->eventRepository->getAmountAll();
 
-        return array("amount" => "$amount");
+        return array("amount" => $amount);
     }
 
     public function getAmountInProgressEvents()
     {
         $amount = $this->eventRepository->getAmountInProgressEvents();
 
-        return array("amount" => "$amount");
+        return array("amount" => $amount);
     }
 
     public function getAmountReadyCars()
     {
         $amount = $this->eventRepository->getAmountReadyCars();
 
-        return array("amount" => "$amount");
+        return array("amount" => $amount);
+    }
+
+    public function getEventStatus($reportedCarId)
+    {
+        $lastStatus = $this->eventRepository->getLastStatusId($reportedCarId);
+        $status = $this->statusRepository->find($lastStatus['status_id']);
+
+        return array($status);
     }
 }
