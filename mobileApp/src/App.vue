@@ -10,22 +10,11 @@
         <div class="loading" :class="{'active':this.$store.state.isLoading}">
             <span></span>
         </div>
+
     </div>
 </template>
 
 <script>
-    document.addEventListener("deviceReady", deviceReady, false);
-
-    function deviceReady() {
-        document.addEventListener("backbutton", onBackKeyDown, false);
-
-        function onBackKeyDown() {
-            alert('test')
-            navigator.notification.alert('Hello', ok, 'Title', 'Button!');
-        }
-    }
-
-
     import Vue from 'vue'
     import axios from "axios"
     import store from './store'
@@ -33,22 +22,37 @@
     export default {
         name: 'App',
         store,
-        created(){
-            setTimeout(() => this.$store.state.isLoading=false, 200);
+        created() {
+            this.loading
+            document.addEventListener("offline", this.offline, false);
+            document.addEventListener("online", this.online, false);
+        },
+        methods: {
+            loading() {
+                setTimeout(() => this.$store.state.isLoading = false, 500);
+            },
+            offline() {
+                this.$router.push('/notConnection')
 
-
-
+            },
+            online() {
+                this.$router.back();
+            }
 
         }
 
-
     }
+
+
+
+
 </script>
 
 <style lang="scss">
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css');
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
     @import "assets/scss/config";
+
+
 
     html, body {
         padding: 0;
@@ -60,6 +64,7 @@
         height: 100%;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         -webkit-tap-highlight-color: transparent;
+
 
         form {
             font-family: 'Open Sans', sans-serif;
@@ -98,23 +103,24 @@
     }
 
     .loading {
-       position: fixed;
-        top:0;
-        right:0;
-        bottom:0;
-        left:0;
-        background:rgba(255,255,255,0.6);
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 0.6);
         z-index: -1;
         opacity: 0;
         visibility: hidden;
-        transition:opacity 0.3s, visiblity 0.3s;
+        transition: opacity 0.3s, visiblity 0.3s;
 
-        &.active{
-            opacity:1;
+        &.active {
+            opacity: 1;
             visibility: visible;
             z-index: 100;
         }
-        span{
+
+        span {
             position: fixed;
             top: 0;
             right: 0;
@@ -176,9 +182,13 @@
         font-weight: 400;
         margin-bottom: 20px;
 
-        i {
-            font-size: 25px;
-            margin-bottom: 5px;
+        .icon{
+            font-size:30px;
+            margin-bottom:5px;
+            color:$mainColor;
+            path{
+                fill:$mainColor;
+            }
         }
     }
 
@@ -237,7 +247,7 @@
         }
     }
 
-    button.btn{
+    button.btn {
         width: 100%;
         margin-top: 10px;
         outline: none;
@@ -258,4 +268,6 @@
 
 
     }
+
+
 </style>

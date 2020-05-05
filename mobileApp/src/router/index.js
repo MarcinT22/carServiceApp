@@ -5,19 +5,23 @@ import store from './../store'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Visit from '@/components/Visit'
+import NewCarVisit from '@/components/NewCarVisit'
 import Status from '@/components/Status'
 import Message from '@/components/Message'
+import NotConnection from '@/components/NotConnection'
 
 Vue.use(Router)
 
 let router = new Router({
-  mode: 'history',
   linkExactActiveClass: 'active',
   routes: [
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta:{
+        auth: false
+      }
     },
     {
       path: '/',
@@ -32,6 +36,14 @@ let router = new Router({
       name: 'Visit',
       component: Visit,
       meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/newCarVisit',
+      name: 'NewCarVisit',
+      component: NewCarVisit,
+      meta:{
         auth: false
       }
     },
@@ -44,13 +56,21 @@ let router = new Router({
       }
     },
     {
-      path: '/message',
-      name: 'Message',
-      component: Message,
-      meta:{
-        auth: false
-      }
-    },
+          path: '/message',
+          name: 'Message',
+          component: Message,
+          meta:{
+              auth: false
+          }
+      },
+      {
+          path: '/notConnection',
+          name: 'NotConnection',
+          component: NotConnection,
+          meta:{
+              auth: false
+          }
+      },
     { path: "*",
       component: Home
     }

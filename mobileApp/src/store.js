@@ -7,11 +7,11 @@ export default new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || null,
         car: null,
-        reportedCar:null,
-        status:null,
+        reportedCar: null,
+        status: null,
         eventStatus: null,
-        isLoading:true,
-        zone:null,
+        isLoading: true,
+        zone: null,
 
     },
 
@@ -29,8 +29,10 @@ export default new Vuex.Store({
         logout(state) {
             state.status = null
             state.token = null
-            state.car=null,
-            state.reportedCar=null
+            state.car = null
+            state.reportedCar = null
+            state.eventStatus = null
+            state.zone = null
         },
 
         reportedCarSuccess(state) {
@@ -40,29 +42,25 @@ export default new Vuex.Store({
             state.status = 'error'
         },
 
-        changeZone(state, zone){
+        changeZone(state, zone) {
             state.zone = zone
         },
 
-        setCar(state, car)
-        {
+        setCar(state, car) {
             state.car = car
         },
 
-        setReportedCar(state, reportedCar){
+        setReportedCar(state, reportedCar) {
             state.reportedCar = reportedCar
         },
 
-        setStatus(state, status)
-        {
+        setStatus(state, status) {
             state.eventStatus = status
         },
 
-        setStatusError(){
+        setStatusError() {
             state.status = 'error'
         },
-
-
 
 
     },
@@ -75,10 +73,10 @@ export default new Vuex.Store({
                     .then(response => {
                         const token = response.data.access_token;
                         localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                         commit('loginSuccess', token)
                         commit('setCar', response.data.car)
-                        commit('setReportedCar',response.data.car.reported_cars[0])
+                        commit('setReportedCar', response.data.car.reported_cars[0])
                         resolve(response)
 
                     })
@@ -108,7 +106,7 @@ export default new Vuex.Store({
                     .then(response => {
                         const token = response.data.access_token;
                         localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                         commit('reportedCarSuccess')
                         resolve(response)
 
@@ -139,7 +137,7 @@ export default new Vuex.Store({
 
         getStatus({commit}, reportedCarId) {
             return new Promise((resolve, reject) => {
-                axios.get('/getEventStatus/'+reportedCarId)
+                axios.get('/getEventStatus/' + reportedCarId)
                     .then(response => {
                         commit('setStatus', response.data[0])
                         resolve(response)
@@ -159,10 +157,10 @@ export default new Vuex.Store({
     getters: {
         isCarLogged: state => !!state.token,
         getZone: state => state.zone,
-        getCar:state => state.car,
-        getEventStatus:state => state.eventStatus,
-        getReportedCar:state => state.reportedCar,
-        isLoading:state => state.isLoading
+        getCar: state => state.car,
+        getEventStatus: state => state.eventStatus,
+        getReportedCar: state => state.reportedCar,
+        isLoading: state => state.isLoading
 
     }
 })

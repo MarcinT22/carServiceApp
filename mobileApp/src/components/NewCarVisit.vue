@@ -4,16 +4,92 @@
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.89em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 750 850"><path d="M533 194q-20 0-33-14t-14-33V55q0-20 14-34t33-13.5T566 21t13 34v92q0 20-13 33t-33 14zm-325 0q-19 0-32-14t-14-33V55q0-20 14-34t32-13q20 0 34 13t13 34v92q0 20-13 33t-34 14zm487-93q20 0 33 13t13 33v556q0 20-13 33t-33 14H46q-19 0-32-14T0 703V147q0-19 14-33t32-13h70v46q0 19 7 36t20 29t29 20t36 8t36-8t30-20t20-29t7-36v-46h139v46q0 19 8 36t20 29t29 20t36 8t36-8t30-20t20-29t7-36v-46h69zm-46 289q0-11-12-11H104q-11 0-11 11v255q0 12 11 12h533q12 0 12-12V390z" fill="#626262"/></svg>
             Umów wizytę
         </h1>
-        <form class="form" action="visit" @submit.prevent="setVisit" >
+        <form class="form" action="visit" @submit.prevent="setVisitWithNewCar">
             <h2>
                 Dane pojazdu
             </h2>
-            <h2 else>
-                Pojazd
-            </h2>
-            <p>
-                {{getCar.brand}} {{getCar.model}} {{getCar.registration_number}}
-            </p>
+            <div class="form__field">
+                <label for="brand">
+                    Marka
+                </label>
+                <select v-model="brand" id="brand" class="form__input">
+                    <option value="" selected disabled hidden>Wybierz markę</option>
+                    <option>
+                        Audi
+                    </option>
+                    <option>
+                        BMW
+                    </option>
+                    <option>
+                        Mercedes
+                    </option>
+                </select>
+            </div>
+            <div class="form__field">
+                <label for="model">
+                    Model
+                </label>
+                <select v-model="model" id="model" class="form__input">
+                    <option value="" selected disabled hidden>Wybierz model</option>
+                    <option>
+                        A6
+                    </option>
+                    <option>
+                        E36
+                    </option>
+                    <option>
+                        C180
+                    </option>
+                </select>
+            </div>
+            <div class="form__field">
+                <label for="year">
+                    Rok produkcji
+                </label>
+                <input type="text" v-model="year" autocomplete="off" id="year" class="form__input">
+            </div>
+            <div class="form__field">
+                <label for="engine">
+                    Pojemność silnika
+                </label>
+                <input type="text" id="engine" v-model="engine" class="form__input">
+            </div>
+            <div class="form__field">
+                <label for="fuel">
+                    Rodzaj paliwa
+                </label>
+                <select v-model="fuel" id="fuel" class="form__input">
+                    <option>
+                        Benzyna
+                    </option>
+                    <option>
+                        Diezel
+                    </option>
+                    <option>
+                        Benzyna + LPG
+                    </option>
+                    <option>
+                        Hybryda
+                    </option>
+                    <option>
+                        Elektryczny
+                    </option>
+                </select>
+            </div>
+            <div class="form__field">
+                <label for="registration_number">
+                    Numer rejestracyjny
+                </label>
+                <input type="text" v-model="registration_number" autocomplete="off" id="registration_number"
+                       class="form__input form__input--uppercase">
+            </div>
+            <div class="form__field">
+                <label for="vin">
+                    VIN
+                </label>
+                <input type="text" v-model="vin" autocomplete="off" id="vin"
+                       class="form__input form__input--uppercase">
+            </div>
             <h2>
                 Opis usterki / wymiany podzespołu
             </h2>
@@ -53,11 +129,9 @@
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     export default {
-        name: "Visit",
-        computed:mapGetters(['getCar']),
+        name: "NewCarVisit",
         data() {
             return {
-                car_id:this.$store.getters.getCar.id || {type: Object, default: () => ({})},
                 brand: '',
                 model: '',
                 year: '',
@@ -82,13 +156,25 @@
                 return day === 0 || day === 6 || date < today;
 
             },
-            setVisit() {
+            setVisitWithNewCar() {
                 this.$store.state.isLoading=true
-                let car_id = this.car_id
+                let brand = this.brand
+                let model = this.model
+                let year = this.year
+                let fuel = this.fuel
+                let engine = this.engine
+                let registration_number = this.registration_number.toUpperCase()
+                let vin = this.vin.toUpperCase()
                 let description = this.description
                 let reported_car_date =this.reported_car_date
-                this.$store.dispatch('setVisitWithMyCar', {
-                       car_id,
+                this.$store.dispatch('setVisitWithNewCar', {
+                        brand,
+                        model,
+                        year,
+                        fuel,
+                        engine,
+                        registration_number,
+                        vin,
                         description,
                         reported_car_date
                     }
@@ -122,7 +208,7 @@
 
                         }
                     )
-            }
+            },
         },
         created() {
             setTimeout(() => this.$store.state.isLoading = false, 500);

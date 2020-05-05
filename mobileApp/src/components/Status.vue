@@ -7,14 +7,14 @@
         </h1>
 
         <div class="status__container" :class="{active:show}">
-            <tamplate v-if="status != null">
+            <template v-if="status != null">
                 <div class="status__block" :style="{background:status.color}" v-if="status.id != 5">
                     {{status.name}}
                 </div>
                 <div class="status__block status__block--default" v-else>
                    Pojazd nie został zgłoszony do naprawy
                 </div>
-            </tamplate>
+            </template>
             <div class="status__block" v-else>
                 Zgłoszenie oczekuje na akceptację przez warsztat
             </div>
