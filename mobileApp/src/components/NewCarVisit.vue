@@ -12,6 +12,7 @@
                 <label for="brand">
                     Marka
                 </label>
+
                 <select v-model="brand" id="brand" class="form__input">
                     <option value="" selected disabled hidden>Wybierz markę</option>
                     <option>
@@ -216,180 +217,16 @@
         components: {DatePicker},
     }
 </script>
-<style lang="scss">
 
-    .form {
-
-        &__error {
-            font-size: 13px;
-            color: #ff3e61;
-            margin-top: 3px;
-        }
-
-        &__field {
-            &.error {
-                input,select {
-                    border-color: #ff3e61 !important;
-                }
-            }
-
-        }
-    }
-
-</style>
 <style lang="scss">
     @import "../assets/scss/config";
-
-    $default-color: #555 !important;
-    $primary-color: $mainColor;
-
-    @import '~vue2-datepicker/scss/index.scss';
-    .mx-calendar-header-label {
-        button {
-            font-weight: bold !important;
-            font-size: 16px !important;
-        }
-    }
-
-    .mx-calendar {
-        width: 290px !important;
-    }
-
-    .mx-table-date {
-        th {
-            font-weight: bold !important;
-            font-size: 16px !important;
-        }
-
-        td {
-            font-size: 16px !important;
-
-            &.disabled {
-                opacity: 0.6 !important;
-            }
-
-            &.today {
-                background: rgba(97, 190, 247, 0.42) !important;
-            }
-
-            &.active {
-                background: $mainColor !important;
-            }
-        }
-
-        .mx-date-row {
-            td:last-child {
-                color: #ff345c !important;
-                color: #ff345c !important;
-            }
-
-        }
-    }
-
-    .mx-datepicker {
-        width: 100% !important;
-    }
-
-    .form__date {
-
-        border-radius: 5px;
-        border: 1px solid #999999;
-        padding: 10px;
-        box-sizing: border-box;
-        height: 40px;
-        width: 100%;
-        outline: none;
-        font-size: 16px;
-        color: $mainColor;
-        font-weight: 400;
-        background: #f7f7f7;
-        transition: border-color 0.3s ease-in-out, background 0.3s ease-in-out;
-
-        &:focus {
-            border-color: $mainColor;
-            background: rgba(255, 255, 255, 0.5);
-        }
+    @import "../assets/scss/calendar";
+    @import "../assets/scss/formError";
 
 
-    }
 
 </style>
 <style scoped lang="scss">
     @import "../assets/scss/config";
-
-
-    .visit {
-        .form {
-            padding-bottom: 30px;
-
-            label {
-                font-size: 14px;
-                color: #555;
-                font-weight: 400;
-                display: block;
-                margin-bottom: 5px;
-
-
-            }
-
-            &__field {
-                margin-bottom: 13px;
-            }
-
-            &__input {
-                border-radius: 5px;
-                border: 1px solid #999999;
-                padding: 10px;
-                box-sizing: border-box;
-                height: 40px;
-                width: 100%;
-                outline: none;
-                font-size: 16px;
-                color: $mainColor;
-                font-weight: 400;
-                background: #f7f7f7;
-                transition: border-color 0.3s ease-in-out, background 0.3s ease-in-out;
-
-                &:focus {
-                    border-color: $mainColor;
-                    background: rgba(255, 255, 255, 1);
-                }
-
-                &--uppercase {
-                    text-transform: uppercase;
-                }
-
-                &--textarea {
-                    resize: none;
-                    height: 200px;
-                    font-size: 14px;
-                }
-
-                option {
-                    border: 0;
-                    box-shadow: none;
-                }
-            }
-
-            &__button {
-                width: 100%;
-                margin-top: 10px;
-                outline: none;
-                border: 0;
-                width: 100%;
-                max-width: 290px;
-                box-sizing: border-box;
-                margin: 0 auto;
-                text-align: center;
-                font-size: 16px;
-                color: #fff;
-                background: url('../img/background_2.jpg') no-repeat;
-                background-size: cover;
-                display: block;
-                padding: 15px 10px;
-                border-radius: 5px;
-                margin-top: 30px;
-            }
-        }
-    }
+    @import "../assets/scss/form";
 </style>

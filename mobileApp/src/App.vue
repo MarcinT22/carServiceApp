@@ -24,26 +24,32 @@
         store,
         created() {
             this.loading
-            document.addEventListener("offline", this.offline, false);
-            document.addEventListener("online", this.online, false);
+            document.addEventListener("deviceready", this.onDeviceReady, false);
+
+
         },
         methods: {
             loading() {
                 setTimeout(() => this.$store.state.isLoading = false, 500);
             },
+
+            onDeviceReady(){
+                document.addEventListener("offline", this.offline, false);
+                document.addEventListener("online", this.online, false);
+            },
+
             offline() {
                 this.$router.push('/notConnection')
 
             },
             online() {
                 this.$router.back();
-            }
+            },
+
 
         }
 
     }
-
-
 
 
 </script>
@@ -51,7 +57,6 @@
 <style lang="scss">
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
     @import "assets/scss/config";
-
 
 
     html, body {
@@ -66,13 +71,10 @@
         -webkit-tap-highlight-color: transparent;
 
 
-        form {
+        form, textarea, input, button {
             font-family: 'Open Sans', sans-serif;
         }
 
-        textarea {
-            font-family: 'Open Sans', sans-serif;
-        }
 
         &::before {
             content: '';
@@ -109,15 +111,15 @@
         bottom: 0;
         left: 0;
         background: rgba(255, 255, 255, 0.6);
-        z-index: -1;
+        z-index: 100;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.3s, visiblity 0.3s;
+        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 
         &.active {
             opacity: 1;
             visibility: visible;
-            z-index: 100;
+
         }
 
         span {
@@ -182,12 +184,13 @@
         font-weight: 400;
         margin-bottom: 20px;
 
-        .icon{
-            font-size:30px;
-            margin-bottom:5px;
-            color:$mainColor;
-            path{
-                fill:$mainColor;
+        .icon {
+            font-size: 30px;
+            margin-bottom: 5px;
+            color: $mainColor;
+
+            path {
+                fill: $mainColor;
             }
         }
     }
@@ -262,11 +265,19 @@
         background: url('./img/background_2.jpg') no-repeat;
         background-size: cover;
         display: block;
-        padding: 15px 10px;
+        padding: 10px 10px;
         border-radius: 5px;
         margin-top: 30px;
 
 
+    }
+
+    .errorMessage {
+        text-align: center;
+        margin-top: 20px;
+        color: $errorColor;
+        font-size: 14px;
+        font-weight: 600
     }
 
 
