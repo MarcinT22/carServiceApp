@@ -70,6 +70,10 @@
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         -webkit-tap-highlight-color: transparent;
 
+        &.overflow{
+            overflow: hidden;
+        }
+
 
         form, textarea, input, button {
             font-family: 'Open Sans', sans-serif;
@@ -279,6 +283,7 @@
         font-size: 14px;
         font-weight: 600
     }
+
 
 
 </style>

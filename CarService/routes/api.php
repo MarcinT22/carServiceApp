@@ -40,6 +40,9 @@ Route::put('cars/{id}','Api\CarApiController@update');
 Route::delete('cars/{id}','Api\CarApiController@destroy');
 Route::get('cars/{id}','Api\CarApiController@find');
 
+Route::get('getCarsModels','Api\CarApiController@getCarsModels');
+
+
 
 Route::get('reportedCars','Api\ReportedCarApiController@list');
 Route::post('reportedNewCar','Api\ReportedCarApiController@storeWithNewCars');

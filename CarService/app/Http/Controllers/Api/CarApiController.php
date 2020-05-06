@@ -95,5 +95,13 @@ class CarApiController extends Controller
 
     }
 
+    public function getCarsModels(){
+
+        $carModelsJson = file_get_contents(base_path('app/Storage/carModels.json'));
+
+        return json_decode($carModelsJson , true);
+
+    }
+
 
 }

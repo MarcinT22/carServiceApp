@@ -1,48 +1,46 @@
 <template>
     <div class="visit">
         <h1>
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.89em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 750 850"><path d="M533 194q-20 0-33-14t-14-33V55q0-20 14-34t33-13.5T566 21t13 34v92q0 20-13 33t-33 14zm-325 0q-19 0-32-14t-14-33V55q0-20 14-34t32-13q20 0 34 13t13 34v92q0 20-13 33t-34 14zm487-93q20 0 33 13t13 33v556q0 20-13 33t-33 14H46q-19 0-32-14T0 703V147q0-19 14-33t32-13h70v46q0 19 7 36t20 29t29 20t36 8t36-8t30-20t20-29t7-36v-46h139v46q0 19 8 36t20 29t29 20t36 8t36-8t30-20t20-29t7-36v-46h69zm-46 289q0-11-12-11H104q-11 0-11 11v255q0 12 11 12h533q12 0 12-12V390z" fill="#626262"/></svg>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 aria-hidden="true" focusable="false" width="0.89em" height="1em"
+                 style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 750 850">
+                <path d="M533 194q-20 0-33-14t-14-33V55q0-20 14-34t33-13.5T566 21t13 34v92q0 20-13 33t-33 14zm-325 0q-19 0-32-14t-14-33V55q0-20 14-34t32-13q20 0 34 13t13 34v92q0 20-13 33t-34 14zm487-93q20 0 33 13t13 33v556q0 20-13 33t-33 14H46q-19 0-32-14T0 703V147q0-19 14-33t32-13h70v46q0 19 7 36t20 29t29 20t36 8t36-8t30-20t20-29t7-36v-46h139v46q0 19 8 36t20 29t29 20t36 8t36-8t30-20t20-29t7-36v-46h69zm-46 289q0-11-12-11H104q-11 0-11 11v255q0 12 11 12h533q12 0 12-12V390z"
+                      fill="#626262"/>
+            </svg>
             Umów wizytę
         </h1>
         <form class="form" action="visit" @submit.prevent="setVisitWithNewCar">
             <h2>
                 Dane pojazdu
             </h2>
+
             <div class="form__field">
                 <label for="brand">
                     Marka
                 </label>
-
-                <select v-model="brand" id="brand" class="form__input">
-                    <option value="" selected disabled hidden>Wybierz markę</option>
-                    <option>
-                        Audi
-                    </option>
-                    <option>
-                        BMW
-                    </option>
-                    <option>
-                        Mercedes
-                    </option>
-                </select>
+                <input type="text" v-model="brand" autocomplete="off" id="brand" readonly class="form__input"
+                       @click="showBrands">
+                <ul :class="{active:showBrandsList}" id="brandsList">
+                    <li v-for="(car, index) in carsList" @click="selectCar(index)">
+                        {{car.brand}}
+                    </li>
+                </ul>
             </div>
-            <div class="form__field">
+
+            <div class="form__field" v-if="models.length">
                 <label for="model">
                     Model
                 </label>
-                <select v-model="model" id="model" class="form__input">
-                    <option value="" selected disabled hidden>Wybierz model</option>
-                    <option>
-                        A6
-                    </option>
-                    <option>
-                        E36
-                    </option>
-                    <option>
-                        C180
-                    </option>
-                </select>
+                <input type="text" v-model="model" autocomplete="off" id="model" readonly class="form__input"
+                       @click="showModels">
+                <ul :class="{active:showModelsList}" id="modelsList">
+                    <li v-for="model in models" @click="selectModel(model)">
+                        {{model}}
+                    </li>
+                </ul>
             </div>
+
             <div class="form__field">
                 <label for="year">
                     Rok produkcji
@@ -59,23 +57,25 @@
                 <label for="fuel">
                     Rodzaj paliwa
                 </label>
-                <select v-model="fuel" id="fuel" class="form__input">
-                    <option>
+                <input type="text" v-model="fuel" autocomplete="off" id="fuel" readonly class="form__input"
+                       @click="showFuels">
+                <ul :class="{active:showFuelsList}" id="fuelsList">
+                    <li @click="selectFuel('Benzyna')">
                         Benzyna
-                    </option>
-                    <option>
-                        Diezel
-                    </option>
-                    <option>
+                    </li>
+                    <li @click="selectFuel('Diesel')">
+                        Diesel
+                    </li>
+                    <li @click="selectFuel('Benzyna + LPG')">
                         Benzyna + LPG
-                    </option>
-                    <option>
+                    </li>
+                    <li @click="selectFuel('Hybryda')">
                         Hybryda
-                    </option>
-                    <option>
+                    </li>
+                    <li @click="selectFuel('Elektryczny')">
                         Elektryczny
-                    </option>
-                </select>
+                    </li>
+                </ul>
             </div>
             <div class="form__field">
                 <label for="registration_number">
@@ -117,6 +117,7 @@
             <button class="btn tap-effect">Umów wizytę</button>
 
         </form>
+        <div class="blur" :class="{active:this.$store.state.blur}" @click="closeModal" ></div>
     </div>
 </template>
 
@@ -124,6 +125,7 @@
     import DatePicker from 'vue2-datepicker';
     import 'vue2-datepicker/index.css';
     import 'vue2-datepicker/locale/pl';
+    import axios from 'axios'
 
     import {mapGetters} from 'vuex'
 
@@ -133,6 +135,8 @@
         name: "NewCarVisit",
         data() {
             return {
+                carsList: null,
+                models: [],
                 brand: '',
                 model: '',
                 year: '',
@@ -149,6 +153,10 @@
                     monthBeforeYear: true,
 
                 },
+                showBrandsList: false,
+                showModelsList: false,
+                showFuelsList: false,
+
             }
         },
         methods: {
@@ -158,7 +166,7 @@
 
             },
             setVisitWithNewCar() {
-                this.$store.state.isLoading=true
+                this.$store.state.isLoading = true
                 let brand = this.brand
                 let model = this.model
                 let year = this.year
@@ -167,7 +175,7 @@
                 let registration_number = this.registration_number.toUpperCase()
                 let vin = this.vin.toUpperCase()
                 let description = this.description
-                let reported_car_date =this.reported_car_date
+                let reported_car_date = this.reported_car_date
                 this.$store.dispatch('setVisitWithNewCar', {
                         brand,
                         model,
@@ -197,7 +205,7 @@
                                     let field = document.getElementById(error);
                                     field.parentElement.insertAdjacentHTML('beforeend', "<div class='form__error'>Proszę wprowadzić prawidłowe dane</div>");
                                     field.parentElement.classList.add('error');
-                                }else{
+                                } else {
                                     let datefield = document.getElementById('dateField')
                                     datefield.classList.add('error')
                                     var errorText = document.createElement("div")
@@ -210,9 +218,64 @@
                         }
                     )
             },
+            selectCar(index) {
+                this.model = null,
+                    this.models = this.carsList[index].models;
+                this.brand = this.carsList[index].brand;
+                this.closeModal();
+            },
+            selectModel(model) {
+                this.model = model;
+                this.closeModal();
+            },
+
+            selectFuel(fuel) {
+                this.fuel = fuel
+                this.closeModal();
+            },
+
+            showBrands() {
+                this.showBrandsList = true
+                document.body.classList.add('overflow');
+                this.$store.state.blur=true
+
+            },
+            showModels() {
+                this.showModelsList = true
+                document.body.classList.add('overflow');
+                this.$store.state.blur=true
+
+            },
+
+            showFuels(){
+                this.showFuelsList = true
+                document.body.classList.add('overflow');
+                this.$store.state.blur=true
+            },
+
+            closeModal(){
+                this.showBrandsList = false
+                this.showModelsList = false
+                this.showFuelsList = false
+                this.$store.state.blur=false
+                document.getElementById('brandsList').scrollTop=0;
+               let modelsList = document.getElementById('modelsList');
+               if (modelsList)
+               {
+                   modelsList.scrollTop=0;
+               }
+                document.getElementById('fuelsList').scrollTop=0;
+                document.body.classList.remove('overflow');
+            }
         },
         created() {
             setTimeout(() => this.$store.state.isLoading = false, 500);
+
+            axios.get('/getCarsModels')
+                .then(response => {
+                    this.carsList = response.data
+                })
+
         },
         components: {DatePicker},
     }
@@ -222,7 +285,6 @@
     @import "../assets/scss/config";
     @import "../assets/scss/calendar";
     @import "../assets/scss/formError";
-
 
 
 </style>
