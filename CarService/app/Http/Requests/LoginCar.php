@@ -28,4 +28,12 @@ class LoginCar extends FormRequest
             'vin' => 'required|max:5',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'registration_number.required' => 'Numer rejestracyjny jest nieprawidłowy.',
+            'vin.required' => 'Podano nieprawidłowe znaki VIN',
+        ];
+    }
 }

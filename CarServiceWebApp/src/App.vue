@@ -11,7 +11,8 @@
 </template>
 
 <script>
-    import Menu from "./components/Menu";
+    import Menu from "./components/Menu"
+    import axios from "axios"
     import store from './store'
     import {mapGetters} from 'vuex'
     export default {

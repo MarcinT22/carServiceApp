@@ -30,20 +30,22 @@ Route::group([
     'middleware' => 'auth:cars-api'
 ], function() {
 
-    Route::get('cars','Api\CarApiController@list');
-
+    Route::post('reportedMyCar','Api\ReportedCarApiController@storeWithMyCar');
 });
 
 Route::post('cars/login', 'Api\CarApiController@login');
-
+Route::get('cars','Api\CarApiController@list');
 Route::post('cars','Api\CarApiController@store');
 Route::put('cars/{id}','Api\CarApiController@update');
 Route::delete('cars/{id}','Api\CarApiController@destroy');
 Route::get('cars/{id}','Api\CarApiController@find');
 
+Route::get('getCarsModels','Api\CarApiController@getCarsModels');
+
+
 
 Route::get('reportedCars','Api\ReportedCarApiController@list');
-Route::post('reportedCars','Api\ReportedCarApiController@store');
+Route::post('reportedNewCar','Api\ReportedCarApiController@storeWithNewCars');
 Route::put('reportedCars/{id}','Api\ReportedCarApiController@update');
 Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
 Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');
@@ -60,6 +62,7 @@ Route::post('events','Api\EventApiController@store');
 Route::put('events/{id}','Api\EventApiController@update');
 Route::delete('events/{id}','Api\EventApiController@destroy');
 Route::get('events/{id}','Api\EventApiController@find');
+Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStatus');
 
 
 

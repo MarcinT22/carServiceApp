@@ -76,7 +76,12 @@ class CarApiController extends Controller
         }
 
 
-        $car = Car::where('registration_number',$request['registration_number'])->first();
+        $car = Car::where('registration_number',$request['registration_number'])
+            ->with(['reportedCars' => function($query){
+                $query->orderBy('id','desc');
+                $query->first();
+            }])
+            ->first();
         $tokenResult = $car->createToken('Car access token');
         $token = $tokenResult->token;
         $token->save();
@@ -89,5 +94,14 @@ class CarApiController extends Controller
         ]);
 
     }
+
+    public function getCarsModels(){
+
+        $carModelsJson = file_get_contents(base_path('app/Storage/carModels.json'));
+
+        return json_decode($carModelsJson , true);
+
+    }
+
 
 }

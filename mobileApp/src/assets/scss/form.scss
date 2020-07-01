@@ -1,0 +1,119 @@
+
+
+.form {
+  padding-bottom: 30px;
+
+  label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 5px;
+
+
+  }
+
+  &__field {
+    margin-bottom: 13px;
+  }
+
+  &__input {
+    border-radius: 5px;
+    border: 1px solid #999999;
+    padding: 10px;
+    box-sizing: border-box;
+    height: 40px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    color: $mainColor;
+    font-weight: 400;
+    background: #f7f7f7;
+    transition: border-color 0.3s ease-in-out, background 0.3s ease-in-out;
+
+    &:focus {
+      border-color: $mainColor;
+      background: rgba(255, 255, 255, 1);
+    }
+
+    &--uppercase {
+      text-transform: uppercase;
+    }
+
+    &--textarea {
+      resize: none;
+      height: 200px;
+      font-size: 14px;
+    }
+
+    option {
+      border: 0;
+      box-shadow: none;
+    }
+  }
+
+  ul{
+    position: fixed;
+    top:20px;
+    right:20px;
+    bottom:20px;
+    left:20px;
+    max-width:400px;
+    box-sizing: border-box;
+    margin:auto;
+    height:80%;
+    background:#fff;
+    overflow: hidden;
+    list-style-type: none;
+    padding:0;
+    overflow-y: auto;
+    opacity:0;
+    visibility: hidden;
+    box-shadow: 0px 0px 4px 0 rgba(0,0,0,0.4);
+
+
+    &.active{
+      opacity:1;
+      visibility: visible;
+      z-index: 10;
+      transition:opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, z-index 0.3s ease-in-out;
+    }
+
+    li{
+      padding:20px;
+      box-sizing: border-box;
+      border-bottom:1px solid #f3f3f3;
+      background:#fff;
+      transition:background 0.2s;
+      font-size:16px;
+      color:$mainColor;
+      &:active{
+        background:#f7f7f7;
+      }
+      &:last-child{
+        border-bottom:0;
+      }
+    }
+  }
+
+}
+
+.blur{
+  position: fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  background:rgba(0,0,0,0.5);
+  z-index: -1;
+  opacity:0;
+  visibility: hidden;
+
+
+  &.active{
+    opacity:1;
+    visibility: visible;
+    z-index: 9;
+    transition:opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, z-index 0.3s ease-in-out;
+  }
+}

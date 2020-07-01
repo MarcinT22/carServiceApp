@@ -1,0 +1,17 @@
+.form {
+
+  &__error {
+    font-size: 13px;
+    color: $errorColor;
+    margin-top: 3px;
+  }
+
+  &__field {
+    &.error {
+      input,select,textarea {
+        border-color: $errorColor !important;
+      }
+    }
+
+  }
+}
