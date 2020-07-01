@@ -11,16 +11,22 @@ class ReportedCarRepository extends BaseRepository{
 
     public function getNotAccepted()
     {
+        return $this->model->where('is_accepted',0)->get();
+    }
+
+
+    public function getCountNotAccepted()
+    {
         return $this->model->where('is_accepted',0)->get()->count();
     }
 
-    public function getAccepted()
+    public function getCountAccepted()
     {
         return $this->model->where('is_accepted',1)->get()->count();
     }
 
 
-    public function getDelivered()
+    public function getCountDelivered()
     {
         return $this->model->where('is_accepted',1)->where('is_delivered',1)->get()->count();
     }

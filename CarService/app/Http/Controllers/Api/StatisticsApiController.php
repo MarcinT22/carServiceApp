@@ -22,9 +22,9 @@ class StatisticsApiController extends Controller
 
     public function getStatistics()
     {
-        $amountNotAcceptedReportedCars = $this->reportedCarRepository->getNotAccepted();
-        $amountAcceptedReportedCars = $this->reportedCarRepository->getAccepted();
-        $amountDeliveredReportedCars = $this->reportedCarRepository->getDelivered();
+        $amountNotAcceptedReportedCars = $this->reportedCarRepository->getCountNotAccepted();
+        $amountAcceptedReportedCars = $this->reportedCarRepository->getCountAccepted();
+        $amountDeliveredReportedCars = $this->reportedCarRepository->getCountDelivered();
         $amountEvents = $this->eventRepository->getAmountAll();
         $amountInProgressEvents = $this->eventRepository->getAmountInProgressEvents();
         $amountReadyCars = $this->eventRepository->getAmountReadyCars();

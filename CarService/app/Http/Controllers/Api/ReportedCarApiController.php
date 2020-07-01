@@ -94,24 +94,24 @@ class ReportedCarApiController extends Controller
         return array("message"=>"success");
     }
 
-    public function getAmountNotAccepted()
+    public function getNotAccepted()
     {
-        $amount = $this->reportedCarRepository->getNotAccepted();
+        $reportedCars = $this->reportedCarRepository->getNotAccepted();
 
-        return array("amount"=>"$amount");
+        return array("reportedCars", $reportedCars);
     }
-
-    public function getAmountAccepted()
-    {
-        $amount = $this->reportedCarRepository->getAccepted();
-
-        return array("amount"=>"$amount");
-    }
-
-    public function getAmountDelivered()
-    {
-        $amount = $this->reportedCarRepository->getDelivered();
-
-        return array("amount"=>"$amount");
-    }
+//
+//    public function getAmountAccepted()
+//    {
+//        $amount = $this->reportedCarRepository->getCountAccepted();
+//
+//        return array("amount"=>"$amount");
+//    }
+//
+//    public function getAmountDelivered()
+//    {
+//        $amount = $this->reportedCarRepository->getCountDelivered();
+//
+//        return array("amount"=>"$amount");
+//    }
 }

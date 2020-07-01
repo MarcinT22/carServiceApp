@@ -10,9 +10,9 @@
                         <div class="block__count">
                             {{data.amountNotAcceptedReportedCars}}
                         </div>
-                        <a href="#">
+                      <router-link :to="{ name: 'ReportedCars' }">
                             Zarządzaj
-                        </a>
+                    </router-link>
                     </div>
                 </div>
                 <div class="dashboard__col">

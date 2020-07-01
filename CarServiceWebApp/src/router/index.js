@@ -4,6 +4,10 @@ import store from './../store'
 
 import Login from '@/components/Login'
 import Home from '@/components/Home'
+import Error from '@/components/Error'
+import ReportedCars from '@/components/ReportedCars'
+
+
 
 Vue.use(Router)
 
@@ -24,8 +28,17 @@ let router = new Router({
         auth: true
       }
     },
+    {
+      path: '/reported-cars',
+      name: 'ReportedCars',
+      component: ReportedCars,
+      meta:{
+        auth: true
+      }
+    },
+
     { path: "*",
-      component: Home
+      component: Error
     }
   ]
 })
@@ -35,10 +48,14 @@ let router = new Router({
 router.beforeEach((to, from, next)=>{
   if (to.matched.some(record => record.meta.auth)){
     if (!store.getters.isUserLogged){
+
       next({name:'Login'})
+
     }
     else{
+
       next()
+
     }
   }else{
     next()
