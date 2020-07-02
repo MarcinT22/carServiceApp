@@ -51,6 +51,7 @@ Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
 Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');
 
 Route::get('getNotAcceptedReportedCars','Api\ReportedCarApiController@getNotAccepted');
+Route::get('acceptReportedCar/{id}','Api\ReportedCarApiController@acceptDate');
 
 
 Route::get('statuses','Api\StatusApiController@list');

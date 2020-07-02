@@ -2,6 +2,13 @@
   padding:20px 0;
 
 
+  h1{
+    font-size:30px;
+    color:$mainColor;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
 
   &__container{
     padding:0 15px;
@@ -31,6 +38,26 @@
     @media (max-width:$screen-sm)
     {
       width:100%;
+    }
+
+    &--4{
+      width:25%;
+
+      @media (max-width:$screen-lg)
+      {
+        width:33.33%;
+      }
+
+
+      @media (max-width:$screen-md)
+      {
+        width:50%;
+      }
+      @media (max-width:$screen-sm)
+      {
+        width:100%;
+      }
+
     }
   }
 }

@@ -7,12 +7,16 @@
                         <h2>
                             Zgłoszenia oczekujące:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{data.amountNotAcceptedReportedCars}}
+                            {{amountNotAcceptedReportedCars}}
                         </div>
-                      <router-link :to="{ name: 'ReportedCars' }">
+                        </div>
+                        <router-link :to="{ name: 'ReportedCars' }">
                             Zarządzaj
-                    </router-link>
+                        </router-link>
+
                     </div>
                 </div>
                 <div class="dashboard__col">
@@ -20,14 +24,17 @@
                         <h2>
                             Przyjęcia pojazdów:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
                             <span class="block__text">
                                 dziś:
                             </span>
                             ---
                             <span class="block__text block__text--light">
-                                Łącznie: {{data.amountAcceptedReportedCars}}
+                                Łącznie: {{amountAcceptedReportedCars}}
                             </span>
+                        </div>
                         </div>
                         <a href="#">
                             Zarządzaj
@@ -39,8 +46,11 @@
                         <h2>
                             Nowe zlecenia:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{data.amountDeliveredReportedCars}}
+                            {{amountDeliveredReportedCars}}
+                        </div>
                         </div>
                         <a href="#">
                             Zarządzaj
@@ -52,14 +62,17 @@
                         <h2>
                             Zaplanowane naprawy:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
                             <span class="block__text">
                                 dziś:
                             </span>
                             ---
                             <span class="block__text block__text--light">
-                                Łącznie: {{data.amountEvents}} <span>|</span>W trakcie: {{ data.amountInProgressEvents}}
+                                Łącznie: {{amountEvents}} <span>|</span>W trakcie: {{ amountInProgressEvents}}
                             </span>
+                        </div>
                         </div>
                         <a href="#">
                             Zarządzaj
@@ -71,8 +84,11 @@
                         <h2>
                             Pojazdy do wydania:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{data.amountReadyCars}}
+                            {{amountReadyCars}}
+                        </div>
                         </div>
                         <a href="#">
                             Zarządzaj
@@ -85,35 +101,35 @@
 </template>
 
 <script>
-    import axios from 'axios'
-
     const headers = {
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
     }
+    import axios from 'axios'
+
     export default {
         name: "Home",
         data() {
             return {
-                data: {
-                    amountNotAcceptedReportedCars: 0,
-                    amountAcceptedReportedCars: 0,
-                    amountDeliveredReportedCars: 0,
-                    amountEvents: 0,
-                    amountInProgressEvents: 0,
-                    amountReadyCars: 0,
-                }
+                amountNotAcceptedReportedCars: null,
+                amountAcceptedReportedCars: 0,
+                amountDeliveredReportedCars: 0,
+                amountEvents: 0,
+                amountInProgressEvents: 0,
+                amountReadyCars: 0,
+                isLoading: true
             }
         },
         mounted() {
             axios.get('/getStatistics')
                 .then(response => {
-                    this.data.amountNotAcceptedReportedCars=response.data.amountNotAcceptedReportedCars
-                    this.data.amountAcceptedReportedCars=response.data.amountAcceptedReportedCars
-                    this.data.amountDeliveredReportedCars=response.data.amountDeliveredReportedCars
-                    this.data.amountEvents=response.data.amountEvents
-                    this.data.amountInProgressEvents=response.data.amountInProgressEvents
-                    this.data.amountReadyCars=response.data.amountReadyCars
+                    this.amountNotAcceptedReportedCars = response.data.amountNotAcceptedReportedCars
+                    this.amountAcceptedReportedCars = response.data.amountAcceptedReportedCars
+                    this.amountDeliveredReportedCars = response.data.amountDeliveredReportedCars
+                    this.amountEvents = response.data.amountEvents
+                    this.amountInProgressEvents = response.data.amountInProgressEvents
+                    this.amountReadyCars = response.data.amountReadyCars
+                    this.isLoading=false
                 })
                 .catch(error => {
                     console.log(error)

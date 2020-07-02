@@ -46,7 +46,7 @@ class ReportedCarApiController extends Controller
             'password' => bcrypt(substr($data['vin'], -5))
         ]);
 
-        $reportedCardata =[
+        $reportedCarData =[
             'car_id'=>$car['id'],
             'description'=>$data['description'],
             'reported_car_date'=>$data['reported_car_date'],
@@ -54,7 +54,7 @@ class ReportedCarApiController extends Controller
             'is_accepted'=>$data['is_accepted'] ?? 0,
         ];
 
-        $reportedCar = $this->reportedCarRepository->create($reportedCardata);
+        $reportedCar = $this->reportedCarRepository->create($reportedCarData);
 
 
         return new ReportedCarResource([
@@ -97,8 +97,16 @@ class ReportedCarApiController extends Controller
     public function getNotAccepted()
     {
         $reportedCars = $this->reportedCarRepository->getNotAccepted();
+        return new ReportedCarResource([
+            'reportedCars'=>$reportedCars
+        ]);
 
-        return array("reportedCars", $reportedCars);
+    }
+
+    public function acceptDate($id)
+    {
+        $reportedCars = $this->reportedCarRepository->acceptDate($id);
+        return array("message"=>"success");
     }
 //
 //    public function getAmountAccepted()
