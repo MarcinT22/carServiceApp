@@ -47,7 +47,10 @@ class ReportedCarApiController extends Controller
             'password' => bcrypt(substr($data['vin'], -5))
         ]);
 
-        
+//
+//        $person = Person::create($personData);
+//        $person->employee()->create($employeeData);
+
         $reportedCarData =[
             'car_id'=>$car['id'],
             'description'=>$data['description'],
