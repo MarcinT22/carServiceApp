@@ -1,5 +1,5 @@
 .dashboard{
-  padding:20px 0;
+  padding:40px 0;
 
 
   h1{
@@ -7,6 +7,7 @@
     color:$mainColor;
     text-align: center;
     margin-bottom: 30px;
+    margin-top:0;
   }
 
 
@@ -59,5 +60,16 @@
       }
 
     }
+
+    &--notFlex{
+      display: block;
+    }
   }
+  &__empty{
+    font-size:16px;
+    text-align: center;
+    color:#ccc;
+    font-weight: bold;
+  }
+
 }

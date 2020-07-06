@@ -10,6 +10,7 @@ use App\Models\Car;
 use App\Repositories\ReportedCarRepository;
 use App\Http\Resources\ReportedCar as ReportedCarResource;
 use App\Http\Resources\ReportedCarCollection as ReportedCarCollectionResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportedCarApiController extends Controller
@@ -46,6 +47,7 @@ class ReportedCarApiController extends Controller
             'password' => bcrypt(substr($data['vin'], -5))
         ]);
 
+        
         $reportedCarData =[
             'car_id'=>$car['id'],
             'description'=>$data['description'],
@@ -64,11 +66,11 @@ class ReportedCarApiController extends Controller
     }
     public function storeWithMyCar(StoreExistingReportedCar $request){
         $data = $request->all();
-
+        $reportedCarDate = Carbon::parse($data['reported_car_date'])->addDay(1);
         $reportedCardata =[
             'car_id'=>$data['car_id'],
             'description'=>$data['description'],
-            'reported_car_date'=>$data['reported_car_date'],
+            'reported_car_date'=>$reportedCarDate->format('Y-m-d'),
             'is_delivered'=>$data['is_delivered'] ?? 0,
             'is_accepted'=>$data['is_accepted'] ?? 0,
         ];
@@ -84,6 +86,8 @@ class ReportedCarApiController extends Controller
     {
 
         $data = $request->all();
+        $newReportedCarDate = Carbon::parse($data['new_reported_car_date'])->addDay(1);
+        $data['new_reported_car_date'] = $newReportedCarDate->format('Y-m-d');
         $this->reportedCarRepository->update($data, $id);
         return array("message"=>"success");
     }

@@ -24,18 +24,20 @@ class StatisticsApiController extends Controller
     {
         $amountNotAcceptedReportedCars = $this->reportedCarRepository->getQuantityNotAccepted();
         $amountAcceptedReportedCars = $this->reportedCarRepository->getQuantityAccepted();
+        $amountTodayDeliveries = $this->reportedCarRepository->getQuantityDeliveriesToday();
         $amountDeliveredReportedCars = $this->reportedCarRepository->getQuantityDelivered();
         $amountEvents = $this->eventRepository->getAmountAll();
         $amountInProgressEvents = $this->eventRepository->getAmountInProgressEvents();
         $amountReadyCars = $this->eventRepository->getAmountReadyCars();
 
         return array(
-            "amountNotAcceptedReportedCars" => "$amountNotAcceptedReportedCars",
-            "amountAcceptedReportedCars" => "$amountAcceptedReportedCars",
-            "amountDeliveredReportedCars" => "$amountDeliveredReportedCars",
-            "amountEvents" => "$amountEvents",
-            "amountInProgressEvents" => "$amountInProgressEvents",
-            "amountReadyCars" => "$amountReadyCars",
+            "amountNotAcceptedReportedCars" => $amountNotAcceptedReportedCars,
+            "amountAcceptedReportedCars" => $amountAcceptedReportedCars,
+            "amountTodayDeliveries"=>$amountTodayDeliveries,
+            "amountDeliveredReportedCars" => $amountDeliveredReportedCars,
+            "amountEvents" => $amountEvents,
+            "amountInProgressEvents" => $amountInProgressEvents,
+            "amountReadyCars" => $amountReadyCars,
         );
 
     }

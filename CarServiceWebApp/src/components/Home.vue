@@ -30,7 +30,7 @@
                             <span class="block__text">
                                 dziś:
                             </span>
-                            ---
+                            {{amountTodayDeliveries}}
                             <span class="block__text block__text--light">
                                 Łącznie: {{amountAcceptedReportedCars}}
                             </span>
@@ -111,8 +111,9 @@
         name: "Home",
         data() {
             return {
-                amountNotAcceptedReportedCars: null,
+                amountNotAcceptedReportedCars: 0,
                 amountAcceptedReportedCars: 0,
+                amountTodayDeliveries:0,
                 amountDeliveredReportedCars: 0,
                 amountEvents: 0,
                 amountInProgressEvents: 0,
@@ -125,6 +126,7 @@
                 .then(response => {
                     this.amountNotAcceptedReportedCars = response.data.amountNotAcceptedReportedCars
                     this.amountAcceptedReportedCars = response.data.amountAcceptedReportedCars
+                    this.amountTodayDeliveries = response.data.amountTodayDeliveries
                     this.amountDeliveredReportedCars = response.data.amountDeliveredReportedCars
                     this.amountEvents = response.data.amountEvents
                     this.amountInProgressEvents = response.data.amountInProgressEvents
