@@ -18,9 +18,7 @@
 <script>
     export default {
         name: "Message",
-        created(){
-            setTimeout(() => this.$store.state.isLoading=false, 500);
-        },
+
 
         methods:{
             logout()
@@ -31,7 +29,10 @@
                         this.$router.push('/')
                     })
             },
-        }
+        },
+        created(){
+            setTimeout(() => this.$store.state.isLoading=false, 500);
+        },
     }
 </script>
 

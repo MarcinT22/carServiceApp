@@ -19,7 +19,7 @@
                 <label for="brand">
                     Marka
                 </label>
-                <input type="text" v-model="brand" autocomplete="off" id="brand" readonly class="form__input"
+                <input type="text" v-model="brand" autocomplete="off" id="brand" readonly class="form__input form__input--readonly"
                        @click="showBrands">
                 <ul :class="{active:showBrandsList}" id="brandsList">
                     <li v-for="(car, index) in carsList" @click="selectCar(index)">
@@ -32,7 +32,7 @@
                 <label for="model">
                     Model
                 </label>
-                <input type="text" v-model="model" autocomplete="off" id="model" readonly class="form__input"
+                <input type="text" v-model="model" autocomplete="off" id="model" readonly class="form__input form__input--readonly"
                        @click="showModels">
                 <ul :class="{active:showModelsList}" id="modelsList">
                     <li v-for="model in models" @click="selectModel(model)">
@@ -49,7 +49,7 @@
             </div>
             <div class="form__field">
                 <label for="engine">
-                    Pojemność silnika
+                    Pojemność silnika (cm<sup>3</sup>)
                 </label>
                 <input type="text" id="engine" v-model="engine" class="form__input">
             </div>
@@ -57,7 +57,7 @@
                 <label for="fuel">
                     Rodzaj paliwa
                 </label>
-                <input type="text" v-model="fuel" autocomplete="off" id="fuel" readonly class="form__input"
+                <input type="text" v-model="fuel" autocomplete="off" id="fuel" readonly class="form__input form__input--readonly"
                        @click="showFuels">
                 <ul :class="{active:showFuelsList}" id="fuelsList">
                     <li @click="selectFuel('Benzyna')">
@@ -269,12 +269,13 @@
             }
         },
         created() {
-            setTimeout(() => this.$store.state.isLoading = false, 500);
-
+            this.$store.state.blur=false
             axios.get('/getCarsModels')
                 .then(response => {
                     this.carsList = response.data
                 })
+
+            setTimeout(() => this.$store.state.isLoading = false, 500);
 
         },
         components: {DatePicker},
