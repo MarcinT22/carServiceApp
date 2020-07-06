@@ -25,22 +25,14 @@ class ReportedCarRepository extends BaseRepository{
         return $this->model->where('is_accepted',1)->get()->count();
     }
 
+//    public function getQuantityDeliveriesToday(){
+//        return $this->model->where('is_accepted',1)->get()->count();
+//    }
 
     public function getQuantityDelivered()
     {
         return $this->model->where('is_accepted',1)->where('is_delivered',1)->get()->count();
     }
-
-//    public function getQuantityTodayDelivered()
-//    {
-//        return $this->model->where('is_accepted',1)->where('is_delivered',1)->get()->count();
-//    }
-
-    public function getTodayQuantityDeliveries()
-    {
-        return $this->model->where('is_accepted',1)->where('is_delivered',1)->get()->count();
-    }
-
 
 
     public function acceptDate($id)
