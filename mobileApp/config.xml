@@ -62,6 +62,5 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.2" />
 
     <preference name="android-minSdkVersion" value="21" />
-    <preference name="android-targetSdkVersion" value="28" />
 
 </widget>

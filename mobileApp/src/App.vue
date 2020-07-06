@@ -123,6 +123,7 @@
         &.active {
             opacity: 1;
             visibility: visible;
+            transition:none
 
         }
 

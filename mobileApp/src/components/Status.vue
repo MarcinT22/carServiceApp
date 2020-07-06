@@ -37,8 +37,19 @@
                 show: false
             }
         },
+
+
+        methods: {
+            logout() {
+                this.$store.state.isLoading = true
+                this.$store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push('/')
+                    })
+            },
+        },
         created() {
-            setTimeout(() => this.$store.state.isLoading = false, 500);
+
             let reportedCarId = this.$store.getters.getReportedCar.id;
             this.$store.dispatch('getStatus', reportedCarId
             )
@@ -51,18 +62,9 @@
                     }
                 )
 
-
+            setTimeout(() => this.$store.state.isLoading = false, 500);
         },
 
-        methods: {
-            logout() {
-                this.$store.state.isLoading = true
-                this.$store.dispatch('logout')
-                    .then(() => {
-                        this.$router.push('/')
-                    })
-            },
-        }
     }
 </script>
 
