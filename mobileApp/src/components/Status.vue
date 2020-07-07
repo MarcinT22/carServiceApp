@@ -15,9 +15,22 @@
                    Pojazd nie został zgłoszony do naprawy
                 </div>
             </template>
-            <div class="status__block" v-else>
-                Zgłoszenie oczekuje na akceptację przez warsztat
-            </div>
+            <template v-else>
+                <div class="status__block status__block--accepted" v-if="getReportedCar.is_accepted">
+                    Zgłoszenie zostało przyjęte.<br />Prosimy dostarczyć pojazd dnia:<br />
+                    <template v-if="getReportedCar.new_reported_car_date">
+                        {{getReportedCar.new_reported_car_date}}
+                    </template>
+                    <template v-else>
+                        {{getReportedCar.reported_car_date}}
+                    </template><br />
+                    w godzinach<br />8:00 - 17:00
+                </div>
+                <div class="status__block" v-else>
+                    Zgłoszenie oczekuje na akceptację przez warsztat
+                </div>
+            </template>
+
 
             <button class="btn tap-effect" @click="logout">
                 OK
@@ -29,16 +42,18 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
         name: "Status",
         data() {
             return {
                 status: {type: Object, default: () => ({})},
-                show: false
+                show: false,
             }
         },
 
-
+        computed: mapGetters(['getReportedCar']),
         methods: {
             logout() {
                 this.$store.state.isLoading = true
@@ -50,19 +65,19 @@
         },
         created() {
 
-            let reportedCarId = this.$store.getters.getReportedCar.id;
-            this.$store.dispatch('getStatus', reportedCarId
-            )
-                .then(success => {
-                    this.status = this.$store.getters.getEventStatus
-                    this.show = true
-                })
-                .catch(error => {
-                        this.$store.state.isLoading = false
-                    }
+                let reportedCarId = this.$store.getters.getReportedCar.id;
+                this.$store.dispatch('getStatus', reportedCarId
                 )
+                    .then(success => {
+                        this.status = this.$store.getters.getEventStatus
+                        this.show = true
+                    })
+                    .catch(error => {
+                            this.$store.state.isLoading = false
+                        }
+                    )
 
-            setTimeout(() => this.$store.state.isLoading = false, 500);
+                setTimeout(() => this.$store.state.isLoading = false, 500);
         },
 
     }
@@ -82,6 +97,7 @@
             text-align: center;
             color: #fff;
             box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.2);
+            line-height: 180%;
 
             &--default{
                 box-shadow: none;
@@ -89,6 +105,11 @@
                 color:$mainColor;
                 padding:0;
                 font-size:16px;
+            }
+
+            &--accepted{
+                font-size:16px;
+                background:$mainColor;
             }
         }
 

@@ -12,7 +12,7 @@ export default new Vuex.Store({
         eventStatus: null,
         isLoading: true,
         zone: null,
-        blur:false,
+        blur: false,
 
     },
 

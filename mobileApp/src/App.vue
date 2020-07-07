@@ -282,7 +282,7 @@
         margin-top: 20px;
         color: $errorColor;
         font-size: 14px;
-        font-weight: 600
+        font-weight: 400
     }
 
 
