@@ -117,4 +117,13 @@ class ReportedCarApiController extends Controller
         $reportedCars = $this->reportedCarRepository->acceptDate($id);
         return array("message"=>"success");
     }
+
+    public function checkIfCarIsReported($id)
+    {
+        $isCarReported = $this->reportedCarRepository->checkIfCarIsReported($id);
+        return array("isCarReported"=>$isCarReported);
+
+    }
+
+
 }

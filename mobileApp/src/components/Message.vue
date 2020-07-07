@@ -3,8 +3,13 @@
 
         <div class="message__block">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192s192-86 192-192z" fill="none" stroke="#626262" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="#626262" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M352 176L217.6 336L160 272"/></svg>
+            <template v-if="getMessageType == 'visit'">
             <p>Zgłoszenie jest w trakcie przetwarzania.</p>
             <p>Prosimy na bieżąco sprawdzać status zlecenia.</p>
+        </template>
+            <template v-else>
+                <p>Zgłoszenie zostało anulowane.</p>
+            </template>
         </div>
         <button class="btn tap-effect" @click="logout">
             OK
@@ -16,10 +21,10 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     export default {
         name: "Message",
-
-
+        computed: mapGetters(['getMessageType']),
         methods:{
             logout()
             {
@@ -31,6 +36,7 @@
             },
         },
         created(){
+
             setTimeout(() => this.$store.state.isLoading=false, 500);
         },
     }

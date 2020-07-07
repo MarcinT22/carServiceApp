@@ -19,7 +19,8 @@
                 <label for="brand">
                     Marka
                 </label>
-                <input type="text" v-model="brand" autocomplete="off" id="brand" readonly class="form__input form__input--readonly"
+                <input type="text" v-model="brand" autocomplete="off" id="brand" readonly
+                       class="form__input form__input--readonly"
                        @click="showBrands">
                 <ul :class="{active:showBrandsList}" id="brandsList">
                     <li v-for="(car, index) in carsList" @click="selectCar(index)">
@@ -32,7 +33,8 @@
                 <label for="model">
                     Model
                 </label>
-                <input type="text" v-model="model" autocomplete="off" id="model" readonly class="form__input form__input--readonly"
+                <input type="text" v-model="model" autocomplete="off" id="model" readonly
+                       class="form__input form__input--readonly"
                        @click="showModels">
                 <ul :class="{active:showModelsList}" id="modelsList">
                     <li v-for="model in models" @click="selectModel(model)">
@@ -45,19 +47,20 @@
                 <label for="year">
                     Rok produkcji
                 </label>
-                <input type="text" v-model="year" autocomplete="off" id="year" class="form__input">
+                <input type="text" v-model="year" maxlength="4" autocomplete="off" id="year" class="form__input">
             </div>
             <div class="form__field">
                 <label for="engine">
                     Pojemność silnika (cm<sup>3</sup>)
                 </label>
-                <input type="text" id="engine" v-model="engine" class="form__input">
+                <input type="text" id="engine" v-model="engine" maxlength="4" class="form__input">
             </div>
             <div class="form__field">
                 <label for="fuel">
                     Rodzaj paliwa
                 </label>
-                <input type="text" v-model="fuel" autocomplete="off" id="fuel" readonly class="form__input form__input--readonly"
+                <input type="text" v-model="fuel" autocomplete="off" id="fuel" readonly
+                       class="form__input form__input--readonly"
                        @click="showFuels">
                 <ul :class="{active:showFuelsList}" id="fuelsList">
                     <li @click="selectFuel('Benzyna')">
@@ -117,7 +120,7 @@
             <button class="btn tap-effect">Umów wizytę</button>
 
         </form>
-        <div class="blur" :class="{active:this.$store.state.blur}" @click="closeModal" ></div>
+        <div class="blur" :class="{active:this.$store.state.blur}" @click="closeModal"></div>
     </div>
 </template>
 
@@ -188,7 +191,10 @@
                         reported_car_date
                     }
                 )
-                    .then(() => this.$router.push('/message'))
+                    .then(() => {
+                        this.$store.state.messageType = 'visit',
+                            this.$router.push('/message')
+                    })
                     .catch(error => {
                             this.$store.state.isLoading = false
                             var errorsLabel = document.querySelectorAll(".form__error");
@@ -237,39 +243,38 @@
             showBrands() {
                 this.showBrandsList = true
                 document.body.classList.add('overflow');
-                this.$store.state.blur=true
+                this.$store.state.blur = true
 
             },
             showModels() {
                 this.showModelsList = true
                 document.body.classList.add('overflow');
-                this.$store.state.blur=true
+                this.$store.state.blur = true
 
             },
 
-            showFuels(){
+            showFuels() {
                 this.showFuelsList = true
                 document.body.classList.add('overflow');
-                this.$store.state.blur=true
+                this.$store.state.blur = true
             },
 
-            closeModal(){
+            closeModal() {
                 this.showBrandsList = false
                 this.showModelsList = false
                 this.showFuelsList = false
-                this.$store.state.blur=false
-                document.getElementById('brandsList').scrollTop=0;
-               let modelsList = document.getElementById('modelsList');
-               if (modelsList)
-               {
-                   modelsList.scrollTop=0;
-               }
-                document.getElementById('fuelsList').scrollTop=0;
+                this.$store.state.blur = false
+                document.getElementById('brandsList').scrollTop = 0;
+                let modelsList = document.getElementById('modelsList');
+                if (modelsList) {
+                    modelsList.scrollTop = 0;
+                }
+                document.getElementById('fuelsList').scrollTop = 0;
                 document.body.classList.remove('overflow');
             }
         },
         created() {
-            this.$store.state.blur=false
+            this.$store.state.blur = false
             axios.get('/getCarsModels')
                 .then(response => {
                     this.carsList = response.data

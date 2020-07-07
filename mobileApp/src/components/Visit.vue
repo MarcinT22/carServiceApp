@@ -1,5 +1,6 @@
 <template>
     <div class="visit">
+        <template v-if="!isReported">
         <h1>
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  aria-hidden="true" focusable="false" width="0.89em" height="1em"
@@ -12,14 +13,25 @@
         </h1>
         <form class="form" action="visit" @submit.prevent="setVisit">
             <h2>
-                Dane pojazdu
-            </h2>
-            <h2 else>
                 Pojazd
             </h2>
-            <p class="carData">
-                {{getCar.brand}} {{getCar.model}} {{getCar.registration_number}}
-            </p>
+            <div class="carData">
+                <div>
+                    <span>Model:</span>{{getCar.brand}} {{getCar.model}}
+                </div>
+                <div>
+                    <span>Nr rejestracyjny:</span>{{getCar.registration_number}}
+                </div>
+                <div>
+                    <span>Rok produkcji:</span>{{getCar.year}}
+                </div>
+                <div>
+                    <span>Silnik:</span>{{getCar.engine}}cm<sup>3</sup>
+                </div>
+                <div>
+                    <span>Rodzaj paliwa:</span>{{getCar.fuel}}
+                </div>
+            </div>
             <h2>
                 Opis usterki / wymiany podzespołu
             </h2>
@@ -46,6 +58,18 @@
             <button class="btn tap-effect">Umów wizytę</button>
 
         </form>
+        </template>
+        <template v-else>
+            <h1>
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372z" fill="#626262"/><path d="M464 336a48 48 0 1 0 96 0a48 48 0 1 0-96 0zm72 112h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V456c0-4.4-3.6-8-8-8z" fill="#626262"/><rect x="0" y="0" width="1024" height="1024" fill="rgba(0, 0, 0, 0)" /></svg>
+            </h1>
+            <p class="visit__text">
+                Samochód został już zgłoszony do serwisu.
+            </p>
+            <button class="btn tap-effect" @click="goToHome">
+                OK
+            </button>
+        </template>
     </div>
 </template>
 
@@ -60,10 +84,11 @@
     today.setHours(0, 0, 0, 0);
     export default {
         name: "Visit",
-        computed: mapGetters(['getCar']),
+        computed: mapGetters(['getCar', 'getReportedCar']),
         data() {
             return {
                 car_id: this.$store.getters.getCar.id || {type: Object, default: () => ({})},
+                reported_cars:this.$store.getters.getCar.reported_cars,
                 brand: '',
                 model: '',
                 year: '',
@@ -80,9 +105,14 @@
                     monthBeforeYear: true,
 
                 },
+                isReported:null,
             }
         },
         methods: {
+            goToHome(){
+                this.$store.state.isLoading = true
+                this.$router.push('/')
+            },
             disabledDates(date) {
                 const day = new Date(date).getDay()
                 return day === 0 || day === 6 || date < today;
@@ -99,7 +129,10 @@
                         reported_car_date
                     }
                 )
-                    .then(() => this.$router.push('/message'))
+                    .then(() => {
+                        this.$store.state.messageType = 'visit',
+                            this.$router.push('/message')
+                    })
                     .catch(error => {
                             this.$store.state.isLoading = false
                             var errorsLabel = document.querySelectorAll(".form__error");
@@ -132,6 +165,10 @@
         },
         created() {
             setTimeout(() => this.$store.state.isLoading = false, 500);
+            this.isReported=false
+            console.log(this.reported_cars)
+
+
         },
         components: {DatePicker},
     }
@@ -146,5 +183,25 @@
     @import "../assets/scss/config";
     @import "../assets/scss/form";
 
+    .carData{
+        display: flex;
+        flex-direction: column;
+        font-size:14px;
+        span{
+            font-weight: bold;
+            min-width:120px;
+            display: inline-block;
+            margin-right:10px;
+            font-size:13px;
+        }
+    }
+
+    .visit{
+        &__text{
+            text-align: center;
+            font-size:16px;
+            color:$mainColor;
+        }
+    }
 
 </style>

@@ -60,4 +60,32 @@ class ReportedCarRepository extends BaseRepository
         $this->model->find($id)->update(['is_accepted' => 1]);
     }
 
+
+    public function checkIfCarIsReported($id)
+    {
+        $isReported = $this->model
+            ->where('car_id', $id)
+            ->with('event')
+            ->get();
+
+
+        if ($isReported->count() == 0)
+        {
+            return false;
+        }else {
+            if ($isReported[0]->event) {
+               if($isReported[0]->event->status_id == 5)
+               {
+                   return false;
+               }else{
+                   return true;
+               }
+            } else {
+                return true;
+            }
+        }
+
+
+    }
+
 }

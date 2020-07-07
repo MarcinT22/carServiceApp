@@ -33,6 +33,8 @@
                 setTimeout(() => this.$store.state.isLoading = false, 500);
             },
 
+
+
             onDeviceReady(){
                 document.addEventListener("offline", this.offline, false);
                 document.addEventListener("online", this.online, false);
@@ -226,8 +228,6 @@
     .tap-effect {
         position: relative;
         overflow: hidden;
-        overflow: hidden;
-
 
         &::after {
             content: '';

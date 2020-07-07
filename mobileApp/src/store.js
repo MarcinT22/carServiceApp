@@ -13,6 +13,7 @@ export default new Vuex.Store({
         isLoading: true,
         zone: null,
         blur: false,
+        messageType:null
 
     },
 
@@ -62,6 +63,8 @@ export default new Vuex.Store({
         setStatusError() {
             state.status = 'error'
         },
+
+
 
 
     },
@@ -153,6 +156,7 @@ export default new Vuex.Store({
         },
 
 
+
     },
 
     getters: {
@@ -161,7 +165,8 @@ export default new Vuex.Store({
         getCar: state => state.car,
         getEventStatus: state => state.eventStatus,
         getReportedCar: state => state.reportedCar,
-        isLoading: state => state.isLoading
+        isLoading: state => state.isLoading,
+        getMessageType: state => state.messageType
 
     }
 })

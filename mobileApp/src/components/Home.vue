@@ -46,19 +46,21 @@
 
             goToStatus()
             {
-
+                this.$store.state.isLoading = true
                 this.changeZone('status')
                 this.$router.push('/login')
             },
 
             goToVisitWithMyCar()
             {
+                this.$store.state.isLoading = true
                 this.changeZone('myCar')
                 this.$router.push('/login')
             },
 
             goToVisit()
             {
+                this.$store.state.isLoading = true
                 this.changeZone('newCar')
                 this.$router.push('/NewCarVisit')
             }
