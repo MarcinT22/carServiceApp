@@ -10,7 +10,7 @@
                         <div class="loading" v-if="isLoading"></div>
                         <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{amountNotAcceptedReportedCars}}
+                            {{numberOfNotAcceptedReportedCars}}
                         </div>
                         </div>
                         <router-link :to="{ name: 'ReportedCars' }">
@@ -30,15 +30,15 @@
                             <span class="block__text">
                                 dziś:
                             </span>
-                            {{amountTodayDeliveries}}
+                            {{numberOfTodayDeliveries}}
                             <span class="block__text block__text--light">
-                                Łącznie: {{amountAcceptedReportedCars}}
+                                Łącznie: {{numberOfAcceptedReportedCars}}
                             </span>
                         </div>
                         </div>
-                        <a href="#">
+                        <router-link :to="{ name: 'CarDeliveries' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="dashboard__col">
@@ -49,7 +49,7 @@
                         <div class="loading" v-if="isLoading"></div>
                         <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{amountDeliveredReportedCars}}
+                            {{numberOfNewEvents}}
                         </div>
                         </div>
                         <a href="#">
@@ -70,7 +70,7 @@
                             </span>
                             ---
                             <span class="block__text block__text--light">
-                                Łącznie: {{amountEvents}} <span>|</span>W trakcie: {{ amountInProgressEvents}}
+                                Łącznie: {{numberOfAllEvents}} <span>|</span>W trakcie: {{ numberOfInProgressEvents}}
                             </span>
                         </div>
                         </div>
@@ -87,7 +87,7 @@
                         <div class="loading" v-if="isLoading"></div>
                         <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{amountReadyCars}}
+                            {{numberOfReadyCars}}
                         </div>
                         </div>
                         <a href="#">
@@ -111,26 +111,26 @@
         name: "Home",
         data() {
             return {
-                amountNotAcceptedReportedCars: 0,
-                amountAcceptedReportedCars: 0,
-                amountTodayDeliveries:0,
-                amountDeliveredReportedCars: 0,
-                amountEvents: 0,
-                amountInProgressEvents: 0,
-                amountReadyCars: 0,
+                numberOfNotAcceptedReportedCars: 0,
+                numberOfAcceptedReportedCars: 0,
+                numberOfTodayDeliveries:0,
+                numberOfNewEvents: 0,
+                numberOfAllEvents: 0,
+                numberOfInProgressEvents: 0,
+                numberOfReadyCars: 0,
                 isLoading: true
             }
         },
         mounted() {
             axios.get('/getStatistics')
                 .then(response => {
-                    this.amountNotAcceptedReportedCars = response.data.amountNotAcceptedReportedCars
-                    this.amountAcceptedReportedCars = response.data.amountAcceptedReportedCars
-                    this.amountTodayDeliveries = response.data.amountTodayDeliveries
-                    this.amountDeliveredReportedCars = response.data.amountDeliveredReportedCars
-                    this.amountEvents = response.data.amountEvents
-                    this.amountInProgressEvents = response.data.amountInProgressEvents
-                    this.amountReadyCars = response.data.amountReadyCars
+                    this.numberOfNotAcceptedReportedCars = response.data.numberOfNotAcceptedReportedCars
+                    this.numberOfAcceptedReportedCars = response.data.numberOfAcceptedReportedCars
+                    this.numberOfTodayDeliveries = response.data.numberOfTodayDeliveries
+                    this.numberOfNewEvents = response.data.numberOfNewEvents
+                    this.numberOfAllEvents = response.data.numberOfAllEvents
+                    this.numberOfInProgressEvents = response.data.numberOfInProgressEvents
+                    this.numberOfReadyCars = response.data.numberOfReadyCars
                     this.isLoading=false
                 })
                 .catch(error => {

@@ -52,6 +52,8 @@ Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');
 Route::get('getNotAcceptedReportedCars','Api\ReportedCarApiController@getNotAccepted');
 Route::get('acceptReportedCar/{id}','Api\ReportedCarApiController@acceptDate');
 Route::get('checkIfCarIsReported/{id}','Api\ReportedCarApiController@checkIfCarIsReported');
+Route::get('getCarDeliveries','Api\ReportedCarApiController@getCarDeliveries');
+Route::get('confirmCarDelivery/{id}','Api\ReportedCarApiController@confirmCarDelivery');
 
 Route::get('statuses','Api\StatusApiController@list');
 Route::post('statuses','Api\StatusApiController@store');

@@ -41,7 +41,8 @@
                                 <hr>
                                 <div class="block__text">
                                     <strong>Data dostarczenia pojazdu:</strong><br/>
-                                    {{formatDate(reportedCar.reported_car_date)}}
+                                    {{$formatDate(reportedCar.reported_car_date)}}
+
                                 </div>
                                 <hr>
                                 <div class="block__text">
@@ -72,7 +73,7 @@
                                                      id="date"></date-picker>
 
                                     </div>
-                                    <button href="#" class="block__actionBtn block__actionBtn--cancel"
+                                    <button class="block__actionBtn block__actionBtn--cancel"
                                             @click="showDateInput = null">
                                         <i class="far fa-times-circle"></i> Anuluj
                                     </button>
@@ -97,7 +98,7 @@
     import DatePicker from 'vue2-datepicker';
     import 'vue2-datepicker/index.css';
     import 'vue2-datepicker/locale/pl';
-    import moment from 'moment'
+
 
     const today = new Date();
     export default {
@@ -150,9 +151,7 @@
                         console.log(error)
                     })
             },
-            formatDate(date) {
-                return moment(String(date)).format('DD.MM.YYYY')
-            }
+
 
         },
         mounted() {

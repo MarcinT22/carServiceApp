@@ -53,29 +53,11 @@ class EventApiController extends Controller
         return array("message" => "success");
     }
 
-    public function getAmountAll()
-    {
-        $amount = $this->eventRepository->getAmountAll();
 
-        return array("amount" => $amount);
-    }
-
-    public function getAmountInProgressEvents()
-    {
-        $amount = $this->eventRepository->getAmountInProgressEvents();
-
-        return array("amount" => $amount);
-    }
-
-    public function getAmountReadyCars()
-    {
-        $amount = $this->eventRepository->getAmountReadyCars();
-
-        return array("amount" => $amount);
-    }
 
     public function getEventStatus($reportedCarId)
     {
+
         $lastStatus = $this->eventRepository->getLastStatusId($reportedCarId);
         $status = $this->statusRepository->find($lastStatus['status_id']);
 

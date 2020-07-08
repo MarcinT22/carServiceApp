@@ -16,7 +16,7 @@ class CreateReportedCarsTable extends Migration
         Schema::create('reported_cars', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('car_id')->unsigned();
-            $table->string('description');
+            $table->text('description');
             $table->string('reported_car_date');
             $table->string('new_reported_car_date')->nullable();
             $table->boolean('is_delivered')->default(0);

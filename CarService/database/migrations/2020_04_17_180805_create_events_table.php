@@ -16,11 +16,11 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->string('start');
-            $table->string('end');
+            $table->text('description')->default(null);
+            $table->string('start')->default(null);
+            $table->string('end')->default(null);
             $table->bigInteger('status_id')->unsigned();
-            $table->bigInteger('calendar_id')->unsigned();
+            $table->bigInteger('calendar_id')->unsigned()->default(null);
             $table->bigInteger('reported_cars_id')->unsigned();
             $table->float('price', 6, 2)->default(0.00);
             $table->timestamps();

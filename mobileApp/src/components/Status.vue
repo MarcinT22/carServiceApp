@@ -145,10 +145,9 @@
 
         },
         created() {
-            if (this.$store.getters.getCar.reported_cars.length) {
+            if ((this.$store.getters.getCar.reported_cars).length) {
                 let reportedCarId = this.$store.getters.getReportedCar.id;
-                this.$store.dispatch('getStatus', reportedCarId
-                )
+                this.$store.dispatch('getStatus', reportedCarId)
                     .then(success => {
                         this.status = this.$store.getters.getEventStatus
                         this.show = true

@@ -8,6 +8,7 @@ use App\Http\Requests\StoreExistingReportedCar;
 use App\Http\Requests\StoreReportedCar;
 use App\Models\Car;
 use App\Repositories\CarRepository;
+use App\Repositories\EventRepository;
 use App\Repositories\ReportedCarRepository;
 use App\Http\Resources\ReportedCar as ReportedCarResource;
 use App\Http\Resources\ReportedCarCollection as ReportedCarCollectionResource;
@@ -18,11 +19,13 @@ class ReportedCarApiController extends Controller
 {
     protected $reportedCarRepository;
     protected $carRepository;
+    protected $eventRepository;
 
-    public function __construct(ReportedCarRepository $reportedCarRepository, CarRepository $carRepository)
+    public function __construct(ReportedCarRepository $reportedCarRepository, CarRepository $carRepository, EventRepository $eventRepository)
     {
         $this->reportedCarRepository = $reportedCarRepository;
         $this->carRepository = $carRepository;
+        $this->eventRepository = $eventRepository;
     }
 
     public function find($id)
@@ -70,22 +73,32 @@ class ReportedCarApiController extends Controller
         ]);
     }
     public function storeWithMyCar(StoreExistingReportedCar $request){
+
+
         $data = $request->all();
-        $reportedCarDate = Carbon::parse($data['reported_car_date'])->addDay(1);
-        $reportedCarData =[
-            'car_id'=>$data['car_id'],
-            'description'=>$data['description'],
-            'reported_car_date'=>$reportedCarDate->format('Y-m-d'),
-            'is_delivered'=>$data['is_delivered'] ?? 0,
-            'is_accepted'=>$data['is_accepted'] ?? 0,
-        ];
+        $checkIfCarIsReported = $this->reportedCarRepository->checkIfCarIsReported($data['car_id']);
 
-        $reportedCar = $this->reportedCarRepository->create($reportedCarData);
+        if (!$checkIfCarIsReported)
+        {
+            $reportedCarDate = Carbon::parse($data['reported_car_date'])->addDay(1);
+            $reportedCarData =[
+                'car_id'=>$data['car_id'],
+                'description'=>$data['description'],
+                'reported_car_date'=>$reportedCarDate->format('Y-m-d'),
+                'is_delivered'=>$data['is_delivered'] ?? 0,
+                'is_accepted'=>$data['is_accepted'] ?? 0,
+            ];
+
+            $reportedCar = $this->reportedCarRepository->create($reportedCarData);
 
 
+
+        }
         return new ReportedCarResource([
             'reportedCar'=>$reportedCar
         ]);
+
+
     }
     public function update(Request $request, $id)
     {
@@ -125,5 +138,30 @@ class ReportedCarApiController extends Controller
 
     }
 
+
+    public function getCarDeliveries()
+    {
+        $todaysCarDeliveries = $this->reportedCarRepository->getTodaysCarDeliveries();
+        $remainingCarDeliveries = $this->reportedCarRepository->getRemainingCarDeliveries();
+
+        return new ReportedCarResource([
+            'todaysCarDeliveries'=>$todaysCarDeliveries,
+            'remainingCarDeliveries'=>$remainingCarDeliveries,
+        ]);
+    }
+
+    public function confirmCarDelivery($id)
+    {
+        $this->reportedCarRepository->confirmCarDelivery($id);
+        $car = $this->reportedCarRepository->find($id)->car;
+        $event = [
+            'title'=>$car->brand.' '.$car->model.' '.$car->registration_number,
+            'status_id'=>1,
+            'reported_car_id'=>$id
+        ];
+         $this->eventRepository->create($event);
+
+        return array("message"=>"success");
+    }
 
 }

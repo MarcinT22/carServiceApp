@@ -22,22 +22,22 @@ class StatisticsApiController extends Controller
 
     public function getStatistics()
     {
-        $amountNotAcceptedReportedCars = $this->reportedCarRepository->getQuantityNotAccepted();
-        $amountAcceptedReportedCars = $this->reportedCarRepository->getQuantityAccepted();
-        $amountTodayDeliveries = $this->reportedCarRepository->getQuantityDeliveriesToday();
-        $amountDeliveredReportedCars = $this->reportedCarRepository->getQuantityDelivered();
-        $amountEvents = $this->eventRepository->getAmountAll();
-        $amountInProgressEvents = $this->eventRepository->getAmountInProgressEvents();
-        $amountReadyCars = $this->eventRepository->getAmountReadyCars();
+        $numberOfNotAcceptedReportedCars = $this->reportedCarRepository->getNotAccepted()->count();
+        $numberOfAcceptedReportedCars = $this->reportedCarRepository->getAccepted()->count();
+        $numberOfTodayDeliveries = $this->reportedCarRepository->getTodaysCarDeliveries()->count();
+        $numberOfNewEvents = $this->eventRepository->getNumberOfNewEvents();
+        $numberOfAllEvents = $this->eventRepository->getNumberOfAll();
+        $numberOfInProgressEvents = $this->eventRepository->getNumberOfInProgressEvents();
+        $numberOfReadyCars = $this->eventRepository->getNumberOfReadyCars();
 
         return array(
-            "amountNotAcceptedReportedCars" => $amountNotAcceptedReportedCars,
-            "amountAcceptedReportedCars" => $amountAcceptedReportedCars,
-            "amountTodayDeliveries"=>$amountTodayDeliveries,
-            "amountDeliveredReportedCars" => $amountDeliveredReportedCars,
-            "amountEvents" => $amountEvents,
-            "amountInProgressEvents" => $amountInProgressEvents,
-            "amountReadyCars" => $amountReadyCars,
+            "numberOfNotAcceptedReportedCars" => $numberOfNotAcceptedReportedCars,
+            "numberOfAcceptedReportedCars" => $numberOfAcceptedReportedCars,
+            "numberOfTodayDeliveries"=>$numberOfTodayDeliveries,
+            "numberOfNewEvents" => $numberOfNewEvents,
+            "numberOfAllEvents" => $numberOfAllEvents,
+            "numberOfInProgressEvents" => $numberOfInProgressEvents,
+            "numberOfReadyCars" => $numberOfReadyCars,
         );
 
     }

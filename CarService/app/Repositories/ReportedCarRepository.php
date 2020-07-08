@@ -23,36 +23,47 @@ class ReportedCarRepository extends BaseRepository
     }
 
 
-    public function getQuantityNotAccepted()
-    {
-        return $this->model->where('is_accepted', 0)->get()->count();
-    }
 
-    public function getQuantityAccepted()
+    public function getAccepted()
     {
-        return $this->model->where('is_accepted', 1)->get()->count();
-    }
-
-    public function getQuantityDeliveriesToday()
-    {
-
         return $this->model
+            ->where('is_accepted', 1)
+            ->where('is_delivered', 0)
+            ->get();
+    }
+
+    public function getTodaysCarDeliveries()
+    {
+        return $this->model
+            ->with('car')
+            ->where('is_accepted', 1)
+            ->where('is_delivered', 0)
             ->where(function ($query) {
                 $query->whereDate('reported_car_date', Carbon::today())
-                    ->where('is_accepted', 1);
+                    ->whereNull('new_reported_car_date');
             })
             ->orWhere(function ($query) {
-                $query->whereDate('new_reported_car_date', Carbon::today())
-                    ->where('is_accepted', 1);
+                $query->whereDate('new_reported_car_date', Carbon::today());
             })
-            ->get()
-            ->count();
+            ->get();
     }
 
-    public function getQuantityDelivered()
+    public function getRemainingCarDeliveries()
     {
-        return $this->model->where('is_accepted', 1)->where('is_delivered', 1)->get()->count();
+        return $this->model
+            ->with('car')
+            ->where('is_accepted', 1)
+            ->where('is_delivered', 0)
+            ->where(function ($query) {
+                $query->whereDate('reported_car_date','!=', Carbon::today())
+                    ->whereNull('new_reported_car_date');
+            })
+            ->orWhere(function ($query) {
+                $query->whereDate('new_reported_car_date','!=', Carbon::today());
+            })
+            ->get();
     }
+
 
 
     public function acceptDate($id)
@@ -63,29 +74,35 @@ class ReportedCarRepository extends BaseRepository
 
     public function checkIfCarIsReported($id)
     {
-        $isReported = $this->model
+        $reportedCars = $this->model
             ->where('car_id', $id)
             ->with('event')
+            ->orderBy('id', 'desc')
             ->get();
 
 
-        if ($isReported->count() == 0)
-        {
+        if (count($reportedCars) == 0) {
             return false;
-        }else {
-            if ($isReported[0]->event) {
-               if($isReported[0]->event->status_id == 5)
-               {
-                   return false;
-               }else{
-                   return true;
-               }
-            } else {
-                return true;
+        } else {
+            foreach ($reportedCars as $item) {
+                if ($item->event) {
+                    if ($item->event->status_id == 5) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
             }
         }
 
 
+    }
+
+    public function confirmCarDelivery($id)
+    {
+        $this->model->find($id)->update(['is_delivered' => 1]);
     }
 
 }

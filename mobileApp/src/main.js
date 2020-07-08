@@ -15,6 +15,8 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = token
 }
 
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

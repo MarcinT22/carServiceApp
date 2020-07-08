@@ -6,6 +6,7 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Error from '@/components/Error'
 import ReportedCars from '@/components/ReportedCars'
+import CarDeliveries from '@/components/CarDeliveries'
 
 
 
@@ -32,6 +33,15 @@ let router = new Router({
       path: '/reported-cars',
       name: 'ReportedCars',
       component: ReportedCars,
+      meta:{
+        auth: true
+      }
+    },
+
+    {
+      path: '/car-deliveries',
+      name: 'CarDeliveries',
+      component: CarDeliveries,
       meta:{
         auth: true
       }
