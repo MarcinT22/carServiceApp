@@ -25,7 +25,7 @@ class StatisticsApiController extends Controller
         $numberOfNotAcceptedReportedCars = $this->reportedCarRepository->getNotAccepted()->count();
         $numberOfAcceptedReportedCars = $this->reportedCarRepository->getAccepted()->count();
         $numberOfTodayDeliveries = $this->reportedCarRepository->getTodaysCarDeliveries()->count();
-        $numberOfNewEvents = $this->eventRepository->getNumberOfNewEvents();
+        $numberOfNewEvents = $this->eventRepository->getNewEvents()->count();
         $numberOfAllEvents = $this->eventRepository->getNumberOfAll();
         $numberOfInProgressEvents = $this->eventRepository->getNumberOfInProgressEvents();
         $numberOfReadyCars = $this->eventRepository->getNumberOfReadyCars();

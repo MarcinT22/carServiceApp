@@ -50,6 +50,7 @@ Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
 Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');
 
 Route::get('getNotAcceptedReportedCars','Api\ReportedCarApiController@getNotAccepted');
+Route::get('getAcceptedReportedCars','Api\ReportedCarApiController@getAccepted');
 Route::get('acceptReportedCar/{id}','Api\ReportedCarApiController@acceptDate');
 Route::get('checkIfCarIsReported/{id}','Api\ReportedCarApiController@checkIfCarIsReported');
 Route::get('getCarDeliveries','Api\ReportedCarApiController@getCarDeliveries');
@@ -67,6 +68,8 @@ Route::put('events/{id}','Api\EventApiController@update');
 Route::delete('events/{id}','Api\EventApiController@destroy');
 Route::get('events/{id}','Api\EventApiController@find');
 Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStatus');
+Route::get('getNewEvents','Api\EventApiController@getNewEvents');
+Route::get('getPlannedEvents','Api\EventApiController@getPlannedEvents');
 
 
 

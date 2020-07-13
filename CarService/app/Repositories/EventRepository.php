@@ -12,21 +12,31 @@ class EventRepository extends BaseRepository
         $this->model = $model;
     }
 
-
-    public function getNumberOfNewEvents()
+    public function getAllEvent()
     {
         return $this->model
             ->whereIn('status_id', [1, 2, 3])
-            ->whereNull('start')
-            ->get()->count();
+            ->with('reportedCar.car')
+            ->with('status')
+            ->get();
     }
+
+
+    public function getNewEvents()
+    {
+       return $this->getAllEvent()->whereNull('start');
+    }
+
+    public function getPlannedEvents()
+    {
+        return $this->getAllEvent()->whereNotNull('start');
+    }
+
 
     public function getNumberOfAll()
     {
-        return $this->model
-            ->whereIn('status_id', [1, 2, 3])
-            ->whereNotNull('start')
-            ->get()->count();
+        return $this->getAll()->whereNotNull('start')->count();
+
     }
 
     public function getNumberOfInProgressEvents()

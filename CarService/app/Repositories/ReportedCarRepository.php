@@ -19,6 +19,7 @@ class ReportedCarRepository extends BaseRepository
         return $this->model->where('is_accepted', 0)
             ->whereNull('new_reported_car_date')
             ->with('car')
+            ->orderBy('reported_car_date','ASC')
             ->get();
     }
 
@@ -29,6 +30,7 @@ class ReportedCarRepository extends BaseRepository
         return $this->model
             ->where('is_accepted', 1)
             ->where('is_delivered', 0)
+            ->with('car')
             ->get();
     }
 
@@ -52,8 +54,6 @@ class ReportedCarRepository extends BaseRepository
     {
         return $this->model
             ->with('car')
-            ->where('is_accepted', 1)
-            ->where('is_delivered', 0)
             ->where(function ($query) {
                 $query->whereDate('reported_car_date','!=', Carbon::today())
                     ->whereNull('new_reported_car_date');
@@ -61,6 +61,10 @@ class ReportedCarRepository extends BaseRepository
             ->orWhere(function ($query) {
                 $query->whereDate('new_reported_car_date','!=', Carbon::today());
             })
+            ->where('is_accepted', 1)
+            ->where('is_delivered', 0)
+            ->orderBy('reported_car_date','ASC')
+            ->orderBy('new_reported_car_date','ASC')
             ->get();
     }
 

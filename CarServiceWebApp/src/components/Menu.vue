@@ -3,15 +3,20 @@
         <div class="menu__container">
             <ul :class="{active : visibleMenu}">
                 <li>
-                    <router-link to="/">
+                    <router-link :to="{name:'Home'}">
                         <i class="fas fa-project-diagram"></i>
                         Pulpit
                     </router-link>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="far fa-calendar-alt"></i>Kalendarz
-                    </a>
+                    <router-link :to="{name:'CarDeliveriesCalendar'}">
+                        <i class="far fa-calendar-alt"></i>Kalendarz przyjęć pojazdów
+                    </router-link>
+                </li>
+                <li>
+                    <router-link :to="{name:'RepairCalendar'}">
+                        <i class="far fa-calendar-alt"></i>Kalendarz napraw
+                    </router-link>
                 </li>
                 <li>
                     <a href="#">

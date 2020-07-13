@@ -133,11 +133,13 @@
 
   &__action {
     margin-top: 15px;
+    text-align: right;
 
     @media (max-width:$screen-sm)
     {
       display: flex;
       flex-direction: column-reverse;
+      text-align: center;
     }
   }
 

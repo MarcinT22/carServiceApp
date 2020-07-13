@@ -125,6 +125,15 @@ class ReportedCarApiController extends Controller
 
     }
 
+    public function getAccepted()
+    {
+        $reportedCars = $this->reportedCarRepository->getAccepted();
+        return new ReportedCarResource([
+            'reportedCars'=>$reportedCars
+        ]);
+
+    }
+
     public function acceptDate($id)
     {
         $reportedCars = $this->reportedCarRepository->acceptDate($id);
@@ -143,7 +152,6 @@ class ReportedCarApiController extends Controller
     {
         $todaysCarDeliveries = $this->reportedCarRepository->getTodaysCarDeliveries();
         $remainingCarDeliveries = $this->reportedCarRepository->getRemainingCarDeliveries();
-
         return new ReportedCarResource([
             'todaysCarDeliveries'=>$todaysCarDeliveries,
             'remainingCarDeliveries'=>$remainingCarDeliveries,

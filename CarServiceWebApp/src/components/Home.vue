@@ -52,9 +52,9 @@
                             {{numberOfNewEvents}}
                         </div>
                         </div>
-                        <a href="#">
+                        <router-link :to="{ name: 'NewEvents' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="dashboard__col">

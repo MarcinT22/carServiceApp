@@ -9,7 +9,7 @@ use App\Repositories\StatusRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\EventCollection as EventCollectionResource;
-
+use Carbon\Carbon;
 class EventApiController extends Controller
 {
     protected $eventRepository;
@@ -43,6 +43,7 @@ class EventApiController extends Controller
     {
 
         $data = $request->all();
+        $data['start'] = (Carbon::parse($data['start'])->addDay(1))->format('Y-m-d');
         $this->eventRepository->update($data, $id);
         return array("message" => "success");
     }
@@ -62,5 +63,17 @@ class EventApiController extends Controller
         $status = $this->statusRepository->find($lastStatus['status_id']);
 
         return array($status);
+    }
+
+    public function getNewEvents()
+    {
+        $newEvents = $this->eventRepository->getNewEvents();
+        return new EventResource($newEvents);
+    }
+
+    public function getPlannedEvents()
+    {
+        $plannedEvents = $this->eventRepository->getPlannedEvents();
+        return new EventResource($plannedEvents);
     }
 }

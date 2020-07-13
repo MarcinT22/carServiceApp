@@ -7,6 +7,9 @@ import Home from '@/components/Home'
 import Error from '@/components/Error'
 import ReportedCars from '@/components/ReportedCars'
 import CarDeliveries from '@/components/CarDeliveries'
+import CarDeliveriesCalendar from '@/components/CarDeliveriesCalendar'
+import NewEvents from '@/components/NewEvents'
+import RepairCalendar from '@/components/RepairCalendar'
 
 
 
@@ -42,6 +45,30 @@ let router = new Router({
       path: '/car-deliveries',
       name: 'CarDeliveries',
       component: CarDeliveries,
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/car-deliveries-calendar',
+      name: 'CarDeliveriesCalendar',
+      component: CarDeliveriesCalendar,
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/new-events',
+      name: 'NewEvents',
+      component: NewEvents,
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/repair-calendar',
+      name: 'RepairCalendar',
+      component: RepairCalendar,
       meta:{
         auth: true
       }
