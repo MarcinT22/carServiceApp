@@ -77,3 +77,21 @@
 .fc-past{
   background:#f9f9f9;
 }
+
+.legend{
+  margin-bottom:20px;
+  display: flex;
+  &__block{
+    margin-right:10px;
+    font-size:12px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__background{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    margin-right:5px;
+  }
+}

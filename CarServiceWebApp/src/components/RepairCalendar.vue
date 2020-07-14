@@ -7,9 +7,9 @@
 
             <div class="loading loading--allPage" v-if="isLoading"></div>
             <div class="loadingContainer" :class="{active:!isLoading}">
-                <div class="calendar__legend">
-                    <div class="calendar__status" v-for="status in statuses">
-                        <span class="calendar__background"></span> Domyślny
+                <div class="legend">
+                    <div class="legend__block" v-for="status in statuses">
+                        <span class="legend__background" :style="{background:status.color}"></span> - {{status.name}}
                     </div>
                 </div>
                 <fullcalendar
@@ -34,6 +34,11 @@
 
 
                 />
+                <div class="legend">
+                    <div class="legend__block" v-for="status in statuses">
+                        <span class="legend__background" :style="{background:status.color}"></span> - {{status.name}}
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -117,6 +122,7 @@
                         }
                         this.events.push(event);
                     });
+
 
                 })
                 .catch(error => {

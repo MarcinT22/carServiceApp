@@ -22,9 +22,9 @@
                             <div class="block__data">
                                 <table>
                                     <tr>
-                                        <td class="bold">Model:</td>
-                                        <td> {{reportedCar.car.brand}} {{reportedCar.car.model}}</td>
-                                    </tr>
+                                    <td class="bold">Model:</td>
+                                    <td> {{reportedCar.car.brand}} {{reportedCar.car.model}}</td>
+                                </tr>
                                     <tr>
                                         <td class="bold">Rok:</td>
                                         <td>{{reportedCar.car.year}}</td>
@@ -39,17 +39,19 @@
                                     </tr>
                                 </table>
                                 <hr>
-                                <div class="block__text">
-                                    <strong>Data dostarczenia pojazdu:</strong><br/>
-                                    {{$formatDate(reportedCar.reported_car_date)}}
+                                <div class="block__text block__text--center">
+                                    <strong>Data dostarczenia pojazdu:</strong>
+                                    <span>
+                                        {{$formatDate(reportedCar.reported_car_date)}}
+                                    </span>
 
                                 </div>
                                 <hr>
-                                <div class="block__text">
-                                    <strong>Opis usterki:</strong><br/>
-                                    {{reportedCar.description}}
-                                </div>
                                 <div class="block__action" v-if="showDateInput != index">
+                                    <button href="#" class="block__actionBtn block__actionBtn--info"
+                                            @click="showDescription(reportedCar.description)">
+                                        <i class="fas fa-info-circle"></i> Opis usterki
+                                    </button>
                                     <button href="#" class="block__actionBtn block__actionBtn--changeDate"
                                             @click="showDateInput = index, new_reported_car_date=null">
                                         <i class="far fa-calendar-alt"></i> Zaproponuj inną datę
@@ -62,7 +64,6 @@
 
                                 </div>
                                 <div v-if="showDateInput === index">
-                                    <hr>
                                     <strong>Nowa data dostarczenia pojazdu:</strong><br/>
                                     <div class="block__date">
 
@@ -73,6 +74,7 @@
                                                      id="date"></date-picker>
 
                                     </div>
+                                    <div class="block__action">
                                     <button class="block__actionBtn block__actionBtn--cancel"
                                             @click="showDateInput = null">
                                         <i class="far fa-times-circle"></i> Anuluj
@@ -81,6 +83,7 @@
                                             @click="changeDate(reportedCar.id, index)">
                                         <i class="far fa-check-circle"></i> Zmień datę
                                     </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -90,6 +93,8 @@
             </div>
 
         </div>
+        <DescriptionModal ref="descriptionModal"></DescriptionModal>
+
     </div>
 </template>
 
@@ -98,6 +103,8 @@
     import DatePicker from 'vue2-datepicker';
     import 'vue2-datepicker/index.css';
     import 'vue2-datepicker/locale/pl';
+
+    import DescriptionModal from '@/components/DescriptionModal'
 
 
     const today = new Date();
@@ -152,6 +159,12 @@
                     })
             },
 
+            showDescription(description)
+            {
+                this.$refs['descriptionModal'].show(description)
+            }
+
+
 
         },
         mounted() {
@@ -164,7 +177,7 @@
                     console.log(error)
                 })
         },
-        components: {DatePicker},
+        components: {DatePicker,DescriptionModal},
     }
 </script>
 

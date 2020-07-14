@@ -15,7 +15,6 @@ class EventRepository extends BaseRepository
     public function getAllEvent()
     {
         return $this->model
-            ->whereIn('status_id', [1, 2, 3])
             ->with('reportedCar.car')
             ->with('status')
             ->get();
@@ -24,7 +23,7 @@ class EventRepository extends BaseRepository
 
     public function getNewEvents()
     {
-       return $this->getAllEvent()->whereNull('start');
+       return $this->getAllEvent()->whereNull('start')->whereIn('status_id', [1, 2, 3]);
     }
 
     public function getPlannedEvents()
@@ -35,7 +34,10 @@ class EventRepository extends BaseRepository
 
     public function getNumberOfAll()
     {
-        return $this->getAll()->whereNotNull('start')->count();
+        return $this->getAll()
+            ->whereNotNull('start')
+            ->whereIn('status_id', [1, 2, 3])
+            ->count();
 
     }
 

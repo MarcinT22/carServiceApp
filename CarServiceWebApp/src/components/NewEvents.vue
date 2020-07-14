@@ -37,15 +37,19 @@
                                         <td class="bold">Silnik:</td>
                                         <td> {{newEvent.reported_car.car.engine}} cm<sup>3</sup></td>
                                     </tr>
+                                    <tr>
+                                        <td class="bold">Nr rej.:</td>
+                                        <td>{{newEvent.reported_car.car.registration_number}}</td>
+                                    </tr>
                                 </table>
                                 <hr>
-                                <div class="block__text">
-                                    <strong>Opis usterki:</strong><br/>
-                                    {{newEvent.reported_car.description}}
-                                </div>
-                                <div class="block__action" v-if="showDateInput != index">
+                                <div class="block__action">
+                                    <button href="#" class="block__actionBtn block__actionBtn--info"
+                                            @click="showDescription(newEvent.reported_car.description)">
+                                        <i class="fas fa-info-circle"></i> Opis usterki
+                                    </button>
                                     <button href="#" class="block__actionBtn block__actionBtn--changeDate"
-                                            @click="showDateInput = index, start=null">
+                                            @click="showDateInput = index, start=null"  v-if="showDateInput != index">
                                         <i class="far fa-calendar-alt"></i> Zaplanuj naprawę
                                     </button>
                                 </div>
@@ -61,14 +65,16 @@
                                                      id="date"></date-picker>
 
                                     </div>
-                                    <button class="block__actionBtn block__actionBtn--cancel"
-                                            @click="showDateInput = null">
-                                        <i class="far fa-times-circle"></i> Anuluj
-                                    </button>
-                                    <button class="block__actionBtn block__actionBtn--accept"
-                                            @click="addToCalendar(newEvent.id, index)">
-                                        <i class="far fa-check-circle"></i> Dodaj do kalendarza
-                                    </button>
+                                   <div class="block__action">
+                                       <button class="block__actionBtn block__actionBtn--cancel"
+                                               @click="showDateInput = null">
+                                           <i class="far fa-times-circle"></i> Anuluj
+                                       </button>
+                                       <button class="block__actionBtn block__actionBtn--accept"
+                                               @click="addToCalendar(newEvent.id, index)">
+                                           <i class="far fa-check-circle"></i> Dodaj do kalendarza
+                                       </button>
+                                   </div>
                                 </div>
                             </div>
 
@@ -78,6 +84,7 @@
             </div>
 
         </div>
+        <DescriptionModal ref="descriptionModal"></DescriptionModal>
     </div>
 </template>
 
@@ -86,7 +93,7 @@
     import DatePicker from 'vue2-datepicker';
     import 'vue2-datepicker/index.css';
     import 'vue2-datepicker/locale/pl';
-
+    import DescriptionModal from '@/components/DescriptionModal'
     const today = new Date();
     export default {
         name: "NewEvents",
@@ -126,6 +133,11 @@
                     })
             },
 
+            showDescription(description)
+            {
+                this.$refs['descriptionModal'].show(description)
+            }
+
         },
         mounted() {
             axios.get('/getNewEvents')
@@ -137,7 +149,7 @@
                     console.log(error)
                 })
         },
-        components: {DatePicker},
+        components: {DatePicker, DescriptionModal},
     }
 </script>
 

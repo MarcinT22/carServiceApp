@@ -27,9 +27,20 @@
                             <div class="block__data">
                                 <table>
                                     <tr>
-
                                         <td class="bold">Model:</td>
                                         <td> {{todaysCarDelivery.car.brand}} {{todaysCarDelivery.car.model}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">Rok:</td>
+                                        <td>{{todaysCarDelivery.car.year}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">Paliwo:</td>
+                                        <td>{{todaysCarDelivery.car.fuel}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">Silnik:</td>
+                                        <td> {{todaysCarDelivery.car.engine}} cm<sup>3</sup></td>
                                     </tr>
                                     <tr>
                                         <td class="bold">Nr rej.:</td>
@@ -38,10 +49,6 @@
 
                                 </table>
                                 <hr>
-                                <div class="block__text">
-                                    <strong>Opis usterki:</strong><br/>
-                                    {{todaysCarDelivery.description}}
-                                </div>
                                 <div class="block__action">
                                     <button class="block__actionBtn block__actionBtn--cancel">
                                         <i class="far fa-times-circle"></i> Anuluj
