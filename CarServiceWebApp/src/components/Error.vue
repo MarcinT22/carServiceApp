@@ -66,12 +66,12 @@
             max-width:260px;
             margin:0 auto;
             border-radius: 5px;
-            background:$highlightColor;
+            background:$mainColor;
             transition:background 0.3s;
             margin-top:30px;
 
             &:hover{
-                background: $highlightColorHover;
+                background: $mainColor;
             }
         }
     }

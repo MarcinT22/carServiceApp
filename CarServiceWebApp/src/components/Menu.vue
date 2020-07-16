@@ -1,27 +1,21 @@
 <template>
     <div class="menu">
         <div class="menu__container">
-            <ul :class="{active : visibleMenu}">
+            <ul :class="{active : visibleMenu}" class="menu__main">
                 <li>
                     <router-link :to="{name:'Home'}">
-                        <i class="fas fa-project-diagram"></i>
                         Pulpit
                     </router-link>
                 </li>
                 <li>
                     <router-link :to="{name:'CarDeliveriesCalendar'}">
-                        <i class="far fa-calendar-alt"></i>Kalendarz przyjęć pojazdów
+                        Kalendarz przyjęć
                     </router-link>
                 </li>
                 <li>
                     <router-link :to="{name:'RepairCalendar'}">
-                        <i class="far fa-calendar-alt"></i>Kalendarz napraw
+                        Kalendarz napraw
                     </router-link>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-cog"></i>Administracja
-                    </a>
                 </li>
                 <li>
                     <a href="#" class="highlight">
@@ -29,11 +23,20 @@
                     </a>
                 </li>
             </ul>
-            <a href="#" class="menu__logout" @click="logout">
-                <i class="fas fa-power-off"></i>
-                Wyloguj
-            </a>
-
+            <div class="menu__right">
+                <ul>
+                    <li>
+                        <a href="#" class="menu__icon">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu__icon" @click="logout">
+                            <i class="fas fa-power-off"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <a href="#" class="menuButton" :class="{active:visibleMenu}" v-on:click.prevent="showMenu">
             <span></span>
@@ -75,14 +78,15 @@
     @import "../assets/scss/config";
 
     .menu {
-        background: #f3f3f3;
-        padding: 20px 0;
+        background: #fff;
+        padding: 15px 0;
+        box-shadow:0 0 20px 0 rgba(100,100,100,0.1);
 
         @media (max-width: $screen-md) {
             position: sticky;
             top: 0;
             z-index: 100;
-            padding: 30px 0;
+            padding: 25px 0;
         }
 
         &__container {
@@ -92,10 +96,13 @@
             margin: 0 auto;
             box-sizing: border-box;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
         }
 
-        ul {
+        ul.menu__main {
             list-style-type: none;
             padding: 0;
             margin: 0;
@@ -122,13 +129,14 @@
                 z-index: 100;
 
 
+
                 &.active {
                     left: 0;
                 }
             }
 
             li {
-                margin-right: 30px;
+                margin-right: 5px;
 
                 @media (max-width: $screen-md) {
                     width: 100%;
@@ -143,13 +151,18 @@
                 a {
                     display: flex;
                     align-items: center;
-                    font-size: 14px;
-                    color: $mainColor;
+                    font-size: 13px;
+                    color:$menuTextColor;
                     text-decoration: none;
                     transition: color 0.3s, background 0.3s;
+                    padding:13px 20px;
+                    line-height: 100%;
+                    font-weight: 500;
+                    border-radius: 4px;
+                    box-sizing: border-box;
 
                     @media (max-width: $screen-md) {
-                        padding: 15px 20px;
+                        padding: 15px 15px;
                         font-size: 16px;
                         color: #fff;
                     }
@@ -157,7 +170,8 @@
                     @media (min-width: $screen-md+1px) {
                         &:hover {
 
-                            color: $mainColorHover;
+                            color: $mainColor;
+                            background: $lightMainColor;
                         }
                     }
 
@@ -169,13 +183,12 @@
                 }
 
                 &.highlight {
-                    color: $highlightColor;
+                    color: $mainColor;
                     @media (max-width: $screen-md) {
                         color: #fff;
                     }
 
                     &:hover {
-                        color: $highlightColorHover;
                         @media (max-width: $screen-md) {
                             color: #fff;
                         }
@@ -193,8 +206,8 @@
                 }
 
                 &.active {
-                    font-weight: bold;
-                    color: $mainColorHover;
+                    color: $mainColor;
+                    background: $lightMainColor;
 
                     @media (max-width: $screen-md) {
                         color: #fff;
@@ -207,49 +220,84 @@
         }
     }
 
-    &__logout {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        color: $mainColor;
-        text-decoration: none;
-        transition: color 0.3s;
-        position: absolute;
-        top: 0;
-        right: 15px;
-        bottom: 0;
-        margin: auto;
+        &__right{
 
-        @media (max-width: $screen-md) {
-            font-size: 18px;
-        }
 
-        &:hover {
-            color: $mainColorHover;
-        }
-
-        i {
-            margin-right: 7px;
-            font-size: 16px;
-            @media (max-width: $screen-md) {
-                font-size: 20px;
+            @media (max-width:$screen-md)
+            {
+                position: absolute;
+                right:10px;
             }
 
+            ul{
+                display: flex;
+                align-items: center;
+                padding:0;
+                list-style-type: none;
+                margin:0;
+
+                li{
+                    margin-left:5px;
+                    a{
+                        display: flex;
+                        align-items: center;
+                        font-size: 13px;
+                        color:$menuTextColor;
+                        text-decoration: none;
+                        transition: color 0.3s, background 0.3s;
+                        padding:13px 20px;
+                        line-height: 100%;
+                        font-weight: 500;
+                        border-radius: 4px;
+                        box-sizing: border-box;
+                        @media (min-width: $screen-md+1px) {
+                            &:hover {
+                                color: $mainColor;
+                                background: $lightMainColor;
+                            }
+                        }
+
+                        @media (max-width:$screen-md)
+                        {
+                            &:active {
+                                color: $mainColor;
+                                background: $lightMainColor;
+                            }
+                        }
+
+
+                        i{
+                            margin-right: 7px;
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
         }
 
-    }
+        &__icon{
+            width:42px;
+            height:42px;
+            border-radius: 100% !important;
+            justify-content: center;
+
+            i{
+                margin-right: 0 !important;
+            }
+        }
+
 
     }
 
     .menuButton {
-        width: 40px;
+        width: 30px;
         flex-direction: column;
         position: absolute;
         left: 15px;
         top: 0;
         bottom: 0;
         margin: auto;
-        height: 30px;
+        height: 20px;
         display: none;
         transition: left 0.3s ease-in-out;
         z-index: 100;
@@ -259,8 +307,8 @@
         }
 
         &.active {
-            left: 200px;
-            top: 20px;
+            left: 210px;
+            top: 15px;
 
 
             span {
@@ -289,9 +337,9 @@
         }
 
         span {
-            height: 4px;
+            height: 3px;
             background: $mainColor;
-            margin-bottom: 7px;
+            margin-bottom: 5px;
             transition: transform 0.3s, opacity 0.3s;
 
             &:last-child {

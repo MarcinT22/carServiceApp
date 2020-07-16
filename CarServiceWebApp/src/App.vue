@@ -35,14 +35,15 @@
 </script>
 <style lang="scss">
     @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css');
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
     @import "assets/scss/config";
 
     html, body {
         padding: 0;
         margin: 0;
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Poppins', sans-serif;
         font-weight: 400;
+        background: #f9f9f9;
     }
 
     .overflow {
@@ -56,24 +57,6 @@
     .main {
         position: relative;
 
-        &::before {
-            content: url("./assets/image/car.jpg");
-            position: fixed;
-            right: -140px;
-            bottom: -70px;
-            z-index: -1;
-            transform: scale(0.7);
-
-            @media (max-width: $screen-md) {
-                right: -170px;
-                bottom: -100px;
-                transform: scale(0.6);
-            }
-
-            @media (max-width: $screen-sm) {
-                display: none;
-            }
-        }
     }
 
     .loading {

@@ -105,9 +105,8 @@
                 .then(response => {
                    let events = response.data.data.reportedCars;
                     events.forEach((value, index) => {
-                        console.log(value)
                         let event = {
-                            title: value.car.brand+' '+value.car.model+' - '+value.car.registration_number,
+                            title: value.car.brand+' '+value.car.model+' '+value.car.registration_number,
                             start: value.new_reported_car_date || value.reported_car_date
                         }
                         this.events.push(event);
@@ -129,9 +128,6 @@
 </style>
 <style lang="scss">
     @import "../assets/scss/calendar";
-        .fc-event{
-            background: #9e4506;
-        }
 
 </style>
 

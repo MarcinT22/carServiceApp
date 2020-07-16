@@ -1,6 +1,9 @@
 <template>
     <div class="dashboard">
         <div class="dashboard__container">
+            <h1>
+               Pulpit
+            </h1>
             <div class="dashboard__row">
                 <div class="dashboard__col">
                     <div class="block">

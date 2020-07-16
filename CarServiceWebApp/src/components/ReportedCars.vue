@@ -41,7 +41,7 @@
                                 <hr>
                                 <div class="block__text block__text--center">
                                     <strong>Data dostarczenia pojazdu:</strong>
-                                    <span>
+                                    <span class="highlight">
                                         {{$formatDate(reportedCar.reported_car_date)}}
                                     </span>
 
@@ -63,8 +63,12 @@
 
 
                                 </div>
-                                <div v-if="showDateInput === index">
-                                    <strong>Nowa data dostarczenia pojazdu:</strong><br/>
+                                <div v-if="showDateInput === index" class="block__newDate">
+                                    <div class="block__text">
+                                        <strong>
+                                            Nowa data dostarczenia pojazdu:
+                                        </strong>
+                                    </div>
                                     <div class="block__date">
 
                                         <date-picker v-model="new_reported_car_date" :editable="false"

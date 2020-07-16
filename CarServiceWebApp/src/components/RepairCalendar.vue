@@ -114,7 +114,6 @@
                 .then(response => {
                     let events = response.data.data;
                     events.forEach((value, index) => {
-                        console.log(value)
                         let event = {
                             title: value.title,
                             start: value.start,
@@ -149,10 +148,6 @@
 </style>
 <style lang="scss">
     @import "../assets/scss/calendar";
-    .fc-event{
-        background: #9e4506;
-    }
-
 </style>
 
 

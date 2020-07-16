@@ -50,6 +50,10 @@
                                 </table>
                                 <hr>
                                 <div class="block__action">
+                                    <button href="#" class="block__actionBtn block__actionBtn--info"
+                                            @click="showDescription(remainingCarDelivery.description)">
+                                        <i class="fas fa-info-circle"></i> Opis usterki
+                                    </button>
                                     <button class="block__actionBtn block__actionBtn--cancel">
                                         <i class="far fa-times-circle"></i> Anuluj
                                     </button>
@@ -95,9 +99,11 @@
                                     </template>
                                 </div>
                                 <hr>
-                                <div class="block__text">
-                                    <strong>Opis usterki:</strong><br/>
-                                    {{remainingCarDelivery.description}}
+                                <div class="block__action">
+                                    <button href="#" class="block__actionBtn block__actionBtn--info"
+                                            @click="showDescription(remainingCarDelivery.description)">
+                                        <i class="fas fa-info-circle"></i> Opis usterki
+                                    </button>
                                 </div>
                             </div>
 
@@ -107,11 +113,13 @@
             </div>
 
         </div>
+        <DescriptionModal ref="descriptionModal"></DescriptionModal>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
+    import DescriptionModal from '@/components/DescriptionModal'
 
     export default {
         name: "CarDeliveries",
@@ -139,6 +147,9 @@
                         console.log(error)
                     })
             },
+            showDescription(description) {
+                this.$refs['descriptionModal'].show(description)
+            }
         },
         mounted() {
             axios.get('/getCarDeliveries')
@@ -151,6 +162,7 @@
                     console.log(error)
                 })
         },
+        components: {DescriptionModal},
     }
 </script>
 <style scoped lang="scss">

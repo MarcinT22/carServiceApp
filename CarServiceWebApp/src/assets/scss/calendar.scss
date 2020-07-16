@@ -43,18 +43,15 @@
   &:hover {
     background: darken($mainColor, 10%);
   }
-  &:focus {
-    background: $mainColorHover !important;
-    opacity: 0.65;
+  &:focus,&:active {
+    background: darken($mainColor, 30%) !important;
+    opacity:0.65;
   }
   &-active {
-    background: $mainColorHover !important;
+    background: darken($mainColor, 30%);
     opacity: 0.65;
   }
 
-  &:active{
-    background: $mainColorHover !important;
-  }
 }
 .fc-time-grid .fc-slats td {
   font-size: 16px;
@@ -75,7 +72,72 @@
   font-size: 12px;
 }
 .fc-past{
-  background:#f9f9f9;
+background: #edeee01c !important;
+
+}
+
+.fc-day-top.fc-past{
+  background: none !important;
+}
+
+.fc-day-top{
+  color:$textColor;
+}
+
+.fc-today{
+  background: lighten($mainColor, 32%) !important;
+}
+
+.fc-right{
+  h2{
+    font-weight: 400;
+  }
+}
+
+.fc-view{
+  table{
+    background:rgba(0,0,0,0);
+
+
+    th{
+      border:0;
+    }
+
+    td,th{
+     border:0;
+    }
+
+    th{
+      font-weight:600;
+      font-size:14px;
+
+      &.fc-day-header{
+        background: rgba(0,0,0,0);
+        padding:10px 0;
+        box-sizing: border-box;
+        color:#fff;
+        background: $textColor;
+        font-size:14px;
+        font-weight: 400;
+        border:1px solid #f0f1fd;
+
+      }
+    }
+
+    .fc-day{
+      background:#fff;
+      border:1px solid #f0f1fd;
+
+    }
+  }
+  .fc-event{
+    transition:background 0.3s;
+    background: lighten($danger, 20%);
+
+    &:hover{
+      background: lighten($danger, 30%);
+    }
+  }
 }
 
 .legend{

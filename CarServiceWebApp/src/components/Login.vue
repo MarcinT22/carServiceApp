@@ -166,7 +166,7 @@
         }
 
         &__icon {
-            color: $highlightColor;
+            color: $mainColor;
             font-size: 18px;
             position: absolute;
             display: block;
@@ -180,7 +180,7 @@
         &__button {
             outline: none;
             border: 0;
-            background: $highlightColor;
+            background: $mainColor;
             font-size: 20px;
             color: #fff;
             font-weight: bold;
@@ -196,7 +196,7 @@
             transition: background 0.3s;
 
             &:hover {
-                background: $highlightColorHover;
+                background: $mainColor;
             }
         }
 

@@ -53,9 +53,12 @@
                                         <i class="far fa-calendar-alt"></i> Zaplanuj naprawę
                                     </button>
                                 </div>
-                                <div v-if="showDateInput === index">
+                                <template v-if="showDateInput === index">
                                     <hr>
-                                    <strong>Wybierz datę naprawy pojazdu:</strong><br/>
+                                    <div  class="block__newDate">
+                                    <div class="block__text">
+                                        <strong>Wybierz datę naprawy pojazdu:</strong>
+                                    </div>
                                     <div class="block__date">
 
                                         <date-picker v-model="start" :editable="false"
@@ -76,6 +79,7 @@
                                        </button>
                                    </div>
                                 </div>
+                            </template>
                             </div>
 
                         </div>
