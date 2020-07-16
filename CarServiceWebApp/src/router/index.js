@@ -77,7 +77,8 @@ let router = new Router({
     { path: "*",
       component: Error
     }
-  ]
+  ],
+
 })
 
 

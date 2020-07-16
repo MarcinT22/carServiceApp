@@ -3,18 +3,7 @@
         <div class="dashboard__container">
             <h1>
                 Przyjęcia pojazdów
-                <span v-if="todaysCarDeliveries.length || remainingCarDeliveries.length">
-                    ({{todaysCarDeliveries.length + remainingCarDeliveries.length}})
-                </span>
             </h1>
-            <div class="message" :class="{active:showMessage}">
-                <div class="message__icon">
-                    <i class="far fa-check-circle"></i>
-                </div>
-                <div class="message__text">
-                    {{message}}
-                </div>
-            </div>
             <div class="loading loading--allPage" v-if="isLoading"></div>
             <div class="loadingContainer" :class="{active:!isLoading}">
                 <div class="dashboard__title">
@@ -51,11 +40,11 @@
                                 <hr>
                                 <div class="block__action">
                                     <button href="#" class="block__actionBtn block__actionBtn--info"
-                                            @click="showDescription(remainingCarDelivery.description)">
+                                            @click="showDescription(todaysCarDelivery.description)">
                                         <i class="fas fa-info-circle"></i> Opis usterki
                                     </button>
-                                    <button class="block__actionBtn block__actionBtn--cancel">
-                                        <i class="far fa-times-circle"></i> Anuluj
+                                    <button class="block__actionBtn block__actionBtn--cancel" @click="cancel(todaysCarDelivery.id, index)">
+                                        <i class="far fa-times-circle"></i> Odwołano
                                     </button>
                                     <button @click="confirmCarDelivery(todaysCarDelivery.id, index)"
                                             class="block__actionBtn block__actionBtn--accept">
@@ -82,6 +71,18 @@
 
                                         <td class="bold">Model:</td>
                                         <td> {{remainingCarDelivery.car.brand}} {{remainingCarDelivery.car.model}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">Rok:</td>
+                                        <td>{{remainingCarDelivery.car.year}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">Paliwo:</td>
+                                        <td>{{remainingCarDelivery.car.fuel}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">Silnik:</td>
+                                        <td> {{remainingCarDelivery.car.engine}} cm<sup>3</sup></td>
                                     </tr>
                                     <tr>
                                         <td class="bold">Nr rej.:</td>
@@ -114,12 +115,14 @@
 
         </div>
         <DescriptionModal ref="descriptionModal"></DescriptionModal>
+        <Message ref="message"></Message>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
     import DescriptionModal from '@/components/DescriptionModal'
+    import Message from '@/components/Message'
 
     export default {
         name: "CarDeliveries",
@@ -128,8 +131,6 @@
                 todaysCarDeliveries: 0,
                 remainingCarDeliveries: 0,
                 isLoading: true,
-                message: null,
-                showMessage: false,
             }
         },
         methods: {
@@ -139,9 +140,7 @@
                     .then(response => {
                         this.todaysCarDeliveries.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.message = "Samochód został dostarczony do warsztatu";
-                        this.showMessage = true
-                        setTimeout(() => this.showMessage = false, 5000);
+                        this.$refs['message'].show('Samochód został dostarczony do warsztatu.')
                     })
                     .catch(error => {
                         console.log(error)
@@ -149,6 +148,18 @@
             },
             showDescription(description) {
                 this.$refs['descriptionModal'].show(description)
+            },
+            cancel(id,index){
+                document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
+                axios.delete('/reportedCars/' + id)
+                    .then(response => {
+                        this.todaysCarDeliveries.splice(index, 1);
+                        document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
+                        this.$refs['message'].show('Usunięto.')
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
         },
         mounted() {
@@ -162,7 +173,7 @@
                     console.log(error)
                 })
         },
-        components: {DescriptionModal},
+        components: {DescriptionModal, Message},
     }
 </script>
 <style scoped lang="scss">

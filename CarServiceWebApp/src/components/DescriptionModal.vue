@@ -5,13 +5,13 @@
         <div class="modal__block">
             <div class="modal__header">
                 <i class="fas fa-info-circle"></i> Opis usterki
-                <a href="#" @click.prevent="close" title="Zamknij" class="modal__close">
+                <a href="#" @click.prevent="close"  class="modal__close">
                     <i class="fas fa-times"></i>
                 </a>
             </div>
 
             <div class="modal__content" v-if="description">
-                <div class="modal__description">
+                <div class="modal__text">
                     {{description}}
                 </div>
             </div>
@@ -32,9 +32,7 @@
         methods: {
             close() {
                 this.isShow = !this.isShow
-                setTimeout(() => {
-                    this.description = null
-                }, 500);
+
             },
             show(description) {
                 this.isShow = !this.isShow

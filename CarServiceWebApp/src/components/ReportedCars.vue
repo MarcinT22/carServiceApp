@@ -4,14 +4,7 @@
             <h1>
                 Zgłoszenia oczekujące <span v-if="reportedCars.length">({{reportedCars.length}})</span>
             </h1>
-            <div class="message" :class="{active:showMessage}">
-                <div class="message__icon">
-                    <i class="far fa-check-circle"></i>
-                </div>
-                <div class="message__text">
-                    {{message}}
-                </div>
-            </div>
+
             <div class="loading loading--allPage" v-if="isLoading"></div>
             <div class="loadingContainer" :class="{active:!isLoading}">
                 <div v-if="reportedCars.length == 0" class="dashboard__empty">Brak</div>
@@ -22,9 +15,9 @@
                             <div class="block__data">
                                 <table>
                                     <tr>
-                                    <td class="bold">Model:</td>
-                                    <td> {{reportedCar.car.brand}} {{reportedCar.car.model}}</td>
-                                </tr>
+                                        <td class="bold">Model:</td>
+                                        <td> {{reportedCar.car.brand}} {{reportedCar.car.model}}</td>
+                                    </tr>
                                     <tr>
                                         <td class="bold">Rok:</td>
                                         <td>{{reportedCar.car.year}}</td>
@@ -79,14 +72,14 @@
 
                                     </div>
                                     <div class="block__action">
-                                    <button class="block__actionBtn block__actionBtn--cancel"
-                                            @click="showDateInput = null">
-                                        <i class="far fa-times-circle"></i> Anuluj
-                                    </button>
-                                    <button class="block__actionBtn block__actionBtn--accept"
-                                            @click="changeDate(reportedCar.id, index)">
-                                        <i class="far fa-check-circle"></i> Zmień datę
-                                    </button>
+                                        <button class="block__actionBtn block__actionBtn--cancel"
+                                                @click="showDateInput = null">
+                                            <i class="far fa-times-circle"></i> Anuluj
+                                        </button>
+                                        <button class="block__actionBtn block__actionBtn--accept"
+                                                @click="changeDate(reportedCar.id, index)">
+                                            <i class="far fa-check-circle"></i> Zmień datę
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -98,6 +91,7 @@
 
         </div>
         <DescriptionModal ref="descriptionModal"></DescriptionModal>
+        <Message ref="message"></Message>
 
     </div>
 </template>
@@ -109,7 +103,7 @@
     import 'vue2-datepicker/locale/pl';
 
     import DescriptionModal from '@/components/DescriptionModal'
-
+    import Message from '@/components/Message'
 
     const today = new Date();
     export default {
@@ -118,8 +112,6 @@
             return {
                 reportedCars: 0,
                 isLoading: true,
-                message: null,
-                showMessage: false,
                 new_reported_car_date: null,
                 showDateInput: null,
             }
@@ -136,9 +128,8 @@
                     .then(response => {
                         this.reportedCars.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.message = "Zgłoszenie zostało zaakceptowane";
-                        this.showMessage = true
-                        setTimeout(() => this.showMessage = false, 5000);
+                        this.$refs['message'].show('Zgłoszenie zostało zaakceptowane')
+
                     })
                     .catch(error => {
                         console.log(error)
@@ -152,9 +143,7 @@
                     .then(response => {
                         this.reportedCars.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.message = "Propozycja zmiany daty została przesłana do klienta.";
-                        this.showMessage = true
-                        setTimeout(() => this.showMessage = false, 5000);
+                        this.$refs['message'].show('Propozycja zmiany daty została przesłana do klienta.')
                         this.new_reported_car_date = null
                         this.showDateInput = null
                     })
@@ -163,11 +152,9 @@
                     })
             },
 
-            showDescription(description)
-            {
+            showDescription(description) {
                 this.$refs['descriptionModal'].show(description)
             }
-
 
 
         },
@@ -181,7 +168,7 @@
                     console.log(error)
                 })
         },
-        components: {DatePicker,DescriptionModal},
+        components: {DatePicker, DescriptionModal, Message},
     }
 </script>
 
@@ -189,7 +176,7 @@
     @import "../assets/scss/config";
     @import "../assets/scss/dashboard";
     @import "../assets/scss/block";
-    @import "../assets/scss/message";
+
 
     .mx-datepicker {
         width: 100% !important;

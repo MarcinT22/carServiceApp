@@ -32,10 +32,12 @@
             </div>
 
         </div>
+        <EventModal ref="eventModal"></EventModal>
     </div>
 </template>
 
 <script>
+
     require('@fullcalendar/core/main.min.css')
     require('@fullcalendar/daygrid/main.min.css')
     require('@fullcalendar/timegrid/main.min.css')
@@ -45,6 +47,8 @@
     import InteractionPlugin from '@fullcalendar/interaction'
     import ListPlugin from '@fullcalendar/list'
     import axios from 'axios'
+
+    import EventModal from '@/components/EventModal'
 
     export default {
         name: "CarDeliveriesCalendar",
@@ -85,16 +89,16 @@
                 year: '2-digit'
             },
             events: [],
-            event: [],
             isLoading: true
         }),
         components: {
+            EventModal,
             Fullcalendar,
         },
         methods:{
-            clickEvent()
+            clickEvent(arg)
             {
-
+                this.$refs['eventModal'].show(arg.event,'delivery')
             },
 
 
@@ -107,7 +111,8 @@
                     events.forEach((value, index) => {
                         let event = {
                             title: value.car.brand+' '+value.car.model+' '+value.car.registration_number,
-                            start: value.new_reported_car_date || value.reported_car_date
+                            start: value.new_reported_car_date || value.reported_car_date,
+                            allDetails:value
                         }
                         this.events.push(event);
                     });

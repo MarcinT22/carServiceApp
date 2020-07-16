@@ -81,11 +81,10 @@
         background: #fff;
         padding: 15px 0;
         box-shadow:0 0 20px 0 rgba(100,100,100,0.1);
-
+        position: sticky;
+        top: 0;
+        z-index: 2;
         @media (max-width: $screen-md) {
-            position: sticky;
-            top: 0;
-            z-index: 100;
             padding: 25px 0;
         }
 
@@ -101,6 +100,7 @@
             justify-content: space-between;
 
         }
+
 
         ul.menu__main {
             list-style-type: none;
@@ -172,6 +172,10 @@
 
                             color: $mainColor;
                             background: $lightMainColor;
+                        }
+
+                        &:active{
+                            background: darken($lightMainColor, 10%);
                         }
                     }
 

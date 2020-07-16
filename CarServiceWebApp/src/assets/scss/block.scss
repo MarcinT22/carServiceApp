@@ -1,6 +1,6 @@
 .block {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 4px;
   box-shadow:0 0 20px 0 rgba(100,100,100,0.1);
   padding: 30px 15px;
   box-sizing: border-box;
@@ -108,6 +108,10 @@
       background: $mainColor;
       color:#fff;
     }
+
+    &:active{
+      background: darken($mainColor, 10%);
+    }
   }
 
   &__text {
@@ -196,6 +200,10 @@
       margin-bottom:0;
     }
 
+    &:active{
+      background: darken(#333, 10%);
+    }
+
 
 
     i {
@@ -212,6 +220,10 @@
         background: $success;
         color:#fff;
       }
+
+      &:active{
+        background: darken($success, 10%);
+      }
     }
 
     &--changeDate {
@@ -222,6 +234,10 @@
       &:hover {
         background: $alert;
         color:#fff;
+      }
+
+      &:active{
+        background: darken($alert, 10%);
       }
     }
 
@@ -234,6 +250,10 @@
         background: $info;
         color:#fff;
       }
+
+      &:active{
+        background: darken($info, 10%);
+      }
     }
 
     &--cancel{
@@ -244,6 +264,10 @@
       &:hover {
         background: $danger;
         color:#fff;
+      }
+
+      &:active{
+        background: darken($danger, 10%);
       }
     }
 

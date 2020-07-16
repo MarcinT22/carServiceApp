@@ -32,31 +32,34 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            padding:25px;
+            padding:50px;
             box-sizing: border-box;
-            border:1px solid #f3f3f3;
+            background: #fff;
 
         }
 
         h1 {
             margin: 0;
-            color:$mainColor;
+            color:$textColor;
             font-size:30px;
             text-align: center;
+            font-weight: 800;
         }
 
         h2 {
-            margin: 0;
+            margin: 10px 0;
             color: $mainColor;
             font-size:14px;
             text-align: center;
+            color:$textColor;
+            font-weight: 400;
         }
 
         a{
             width:100%;
             display: block;
             font-size:14px;
-            font-weight: bold;
+            font-weight: 600;
             text-decoration: none;
             color:#fff;
             text-align: center;
@@ -65,13 +68,20 @@
             box-sizing: border-box;
             max-width:260px;
             margin:0 auto;
-            border-radius: 5px;
-            background:$mainColor;
+            border-radius: 4px;
             transition:background 0.3s;
-            margin-top:30px;
+            margin-top:20px;
+            background: rgba(0,0,0,0);
+            color:$mainColor;
+            border:1px solid $mainColor;
 
             &:hover{
                 background: $mainColor;
+                color:#fff;
+            }
+
+            &:active{
+
             }
         }
     }

@@ -4,14 +4,7 @@
             <h1>
                 Nowe zlecenia <span v-if="newEvents.length">({{newEvents.length}})</span>
             </h1>
-            <div class="message" :class="{active:showMessage}">
-                <div class="message__icon">
-                    <i class="far fa-check-circle"></i>
-                </div>
-                <div class="message__text">
-                    {{message}}
-                </div>
-            </div>
+
             <div class="loading loading--allPage" v-if="isLoading"></div>
             <div class="loadingContainer" :class="{active:!isLoading}">
                 <div v-if="newEvents.length == 0" class="dashboard__empty">Brak</div>
@@ -89,6 +82,7 @@
 
         </div>
         <DescriptionModal ref="descriptionModal"></DescriptionModal>
+        <Message ref="message"></Message>
     </div>
 </template>
 
@@ -98,14 +92,13 @@
     import 'vue2-datepicker/index.css';
     import 'vue2-datepicker/locale/pl';
     import DescriptionModal from '@/components/DescriptionModal'
+    import Message from '@/components/Message'
     const today = new Date();
     export default {
         name: "NewEvents",
         data(){
             return{
                 isLoading: true,
-                message: null,
-                showMessage: false,
                 newEvents:0,
                 showDateInput: null,
                 start: null,
@@ -126,9 +119,7 @@
                         console.log(response)
                         this.newEvents.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.message = "Zlecenie zostało dodane do kalendarza.";
-                        this.showMessage = true
-                        setTimeout(() => this.showMessage = false, 5000);
+                        this.$refs['message'].show('Zlecenie zostało dodane do kalendarza.')
                         this.start = null
                         this.showDateInput = null
                     })
@@ -161,7 +152,7 @@
     @import "../assets/scss/config";
     @import "../assets/scss/dashboard";
     @import "../assets/scss/block";
-    @import "../assets/scss/message";
+
 
     .mx-datepicker {
         width: 100% !important;

@@ -152,7 +152,7 @@
             color: #333;
             outline: none;
             border: 0;
-            border-radius: 5px;
+            border-radius: 4px;
             transition: box-shadow 0.3s;
             background: rgba(255, 255, 255, 0.7);
 
@@ -183,7 +183,7 @@
             background: $mainColor;
             font-size: 20px;
             color: #fff;
-            font-weight: bold;
+            font-weight: 600;
             display: block;
             margin: 0 auto;
             max-width: 200px;
@@ -191,12 +191,12 @@
             box-sizing: border-box;
             padding: 8px;
             text-align: center;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             transition: background 0.3s;
 
             &:hover {
-                background: $mainColor;
+                background: lighten($mainColor, 10%);
             }
         }
 
@@ -222,9 +222,10 @@
     .loginForm__errorMessage {
         font-size: 12px;
         color: #fff;
-        font-weight: bold;
+        font-weight: 500;
+        text-align: center;
         margin-top: 20px;
-        background: rgba(255, 0, 0, 0.5);
+        background:$danger;
         padding: 10px;
         box-sizing: border-box;
     }

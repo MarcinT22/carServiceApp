@@ -133,6 +133,7 @@ background: #edeee01c !important;
   .fc-event{
     transition:background 0.3s;
     background: lighten($danger, 20%);
+    cursor: pointer;
 
     &:hover{
       background: lighten($danger, 30%);

@@ -12,6 +12,9 @@
 
 <script>
     import Menu from "./components/Menu"
+    import Message from "./components/Message"
+
+
     import axios from "axios"
     import store from './store'
     import {mapGetters} from 'vuex'
@@ -46,6 +49,10 @@
         background: #f9f9f9;
     }
 
+    input,button{
+        font-family: 'Poppins', sans-serif;
+    }
+
     .overflow {
         overflow: hidden;
     }
@@ -75,6 +82,10 @@
 
         &--allPage {
             position: fixed;
+        }
+
+        &--static{
+            position: static;
         }
     }
 
