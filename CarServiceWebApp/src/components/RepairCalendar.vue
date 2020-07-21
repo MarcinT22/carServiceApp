@@ -8,7 +8,7 @@
             <div class="loading loading--allPage" v-if="isLoading"></div>
             <div class="loadingContainer" :class="{active:!isLoading}">
                 <div class="legend">
-                    <div class="legend__block" v-for="status in statuses">
+                    <div class="legend__block" v-for="status in getStatusesList">
                         <span class="legend__background" :style="{background:status.color}"></span> - {{status.name}}
                     </div>
                 </div>
@@ -19,8 +19,9 @@
                         locale="pl"
                         :weekends="false"
                         :selectable="false"
-                        :editable="false"
-                        :events="events"
+                        :editable="true"
+                        :events="getSheduledEvents"
+                        @eventDrop="updateEventDate"
                         @eventClick="clickEvent"
                         :all-day-slot="false"
                         min-time="08:00:00"
@@ -35,13 +36,14 @@
 
                 />
                 <div class="legend">
-                    <div class="legend__block" v-for="status in statuses">
+                    <div class="legend__block" v-for="status in getStatusesList">
                         <span class="legend__background" :style="{background:status.color}"></span> - {{status.name}}
                     </div>
                 </div>
             </div>
 
         </div>
+        <EventModal ref="eventModal"></EventModal>
     </div>
 </template>
 
@@ -55,6 +57,8 @@
     import InteractionPlugin from '@fullcalendar/interaction'
     import ListPlugin from '@fullcalendar/list'
     import axios from 'axios'
+    import EventModal from '@/components/EventModal'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: "RepairCalendar",
@@ -94,49 +98,30 @@
                 year: 'numeric',
                 year: '2-digit'
             },
-            events: [],
-            event: [],
-            isLoading: true,
-            statuses:[],
+
+
         }),
         components: {
             Fullcalendar,
+            EventModal,
         },
+        computed: mapGetters(['getStatusesList','getSheduledEvents','isLoading']),
         methods:{
-            clickEvent()
+            clickEvent(arg)
             {
-
+                this.$refs['eventModal'].show(arg.event,'repair')
             },
+            updateEventDate(arg)
+            {
+                axios.put('/events/' + arg.event.id, {
+                    start: arg.event.start,
+                })
+            }
 
         },
         created() {
-            axios.get('/getPlannedEvents')
-                .then(response => {
-                    let events = response.data.data;
-                    events.forEach((value, index) => {
-                        let event = {
-                            title: value.title,
-                            start: value.start,
-                            backgroundColor:value.status.color,
-                        }
-                        this.events.push(event);
-                    });
-
-
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-
-            axios.get('/statuses')
-                .then(response=>{
-                    this.statuses = response.data.data
-                    this.isLoading = false
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-
+            this.$store.dispatch('getStatusList')
+            this.$store.dispatch('getSheduledEvents')
         },
     }
 </script>

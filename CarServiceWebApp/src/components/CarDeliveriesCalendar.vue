@@ -15,7 +15,7 @@
                         :weekends="false"
                         :selectable="false"
                         :editable="false"
-                        :events="events"
+                        :events="getAcceptedReportedCars"
                         @eventClick="clickEvent"
                         :all-day-slot="false"
                         min-time="08:00:00"
@@ -49,7 +49,7 @@
     import axios from 'axios'
 
     import EventModal from '@/components/EventModal'
-
+    import {mapGetters} from 'vuex'
     export default {
         name: "CarDeliveriesCalendar",
         data: () => ({
@@ -89,7 +89,7 @@
                 year: '2-digit'
             },
             events: [],
-            isLoading: true
+
         }),
         components: {
             EventModal,
@@ -104,23 +104,9 @@
 
 
         },
+        computed: mapGetters(['getAcceptedReportedCars','isLoading']),
         created() {
-            axios.get('/getAcceptedReportedCars')
-                .then(response => {
-                   let events = response.data.data.reportedCars;
-                    events.forEach((value, index) => {
-                        let event = {
-                            title: value.car.brand+' '+value.car.model+' '+value.car.registration_number,
-                            start: value.new_reported_car_date || value.reported_car_date,
-                            allDetails:value
-                        }
-                        this.events.push(event);
-                    });
-                    this.isLoading = false
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            this.$store.dispatch('getAcceptedReportedCars')
 
         },
     }

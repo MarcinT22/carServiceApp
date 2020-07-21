@@ -77,9 +77,9 @@
                             </span>
                         </div>
                         </div>
-                        <a href="#">
+                        <router-link :to="{ name: 'RepairCalendar' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="dashboard__col">

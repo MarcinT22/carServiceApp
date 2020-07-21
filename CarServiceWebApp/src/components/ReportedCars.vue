@@ -2,7 +2,7 @@
     <div class="dashboard">
         <div class="dashboard__container">
             <h1>
-                Zgłoszenia oczekujące <span v-if="reportedCars.length">({{reportedCars.length}})</span>
+                Zgłoszenia oczekujące <span v-if="reportedCars.length">({{reportedCars.length}})</span><span v-else>(0)</span>
             </h1>
 
             <div class="loading loading--allPage" v-if="isLoading"></div>
@@ -12,6 +12,9 @@
                     <div class="dashboard__col dashboard__col--4 dashboard__col--notFlex"
                          v-for="(reportedCar, index) in reportedCars">
                         <div class="block block--baseline" :id="'blockProcessingIndex-'+index">
+                            <button class="block__delete" @click="remove(reportedCar.id, index)">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
                             <div class="block__data">
                                 <table>
                                     <tr>
@@ -91,8 +94,6 @@
 
         </div>
         <DescriptionModal ref="descriptionModal"></DescriptionModal>
-        <Message ref="message"></Message>
-
     </div>
 </template>
 
@@ -103,7 +104,7 @@
     import 'vue2-datepicker/locale/pl';
 
     import DescriptionModal from '@/components/DescriptionModal'
-    import Message from '@/components/Message'
+
 
     const today = new Date();
     export default {
@@ -128,7 +129,7 @@
                     .then(response => {
                         this.reportedCars.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.$refs['message'].show('Zgłoszenie zostało zaakceptowane')
+                        this.$store.dispatch('message', 'Zgłoszenie zostało zaakceptowane.')
 
                     })
                     .catch(error => {
@@ -143,9 +144,23 @@
                     .then(response => {
                         this.reportedCars.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.$refs['message'].show('Propozycja zmiany daty została przesłana do klienta.')
+                        this.$store.dispatch('message', 'Propozycja zmiany daty została przesłana do klienta.')
                         this.new_reported_car_date = null
                         this.showDateInput = null
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+
+            remove(id, index) {
+                document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
+                axios.delete('/reportedCars/' + id)
+                    .then(response => {
+                        this.reportedCars.splice(index, 1);
+                        document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
+                        this.$store.dispatch('message', 'Zgłoszenie zostało odwołane.')
+
                     })
                     .catch(error => {
                         console.log(error)
@@ -168,7 +183,7 @@
                     console.log(error)
                 })
         },
-        components: {DatePicker, DescriptionModal, Message},
+        components: {DatePicker, DescriptionModal},
     }
 </script>
 

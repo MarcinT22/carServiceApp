@@ -1,15 +1,16 @@
 <template>
-    <div class="message" :class="{active:showMessage}">
+    <div class="message" :class="{active:isMessage}">
         <div class="message__icon">
             <i class="far fa-check-circle"></i>
         </div>
         <div class="message__text">
-            {{message}}
+            {{getMessage}}
         </div>
     </div>
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     export default {
         name: "Message",
         data(){
@@ -25,7 +26,8 @@
                 this.message=message
                 setTimeout(() => this.showMessage = false, 5000);
             }
-        }
+        },
+        computed: mapGetters(['isMessage','getMessage']),
     }
 </script>
 

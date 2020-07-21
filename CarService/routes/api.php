@@ -69,7 +69,7 @@ Route::delete('events/{id}','Api\EventApiController@destroy');
 Route::get('events/{id}','Api\EventApiController@find');
 Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStatus');
 Route::get('getNewEvents','Api\EventApiController@getNewEvents');
-Route::get('getPlannedEvents','Api\EventApiController@getPlannedEvents');
+Route::get('getSheduledEvents','Api\EventApiController@getSheduledEvents');
 
 
 

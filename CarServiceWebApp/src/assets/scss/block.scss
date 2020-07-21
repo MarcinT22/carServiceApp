@@ -156,7 +156,7 @@
   }
 
   &__date{
-    padding:10px 0;
+   padding-top:10px;
   }
 
   &__newDate{
@@ -284,9 +284,31 @@
     td{
       font-weight: 400;
       color:$textColor;
+      vertical-align: top;
       &.bold{
         font-weight: 600;
       }
+    }
+  }
+
+  &__delete{
+    position: absolute;
+    top:0px;
+    right:0px;
+    background:rgba(0,0,0,0);
+    outline:none;
+    borer:0;
+    color:$danger;
+    border:0;
+    font-size:20px;
+    cursor: pointer;
+    transition:color 0.3s;
+    &:hover {
+      color: lighten($danger, 10%);
+    }
+
+    &:active{
+      color: darken($danger, 20%);
     }
   }
 }

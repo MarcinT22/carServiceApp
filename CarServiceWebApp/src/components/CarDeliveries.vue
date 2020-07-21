@@ -13,6 +13,9 @@
                     <div class="dashboard__col dashboard__col--4 dashboard__col--notFlex"
                          v-for="(todaysCarDelivery, index) in todaysCarDeliveries">
                         <div class="block block--baseline" :id="'blockProcessingIndex-'+index">
+                            <button class="block__delete" @click="remove(todaysCarDelivery.id, index)">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
                             <div class="block__data">
                                 <table>
                                     <tr>
@@ -43,9 +46,6 @@
                                             @click="showDescription(todaysCarDelivery.description)">
                                         <i class="fas fa-info-circle"></i> Opis usterki
                                     </button>
-                                    <button class="block__actionBtn block__actionBtn--cancel" @click="cancel(todaysCarDelivery.id, index)">
-                                        <i class="far fa-times-circle"></i> Odwołano
-                                    </button>
                                     <button @click="confirmCarDelivery(todaysCarDelivery.id, index)"
                                             class="block__actionBtn block__actionBtn--accept">
                                         <i class="far fa-check-circle"></i> Odebrano
@@ -65,6 +65,9 @@
                     <div class="dashboard__col dashboard__col--4 dashboard__col--notFlex"
                          v-for="(remainingCarDelivery, index) in remainingCarDeliveries">
                         <div class="block block--baseline" :id="'blockProcessingIndex-'+index">
+                            <button class="block__delete" @click="remove(remainingCarDelivery.id, index)">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
                             <div class="block__data">
                                 <table>
                                     <tr>
@@ -115,14 +118,13 @@
 
         </div>
         <DescriptionModal ref="descriptionModal"></DescriptionModal>
-        <Message ref="message"></Message>
+
     </div>
 </template>
 
 <script>
     import axios from 'axios'
     import DescriptionModal from '@/components/DescriptionModal'
-    import Message from '@/components/Message'
 
     export default {
         name: "CarDeliveries",
@@ -140,7 +142,7 @@
                     .then(response => {
                         this.todaysCarDeliveries.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.$refs['message'].show('Samochód został dostarczony do warsztatu.')
+                        this.$store.dispatch('message', 'Samochód został dostarczony do warsztatu.')
                     })
                     .catch(error => {
                         console.log(error)
@@ -149,18 +151,19 @@
             showDescription(description) {
                 this.$refs['descriptionModal'].show(description)
             },
-            cancel(id,index){
+            remove(id,index){
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
                 axios.delete('/reportedCars/' + id)
                     .then(response => {
                         this.todaysCarDeliveries.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.$refs['message'].show('Usunięto.')
+                        this.$store.dispatch('message', 'Usunięto.')
                     })
                     .catch(error => {
                         console.log(error)
                     })
             }
+
         },
         mounted() {
             axios.get('/getCarDeliveries')
@@ -173,7 +176,7 @@
                     console.log(error)
                 })
         },
-        components: {DescriptionModal, Message},
+        components: {DescriptionModal},
     }
 </script>
 <style scoped lang="scss">

@@ -12,6 +12,9 @@
                     <div class="dashboard__col dashboard__col--4 dashboard__col--notFlex"
                          v-for="(newEvent, index) in newEvents">
                         <div class="block block--baseline" :id="'blockProcessingIndex-'+index">
+                            <button class="block__delete" @click="remove(newEvent.id, index)">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
                             <div class="block__data">
                                 <table>
                                     <tr>
@@ -82,7 +85,7 @@
 
         </div>
         <DescriptionModal ref="descriptionModal"></DescriptionModal>
-        <Message ref="message"></Message>
+
     </div>
 </template>
 
@@ -92,7 +95,7 @@
     import 'vue2-datepicker/index.css';
     import 'vue2-datepicker/locale/pl';
     import DescriptionModal from '@/components/DescriptionModal'
-    import Message from '@/components/Message'
+
     const today = new Date();
     export default {
         name: "NewEvents",
@@ -119,9 +122,22 @@
                         console.log(response)
                         this.newEvents.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
-                        this.$refs['message'].show('Zlecenie zostało dodane do kalendarza.')
+                        this.$store.dispatch('message', 'Zlecenie zostało dodane do kalendarza.')
                         this.start = null
                         this.showDateInput = null
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+            remove(id, index) {
+                document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
+                axios.delete('/events/' + id)
+                    .then(response => {
+                        this.newEvents.splice(index, 1);
+                        document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
+                        this.$store.dispatch('message', 'Zgłoszenie zostało odwołane.')
+
                     })
                     .catch(error => {
                         console.log(error)

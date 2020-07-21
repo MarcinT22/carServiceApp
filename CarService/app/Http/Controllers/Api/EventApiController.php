@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\EventCollection as EventCollectionResource;
 use Carbon\Carbon;
+
 class EventApiController extends Controller
 {
     protected $eventRepository;
@@ -43,7 +44,9 @@ class EventApiController extends Controller
     {
 
         $data = $request->all();
-        $data['start'] = (Carbon::parse($data['start'])->addDay(1))->format('Y-m-d');
+        if (isset($data['start'])) {
+            $data['start'] = (Carbon::parse($data['start'])->addDay(1))->format('Y-m-d');
+        }
         $this->eventRepository->update($data, $id);
         return array("message" => "success");
     }
@@ -53,7 +56,6 @@ class EventApiController extends Controller
         $this->eventRepository->delete($id);
         return array("message" => "success");
     }
-
 
 
     public function getEventStatus($reportedCarId)
@@ -71,9 +73,9 @@ class EventApiController extends Controller
         return new EventResource($newEvents);
     }
 
-    public function getPlannedEvents()
+    public function getSheduledEvents()
     {
-        $plannedEvents = $this->eventRepository->getPlannedEvents();
-        return new EventResource($plannedEvents);
+        $sheduledEvents = $this->eventRepository->getSheduledEvents();
+        return new EventResource($sheduledEvents);
     }
 }

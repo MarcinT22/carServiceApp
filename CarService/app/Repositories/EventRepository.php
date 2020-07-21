@@ -26,7 +26,7 @@ class EventRepository extends BaseRepository
        return $this->getAllEvent()->whereNull('start')->whereIn('status_id', [1, 2, 3]);
     }
 
-    public function getPlannedEvents()
+    public function getSheduledEvents()
     {
         return $this->getAllEvent()->whereNotNull('start');
     }

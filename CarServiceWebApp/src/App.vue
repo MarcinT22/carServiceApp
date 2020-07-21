@@ -2,6 +2,7 @@
     <div id="app">
         <div v-if="isUserLogged" class="main">
             <Menu></Menu>
+            <Message></Message>
             <router-view>
             </router-view>
         </div>
@@ -22,7 +23,7 @@
     export default {
         name: 'App',
         store,
-        components: {Menu},
+        components: {Message, Menu},
         computed: mapGetters(['isUserLogged']),
         created: function () {
             axios.interceptors.response.use(undefined, function (err) {
@@ -49,7 +50,7 @@
         background: #f9f9f9;
     }
 
-    input,button{
+    input,button, textarea{
         font-family: 'Poppins', sans-serif;
     }
 
@@ -85,7 +86,12 @@
         }
 
         &--static{
-            position: static;
+            position: absolute;
+            right: 15px;
+            left: auto;
+            width:20px;
+            height:20px;
+            border-width: 4px;
         }
     }
 
