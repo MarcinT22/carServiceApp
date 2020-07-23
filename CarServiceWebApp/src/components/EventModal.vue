@@ -147,17 +147,83 @@
                                 <strong>
                                     Opis usterki:<br/>
                                 </strong>
-                                <p class="modal__scroll">
+                                <div class="modal__scroll">
                                     {{event.extendedProps.allDetails.reported_car.description}}
-                                </p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="modal__content modal__content--notPaddingTop">
                             <div class="modal__text modal__text--paddingBottom">
-                               <div class="modal__button modal__button--danger">
-                                   <i class="far fa-bell"></i> Wykryto dodatkową usterkę
-                               </div>
+                                <button class="modal__button modal__button--danger" v-if="status != 5 && !isNewFault"
+                                        @click="isNewFault = !isNewFault">
+                                    <i class="far fa-bell"></i> Wykryto nową usterkę
+                                </button>
+                                <div class="modal__text" v-if="isNewFault">
+                                    <strong>
+                                        Opis wykrytej usterki:<br/>
+                                    </strong>
+                                    <textarea v-model="faultDescription"
+                                              placeholder="Wprowadź opis..."></textarea>
+                                    <div class="modal__action modal__action--noBorder modal__action--noPadding">
+                                        <button class="modal__button modal__button--cancel modal__button--marginTop"
+                                                v-if="!alertIsLoading" @click="isNewFault = !isNewFault">
+                                            <i class="far fa-times-circle"></i> Anuluj
+                                        </button>
+                                        <button class="modal__button modal__button--accept modal__button--marginTop"
+                                                v-if="!alertIsLoading" @click="sendAlert">
+                                            <i class="far fa-bell"></i> Powiadom klienta
+                                        </button>
+                                        <div class="loading loading--static" v-if="alertIsLoading"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal__text modal__text--paddingBottom">
+                                <strong>
+                                    Nowe usterki wykryte do naprawy:<br/>
+                                </strong>
+                                <div class="modal__scroll modal__scroll--marginTop">
+                                    <ol>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds     asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                        <li>
+                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
+                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        </li>
+                                    </ol>
+                                </div>
+
                             </div>
                             <div class="modal__text">
                                 <strong>
@@ -222,8 +288,11 @@
                 description: null,
                 price: '0.00',
                 status_id: 1,
-                status:1,
-                isLoading:false
+                status: 1,
+                isLoading: false,
+                alertIsLoading: false,
+                isNewFault: false,
+                faultDescription: null,
 
 
             }
@@ -236,8 +305,11 @@
                     this.description = null
                     this.price = '0.00'
                     this.status_id = 1
+                    this.isNewFault = false
+                    this.alertIsLoading = false
                 }, 500);
             },
+
             show(event, option) {
                 document.body.classList.add('overflow');
                 this.isShow = true
@@ -295,6 +367,15 @@
                     .catch(error => {
                         console.log(error)
                     })
+            },
+            sendAlert() {
+                this.alertIsLoading = true
+
+                setTimeout(() => {
+                    this.isNewFault = false
+                    this.alertIsLoading = false
+                    this.$store.dispatch('message', 'Wysłano powiadomienie do klienta.')
+                }, 500);
             }
 
 

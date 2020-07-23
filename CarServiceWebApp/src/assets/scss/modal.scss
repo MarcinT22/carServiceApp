@@ -137,6 +137,19 @@
     overflow-y: auto;
     margin-bottom:0;
     padding-right:10px;
+    padding-left:0 !important;
+    border:0 !important;
+
+    ol,ul{
+      padding:0;
+      padding-left:15px;
+      margin:0;
+    }
+
+    &--marginTop{
+      margin-top:10px;
+    }
+
     &::-webkit-scrollbar-track
     {
 
@@ -247,6 +260,14 @@
     min-height:40px;
     position: relative;
 
+    &--noBorder{
+      border:0;
+    }
+
+    &--noPadding{
+      padding:0;
+    }
+
   }
 
 
@@ -279,6 +300,10 @@
 
     &:active{
       background: darken(#333, 10%);
+    }
+
+    &--marginTop{
+      margin-top:10px;
     }
 
 
