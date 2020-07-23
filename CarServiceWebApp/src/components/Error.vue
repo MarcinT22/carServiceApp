@@ -81,7 +81,8 @@
             }
 
             &:active{
-
+                background: darken($mainColor, 10%);
+                color:#fff;
             }
         }
     }
