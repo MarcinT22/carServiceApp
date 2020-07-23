@@ -70,6 +70,8 @@ Route::get('events/{id}','Api\EventApiController@find');
 Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStatus');
 Route::get('getNewEvents','Api\EventApiController@getNewEvents');
 Route::get('getSheduledEvents','Api\EventApiController@getSheduledEvents');
+Route::get('getReadyCars','Api\EventApiController@getReadyCars');
+
 
 
 

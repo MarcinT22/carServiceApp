@@ -61,10 +61,13 @@ class EventApiController extends Controller
     public function getEventStatus($reportedCarId)
     {
 
-        $lastStatus = $this->eventRepository->getLastStatusId($reportedCarId);
-        $status = $this->statusRepository->find($lastStatus['status_id']);
+        $eventDetails = $this->eventRepository->getEventDetails($reportedCarId);
+        $status = $this->statusRepository->find($eventDetails['status_id']);
 
-        return array($status);
+        return new EventResource([
+            'status'=>$status,
+            'eventDetails'=> $eventDetails
+        ]);
     }
 
     public function getNewEvents()
@@ -77,5 +80,11 @@ class EventApiController extends Controller
     {
         $sheduledEvents = $this->eventRepository->getSheduledEvents();
         return new EventResource($sheduledEvents);
+    }
+
+    public function getReadyCars()
+    {
+        $readyCars = $this->eventRepository->getReadyCars();
+        return new EventResource($readyCars);
     }
 }

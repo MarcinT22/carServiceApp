@@ -71,7 +71,7 @@
                             <span class="block__text">
                                 dziś:
                             </span>
-                            ---
+                           {{numberOfTodayEvents}}
                             <span class="block__text block__text--light">
                                 Łącznie: {{numberOfAllEvents}} <span>|</span>W trakcie: {{ numberOfInProgressEvents}}
                             </span>
@@ -93,9 +93,9 @@
                             {{numberOfReadyCars}}
                         </div>
                         </div>
-                        <a href="#">
+                        <router-link :to="{ name: 'ReadyCars' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -119,6 +119,7 @@
                 numberOfTodayDeliveries:0,
                 numberOfNewEvents: 0,
                 numberOfAllEvents: 0,
+                numberOfTodayEvents: 0,
                 numberOfInProgressEvents: 0,
                 numberOfReadyCars: 0,
                 isLoading: true
@@ -132,6 +133,7 @@
                     this.numberOfTodayDeliveries = response.data.numberOfTodayDeliveries
                     this.numberOfNewEvents = response.data.numberOfNewEvents
                     this.numberOfAllEvents = response.data.numberOfAllEvents
+                    this.numberOfTodayEvents = response.data.numberOfTodayEvents
                     this.numberOfInProgressEvents = response.data.numberOfInProgressEvents
                     this.numberOfReadyCars = response.data.numberOfReadyCars
                     this.isLoading=false

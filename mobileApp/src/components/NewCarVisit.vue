@@ -112,7 +112,7 @@
                     Wybierz datę
                 </label>
                 <date-picker v-model="reported_car_date" input-class="form__date" :editable="false"
-                             :disabled-date="disabledDates"
+                             :disabled-date="$disabledDates"
                              type="date" format="DD.MM.YYYY" :lang="lang"
                              id="date"></date-picker>
             </div>
@@ -163,11 +163,6 @@
             }
         },
         methods: {
-            disabledDates(date) {
-                const day = new Date(date).getDay()
-                return day === 0 || day === 6 || date < today;
-
-            },
             setVisitWithNewCar() {
                 this.$store.state.isLoading = true
                 let brand = this.brand

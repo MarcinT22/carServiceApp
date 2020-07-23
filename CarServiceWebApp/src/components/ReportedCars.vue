@@ -68,7 +68,7 @@
                                     <div class="block__date">
 
                                         <date-picker v-model="new_reported_car_date" :editable="false"
-                                                     :disabled-date="disabledDates"
+                                                     :disabled-date="$disabledDatesTwoDays"
                                                      type="date" format="DD.MM.YYYY"
                                                      placeholder="Wybierz datę"
                                                      id="date"></date-picker>
@@ -80,7 +80,7 @@
                                             <i class="far fa-times-circle"></i> Anuluj
                                         </button>
                                         <button class="block__actionBtn block__actionBtn--accept"
-                                                @click="changeDate(reportedCar.id, index)">
+                                                @click="changeDate(reportedCar.id, index)"  v-if="new_reported_car_date">
                                             <i class="far fa-check-circle"></i> Zmień datę
                                         </button>
                                     </div>
@@ -106,7 +106,6 @@
     import DescriptionModal from '@/components/DescriptionModal'
 
 
-    const today = new Date();
     export default {
         name: "ReportedCars",
         data() {
@@ -118,11 +117,7 @@
             }
         },
         methods: {
-            disabledDates(date) {
-                const day = new Date(date).getDay()
-                return day === 0 || day === 6 || date < today;
 
-            },
             accept(id, index) {
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
                 axios.get('/acceptReportedCar/' + id)
@@ -167,8 +162,8 @@
                     })
             },
 
-            showDescription(description) {
-                this.$refs['descriptionModal'].show(description)
+            showDescription(description,title) {
+                this.$refs['descriptionModal'].show(description,'Opis usterki')
             }
 
 

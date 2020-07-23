@@ -10,6 +10,7 @@ import CarDeliveries from '@/components/CarDeliveries'
 import CarDeliveriesCalendar from '@/components/CarDeliveriesCalendar'
 import NewEvents from '@/components/NewEvents'
 import RepairCalendar from '@/components/RepairCalendar'
+import ReadyCars from '@/components/ReadyCars'
 
 
 
@@ -69,6 +70,14 @@ let router = new Router({
       path: '/repair-calendar',
       name: 'RepairCalendar',
       component: RepairCalendar,
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/read-cars',
+      name: 'ReadyCars',
+      component: ReadyCars,
       meta:{
         auth: true
       }

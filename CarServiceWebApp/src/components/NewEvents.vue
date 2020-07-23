@@ -58,7 +58,7 @@
                                     <div class="block__date">
 
                                         <date-picker v-model="start" :editable="false"
-                                                     :disabled-date="disabledDates"
+                                                     :disabled-date="$disabledDatesOneDay"
                                                      type="date" format="DD.MM.YYYY"
                                                      placeholder="Wybierz datę"
                                                      id="date"></date-picker>
@@ -70,7 +70,7 @@
                                            <i class="far fa-times-circle"></i> Anuluj
                                        </button>
                                        <button class="block__actionBtn block__actionBtn--accept"
-                                               @click="addToCalendar(newEvent.id, index)">
+                                               @click="addToCalendar(newEvent.id, index)" v-if="start">
                                            <i class="far fa-check-circle"></i> Dodaj do kalendarza
                                        </button>
                                    </div>
@@ -96,7 +96,7 @@
     import 'vue2-datepicker/locale/pl';
     import DescriptionModal from '@/components/DescriptionModal'
 
-    const today = new Date();
+
     export default {
         name: "NewEvents",
         data(){
@@ -108,11 +108,6 @@
             }
         },
         methods:{
-            disabledDates(date) {
-                const day = new Date(date).getDay()
-                return day === 0 || day === 6 || date < today;
-
-            },
             addToCalendar(id, index) {
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
                 axios.put('/events/' + id, {

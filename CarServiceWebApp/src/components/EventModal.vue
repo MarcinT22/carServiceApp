@@ -28,7 +28,7 @@
                                             Rok:
                                         </td>
                                         <td>
-                                            {{event.extendedProps.allDetails.car.year}}r.
+                                            {{event.extendedProps.allDetails.car.year}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -154,6 +154,11 @@
                         </div>
 
                         <div class="modal__content modal__content--notPaddingTop">
+                            <div class="modal__text modal__text--paddingBottom">
+                               <div class="modal__button modal__button--danger">
+                                   <i class="far fa-bell"></i> Wykryto dodatkową usterkę
+                               </div>
+                            </div>
                             <div class="modal__text">
                                 <strong>
                                     Opis naprawy:<br/>
@@ -226,6 +231,7 @@
         methods: {
             close() {
                 this.isShow = false
+                document.body.classList.remove('overflow');
                 setTimeout(() => {
                     this.description = null
                     this.price = '0.00'
@@ -233,6 +239,7 @@
                 }, 500);
             },
             show(event, option) {
+                document.body.classList.add('overflow');
                 this.isShow = true
                 this.event = event
                 this.option = option
@@ -252,7 +259,7 @@
                         this.$store.dispatch('getAcceptedReportedCars')
                         this.isLoading = false
                         this.$store.dispatch('message', 'Zgłoszenie zostało odwołane.')
-                        this.isShow = false
+                        this.close()
                     })
                     .catch(error => {
                         console.log(error)
@@ -265,7 +272,7 @@
                         this.$store.dispatch('getAcceptedReportedCars')
                         this.isLoading = false
                         this.$store.dispatch('message', 'Samochód został dostarczony do warsztatu.')
-                        this.isShow = false
+                        this.close()
                     })
                     .catch(error => {
                         console.log(error)
@@ -279,10 +286,11 @@
                     price: this.price,
                 })
                     .then(response => {
-                        this.isShow = false
+                        this.$store.dispatch('getSheduledEvents')
+                        this.close()
                         this.isLoading = false
                         this.$store.dispatch('message', 'Zapisano.')
-                        this.$store.dispatch('getSheduledEvents')
+
                     })
                     .catch(error => {
                         console.log(error)

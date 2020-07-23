@@ -18,16 +18,31 @@
 
             <div class="status__container" :class="{active:show}">
                 <template v-if="status != null">
-                    <div class="status__block" :style="{background:status.color}" v-if="status.id != 5">
-                        {{status.name}}
-                    </div>
-                    <div class="status__block status__block--default" v-else>
-                        Pojazd nie został zgłoszony do naprawy
-                    </div>
+                    <template v-if="status.id != 5">
+                        <div class="status__block" :style="{background:status.color}">
+                            {{status.name}}
+                        </div>
+                        <div class="status__message status__message--left" v-if="status.id == 4">
+                            <strong>
+                                Opis naprawy:
+                            </strong>
+                            <div>
+                                {{eventDetails.description}}
+                            </div>
+                            <br />
 
-                    <button class="btn tap-effect" @click="goToHome">
-                        OK
-                    </button>
+                            Do zapłaty:  <strong>{{eventDetails.price.toFixed(2)}} zł</strong>
+
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div class="status__block status__block--default">
+                            Pojazd nie został zgłoszony do naprawy
+                        </div>
+                    </template>
+                        <button class="btn tap-effect" @click="goToHome">
+                            OK
+                        </button>
                 </template>
                 <template v-else>
                     <template v-if="getReportedCar.is_accepted">
@@ -69,8 +84,8 @@
                             godzinach 8:00 - 17:00.
 
                             <div class="status__buttons">
-                                <button @click="accept(getReportedCar.id)">Akceptuję</button>
-                                <button @click="cancel(getReportedCar.id)">Anuluję zgłoszenie</button>
+                                <button @click="acceptNewDate(getReportedCar.id)">Akceptuję</button>
+                                <button @click="notAcceptNewDate(getReportedCar.id)">Anuluję zgłoszenie</button>
                             </div>
                         </div>
                         <template v-else>
@@ -101,7 +116,8 @@
         name: "Status",
         data() {
             return {
-                status: {type: Object, default: () => ({})},
+                status: 0,
+                eventDetails: 0,
                 show: false,
                 empty: null,
             }
@@ -113,7 +129,7 @@
                 return moment(String(date)).format('DD.MM.YYYY')
             },
 
-            accept(id) {
+            acceptNewDate(id) {
                 this.$store.state.isLoading = true
                 axios.get('/acceptReportedCar/' + id)
                     .then(response => {
@@ -125,7 +141,7 @@
                     })
             },
 
-            cancel(id) {
+            notAcceptNewDate(id) {
                 this.$store.state.isLoading = true
                 this.$store.state.isLoading = true
                 axios.delete('/reportedCars/' + id)
@@ -150,7 +166,10 @@
                 this.$store.dispatch('getStatus', reportedCarId)
                     .then(success => {
                         this.status = this.$store.getters.getEventStatus
+                        this.eventDetails = this.$store.getters.getEventDetails
                         this.show = true
+
+
                     })
                     .catch(error => {
                             this.$store.state.isLoading = false
@@ -212,6 +231,10 @@
             font-size: 15px;
             color: $mainColor;
             text-align: center;
+
+            &--left{
+                text-align: left;
+            }
 
             .icon {
                 font-size: 40px;

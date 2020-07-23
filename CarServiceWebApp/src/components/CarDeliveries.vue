@@ -183,7 +183,6 @@
     @import "../assets/scss/config";
     @import "../assets/scss/dashboard";
     @import "../assets/scss/block";
-    @import "../assets/scss/message";
 
 </style>
 

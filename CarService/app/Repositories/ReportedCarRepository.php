@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\ReportedCar;
 use Carbon\Carbon;
-use function foo\func;
+
 
 class ReportedCarRepository extends BaseRepository
 {
@@ -19,10 +19,9 @@ class ReportedCarRepository extends BaseRepository
         return $this->model->where('is_accepted', 0)
             ->whereNull('new_reported_car_date')
             ->with('car')
-            ->orderBy('reported_car_date','ASC')
+            ->orderBy('reported_car_date', 'ASC')
             ->get();
     }
-
 
 
     public function getAccepted()
@@ -34,18 +33,20 @@ class ReportedCarRepository extends BaseRepository
             ->get();
     }
 
-    public function getTodaysCarDeliveries()
+    public function getTodayCarDeliveries()
     {
         return $this->model
             ->with('car')
-            ->where('is_accepted', 1)
-            ->where('is_delivered', 0)
             ->where(function ($query) {
                 $query->whereDate('reported_car_date', Carbon::today())
-                    ->whereNull('new_reported_car_date');
+                    ->whereNull('new_reported_car_date')
+                    ->where('is_accepted', 1)
+                    ->where('is_delivered', 0);
             })
             ->orWhere(function ($query) {
-                $query->whereDate('new_reported_car_date', Carbon::today());
+                $query->whereDate('new_reported_car_date', Carbon::today())
+                    ->where('is_accepted', 1)
+                    ->where('is_delivered', 0);
             })
             ->get();
     }
@@ -53,21 +54,20 @@ class ReportedCarRepository extends BaseRepository
     public function getRemainingCarDeliveries()
     {
         return $this->model
+            ->where('is_accepted', 1)
+            ->where('is_delivered', 0)
             ->with('car')
             ->where(function ($query) {
-                $query->whereDate('reported_car_date','!=', Carbon::today())
+                $query->whereDate('reported_car_date', '!=', Carbon::today())
                     ->whereNull('new_reported_car_date');
             })
             ->orWhere(function ($query) {
-                $query->whereDate('new_reported_car_date','!=', Carbon::today());
+                $query->whereDate('new_reported_car_date', '!=', Carbon::today());
             })
-            ->where('is_accepted', 1)
-            ->where('is_delivered', 0)
-            ->orderBy('reported_car_date','ASC')
-            ->orderBy('new_reported_car_date','ASC')
+            ->orderBy('reported_car_date', 'ASC')
+            ->orderBy('new_reported_car_date', 'ASC')
             ->get();
     }
-
 
 
     public function acceptDate($id)

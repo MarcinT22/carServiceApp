@@ -21,6 +21,21 @@ Vue.prototype.$formatDate = function (date) {
   return moment(String(date)).format('DD.MM.YYYY')
 };
 
+Vue.prototype.$disabledDatesTwoDays = function (date) {
+  const today = new Date();
+  const newDate = new Date(today);
+  newDate.setDate(newDate.getDate() + 1)
+  const day = new Date(date).getDay()
+  return day === 0 || day === 6 || date < newDate;
+};
+
+Vue.prototype.$disabledDatesOneDay = function (date) {
+  const today = new Date();
+  const day = new Date(date).getDay()
+  return day === 0 || day === 6 || date < today;
+};
+
+
 
 
 /* eslint-disable no-new */

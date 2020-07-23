@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Event;
+use Carbon\Carbon;
 
 class EventRepository extends BaseRepository
 {
@@ -23,7 +24,7 @@ class EventRepository extends BaseRepository
 
     public function getNewEvents()
     {
-       return $this->getAllEvent()->whereNull('start')->whereIn('status_id', [1, 2, 3]);
+        return $this->getAllEvent()->whereNull('start')->whereIn('status_id', [1, 2, 3]);
     }
 
     public function getSheduledEvents()
@@ -32,12 +33,18 @@ class EventRepository extends BaseRepository
     }
 
 
-    public function getNumberOfAll()
+    public function getAllEvents()
     {
-        return $this->getAll()
+        return $this->model
             ->whereNotNull('start')
+            ->whereIn('status_id', [1, 2, 3]);
+    }
+
+    public function getTodayEvents()
+    {
+        return $this->model
             ->whereIn('status_id', [1, 2, 3])
-            ->count();
+            ->whereDate('start', Carbon::today());
 
     }
 
@@ -46,13 +53,16 @@ class EventRepository extends BaseRepository
         return $this->model->whereIn('status_id', [2])->get()->count();
     }
 
-    public function getNumberOfReadyCars()
+    public function getReadyCars()
     {
-        return $this->model->whereIn('status_id', [4])->get()->count();
+        return $this->model
+            ->with('reportedCar.car')
+            ->whereIn('status_id', [4])
+            ->get();
     }
 
-    public function getLastStatusId($reportedCarId)
+    public function getEventDetails($reportedCarId)
     {
-        return $this->model->where('reported_car_id',$reportedCarId)->orderBy('id','desc')->first();
+        return $this->model->where('reported_car_id', $reportedCarId)->orderBy('id', 'desc')->first();
     }
 }

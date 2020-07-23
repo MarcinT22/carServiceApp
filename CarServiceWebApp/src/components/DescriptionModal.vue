@@ -4,7 +4,7 @@
         <div class="modal__container">
         <div class="modal__block">
             <div class="modal__header">
-                <i class="fas fa-info-circle"></i> Opis usterki
+                <i class="fas fa-info-circle"></i> {{title}}
                 <a href="#" @click.prevent="close"  class="modal__close">
                     <i class="fas fa-times"></i>
                 </a>
@@ -26,17 +26,20 @@
             return {
                 isShow: false,
                 description:null,
+                title:null,
 
             }
         },
         methods: {
             close() {
                 this.isShow = !this.isShow
-
+                document.body.classList.remove('overflow');
             },
-            show(description) {
+            show(description, title) {
+                document.body.classList.add('overflow');
                 this.isShow = !this.isShow
                 this.description = description
+                this.title = title
             },
 
         },

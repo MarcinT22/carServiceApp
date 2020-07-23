@@ -150,7 +150,7 @@ class ReportedCarApiController extends Controller
 
     public function getCarDeliveries()
     {
-        $todaysCarDeliveries = $this->reportedCarRepository->getTodaysCarDeliveries();
+        $todaysCarDeliveries = $this->reportedCarRepository->getTodayCarDeliveries();
         $remainingCarDeliveries = $this->reportedCarRepository->getRemainingCarDeliveries();
         return new ReportedCarResource([
             'todaysCarDeliveries'=>$todaysCarDeliveries,
