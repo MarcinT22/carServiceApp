@@ -9,6 +9,7 @@ use App\Repositories\StatusRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\Event as EventResource;
 use App\Http\Resources\EventCollection as EventCollectionResource;
+use Carbon\Carbon;
 
 class EventApiController extends Controller
 {
@@ -43,6 +44,9 @@ class EventApiController extends Controller
     {
 
         $data = $request->all();
+        if (isset($data['start'])) {
+            $data['start'] = (Carbon::parse($data['start'])->addDay(1))->format('Y-m-d');
+        }
         $this->eventRepository->update($data, $id);
         return array("message" => "success");
     }
@@ -53,32 +57,34 @@ class EventApiController extends Controller
         return array("message" => "success");
     }
 
-    public function getAmountAll()
-    {
-        $amount = $this->eventRepository->getAmountAll();
-
-        return array("amount" => $amount);
-    }
-
-    public function getAmountInProgressEvents()
-    {
-        $amount = $this->eventRepository->getAmountInProgressEvents();
-
-        return array("amount" => $amount);
-    }
-
-    public function getAmountReadyCars()
-    {
-        $amount = $this->eventRepository->getAmountReadyCars();
-
-        return array("amount" => $amount);
-    }
 
     public function getEventStatus($reportedCarId)
     {
-        $lastStatus = $this->eventRepository->getLastStatusId($reportedCarId);
-        $status = $this->statusRepository->find($lastStatus['status_id']);
 
-        return array($status);
+        $eventDetails = $this->eventRepository->getEventDetails($reportedCarId);
+        $status = $this->statusRepository->find($eventDetails['status_id']);
+
+        return new EventResource([
+            'status'=>$status,
+            'eventDetails'=> $eventDetails
+        ]);
+    }
+
+    public function getNewEvents()
+    {
+        $newEvents = $this->eventRepository->getNewEvents();
+        return new EventResource($newEvents);
+    }
+
+    public function getSheduledEvents()
+    {
+        $sheduledEvents = $this->eventRepository->getSheduledEvents();
+        return new EventResource($sheduledEvents);
+    }
+
+    public function getReadyCars()
+    {
+        $readyCars = $this->eventRepository->getReadyCars();
+        return new EventResource($readyCars);
     }
 }

@@ -9,10 +9,12 @@ export default new Vuex.Store({
         car: null,
         reportedCar: null,
         status: null,
+        eventDetails:null,
         eventStatus: null,
         isLoading: true,
         zone: null,
-        blur:false,
+        blur: false,
+        messageType:null
 
     },
 
@@ -55,13 +57,19 @@ export default new Vuex.Store({
             state.reportedCar = reportedCar
         },
 
-        setStatus(state, status) {
-            state.eventStatus = status
-        },
+        setStatus(state, eventStatus) {
+            state.eventStatus = eventStatus
 
+        },
+        setEventDetails(state,eventDetails)
+        {
+            state.eventDetails = eventDetails
+        },
         setStatusError() {
             state.status = 'error'
         },
+
+
 
 
     },
@@ -140,7 +148,9 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 axios.get('/getEventStatus/' + reportedCarId)
                     .then(response => {
-                        commit('setStatus', response.data[0])
+                        commit('setStatus', response.data.data.status)
+                        commit('setEventDetails',  response.data.data.eventDetails)
+
                         resolve(response)
 
                     })
@@ -153,6 +163,7 @@ export default new Vuex.Store({
         },
 
 
+
     },
 
     getters: {
@@ -160,8 +171,10 @@ export default new Vuex.Store({
         getZone: state => state.zone,
         getCar: state => state.car,
         getEventStatus: state => state.eventStatus,
+        getEventDetails: state => state.eventDetails,
         getReportedCar: state => state.reportedCar,
-        isLoading: state => state.isLoading
+        isLoading: state => state.isLoading,
+        getMessageType: state => state.messageType
 
     }
 })

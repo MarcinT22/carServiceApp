@@ -8,9 +8,13 @@ export default new Vuex.Store({
         token: localStorage.getItem('token') || null,
         user: null,
         status: null,
-
-
-
+        events: [],
+        message: null,
+        isMessage: false,
+        statusesList:[],
+        sheduledEvents:[],
+        acceptedReportedCars:[],
+        isLoading:true
     },
 
     mutations: {
@@ -28,6 +32,44 @@ export default new Vuex.Store({
             state.status = ''
             state.token = ''
         },
+        MESSAGE_SUCCESS(state, message) {
+            state.status = 'success'
+            state.message = message
+            state.isMessage = true
+            setTimeout(() => {
+                state.isMessage = false
+                this.message = null
+            }, 4000)
+        },
+        GET_STATUS_LIST_SUCCESS(state, statusesList)
+        {
+            state.statusesList = statusesList
+        },
+        GET_STATUS_LIST_ERROR(state)
+        {
+            state.status = 'error'
+        },
+        GET_SHEDULED_EVENTS_SUCCESS(state, sheduledEvents)
+        {
+            state.sheduledEvents = sheduledEvents
+            this.state.isLoading=false
+        },
+        GET_SHEDULED_EVENTS_ERROR(state)
+        {
+            state.status = 'error'
+            this.state.isLoading=false
+        },
+
+        GET_ACCEPTED_REPORTED_CARS_SUCCESS(state, acceptedReportedCars)
+        {
+            state.acceptedReportedCars = acceptedReportedCars
+            this.state.isLoading=false
+        },
+        GET_ACCEPTED_REPORTED_CARS_ERROR(state)
+        {
+            state.status = 'error'
+            this.state.isLoading=false
+        }
 
     },
 
@@ -39,7 +81,7 @@ export default new Vuex.Store({
                     .then(response => {
                         const token = response.data.access_token;
                         localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                         commit('LOGIN_SUCCESS', token)
                         resolve(response)
 
@@ -63,6 +105,91 @@ export default new Vuex.Store({
 
         },
 
+        message({commit}, message) {
+            return new Promise((resolve, reject) => {
+                commit('MESSAGE_SUCCESS', message)
+                resolve()
+            })
+        },
+
+        getStatusList({commit}){
+
+            return new Promise((resolve, reject)=>{
+                axios.get('/statuses')
+                    .then(response=>{
+                        let statusesList= response.data.data
+                        commit('GET_STATUS_LIST_SUCCESS', statusesList)
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('GET_STATUS_LIST_ERROR')
+                        reject(error)
+                    })
+
+            })
+        },
+
+
+        getSheduledEvents({commit}){
+            this.state.isLoading = true
+            return new Promise((resolve, reject)=>{
+                axios.get('/getSheduledEvents')
+                    .then(response => {
+                        let events = response.data.data;
+                        let sheduledEvents = [];
+                        events.forEach((value, index) => {
+                            let event = {
+                                id: value.id,
+                                title: value.title,
+                                start: value.start,
+                                backgroundColor:value.status.color,
+                                allDetails:value
+                            }
+                            sheduledEvents.push(event);
+                        });
+                        commit('GET_SHEDULED_EVENTS_SUCCESS', sheduledEvents)
+                        resolve(response)
+
+
+                    })
+                    .catch(error => {
+                        commit('GET_SHEDULED_EVENTS_ERROR')
+                        reject(error)
+                    })
+
+            })
+        },
+
+        getAcceptedReportedCars({commit}){
+            this.state.isLoading = true
+            return new Promise((resolve, reject)=>{
+                axios.get('/getAcceptedReportedCars')
+                    .then(response => {
+                        let events = response.data.data.reportedCars;
+                        let acceptedReportedCars = [];
+                        events.forEach((value, index) => {
+                            let event = {
+                                id: value.id,
+                                title: value.car.brand+' '+value.car.model+' '+value.car.registration_number,
+                                start: value.new_reported_car_date || value.reported_car_date,
+                                allDetails:value
+                            }
+                            acceptedReportedCars.push(event);
+                        });
+                        commit('GET_ACCEPTED_REPORTED_CARS_SUCCESS', acceptedReportedCars)
+                        resolve(response)
+
+
+                    })
+                    .catch(error => {
+                        commit('GET_ACCEPTED_REPORTED_CARS_ERROR')
+                        reject(error)
+                    })
+
+            })
+        }
+
+
 
 
 
@@ -70,7 +197,16 @@ export default new Vuex.Store({
 
     getters: {
         isUserLogged: state => !!state.token,
-        authStatus: state => state.status,
+        authStatus:
+            state => state.status,
+        getMessage:
+            state => state.message,
+        isMessage:
+            state => state.isMessage,
+        getStatusesList: state => state.statusesList,
+        getSheduledEvents: state => state.sheduledEvents,
+        getAcceptedReportedCars: state => state.acceptedReportedCars,
+        isLoading: state => state.isLoading,
 
 
     }

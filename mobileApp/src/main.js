@@ -15,6 +15,15 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = token
 }
 
+
+Vue.prototype.$disabledDates = function (date) {
+  const today = new Date();
+  const newDate = new Date(today);
+  newDate.setDate(newDate.getDate() + 1)
+  const day = new Date(date).getDay()
+  return day === 0 || day === 6 || date < newDate;
+};
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

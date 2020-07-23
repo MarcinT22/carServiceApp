@@ -33,6 +33,8 @@
                 setTimeout(() => this.$store.state.isLoading = false, 500);
             },
 
+
+
             onDeviceReady(){
                 document.addEventListener("offline", this.offline, false);
                 document.addEventListener("online", this.online, false);
@@ -123,6 +125,7 @@
         &.active {
             opacity: 1;
             visibility: visible;
+            transition:none
 
         }
 
@@ -225,8 +228,6 @@
     .tap-effect {
         position: relative;
         overflow: hidden;
-        overflow: hidden;
-
 
         &::after {
             content: '';
@@ -281,7 +282,7 @@
         margin-top: 20px;
         color: $errorColor;
         font-size: 14px;
-        font-weight: 600
+        font-weight: 400
     }
 
 

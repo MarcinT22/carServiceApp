@@ -1,70 +1,314 @@
-.block{
+.block {
   width: 100%;
-  border-radius: 5px;
-  box-shadow:10px 10px 15px 0 rgba(30,94,119,0.1),-2px -2px 10px 0 rgba(30,94,119,0.1);
-  padding:30px 15px;
+  border-radius: 4px;
+  box-shadow:0 0 20px 0 rgba(100,100,100,0.1);
+  padding: 30px 15px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   background: #fff;
+  transition: opacity 2s ease-in-out;
+  position: relative;
+  overflow: hidden;
 
-  h2{
-    margin:0;
-    font-size:24px;
-    color:$mainColor;
-    text-align: center;
-    font-weight: 400;
+
+
+  &--baseline {
+    align-items: baseline;
+    justify-content: start;
+
   }
 
-  &__count{
-    font-size:43px;
-    font-weight: bold;
+  &--processing {
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      z-index: 5;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(200, 200, 200, 0.5);
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+      border: 5px solid $lightMainColor;
+      border-top-color: $mainColor;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      z-index: 6;
+      animation: loading 0.5s ease-in-out infinite;
+
+    }
+  }
+
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    color: $textColor;
     text-align: center;
-    color: $mainColor;
+    font-weight: 500;
+  }
+
+  &__count {
+    font-size: 43px;
+    font-weight: 500;
+    text-align: center;
+    color: $textColor;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding:15px 0;
+    padding: 15px 0;
+
   }
 
-  a{
-    width:100%;
+  a {
+    width: 100%;
     display: block;
-    font-size:16px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 600;
     text-decoration: none;
-    color:#fff;
+    color: $mainColor;
     text-align: center;
     text-transform: uppercase;
-    padding:8px 10px;
+    padding: 8px 10px;
     box-sizing: border-box;
-    max-width:200px;
-    margin:0 auto;
-    border-radius: 5px;
-    background:$highlightColor;
-    transition:background 0.3s;
-    margin-top:10px;
+    max-width: 200px;
+    margin: 0 auto;
+    border-radius: 4px;
+    background: rgba(0,0,0,0);
+    transition: background 0.3s, color 0.3s;
+    margin-top: 10px;
+    border: 1px solid $mainColor;
 
-    &:hover{
-      background: $highlightColorHover;
+    &:hover {
+      background: $mainColor;
+      color:#fff;
+    }
+
+    &:active{
+      background: darken($mainColor, 10%);
     }
   }
 
-  &__text{
-    font-size:14px;
+  &__text {
+    font-size: 14px;
     font-weight: 400;
+    color:$textColor;
 
-    &--light{
-      color:#999;
-      margin-top:10px;
+    strong{
+      font-weight: 500;
+    }
 
-      span{
-        display: inline-block;
-        margin:0 8px;
+    &--center{
+      text-align: center;
+    }
+    span{
+      color: $lightText;
+      font-weight: 400;
+      font-size:16px;
+      display: block;
+
+      &.highlight{
+        color:$textColor;
+        font-weight: 600;
       }
+    }
+
+
+    &--light {
+      color: $lightText;
+      margin-top: 10px;
+
+      span {
+        display: inline-block;
+        margin: 0 8px;
+      }
+    }
+  }
+
+  &__data {
+    font-size: 14px;
+    width:100%;
+  }
+
+  &__date{
+   padding-top:10px;
+  }
+
+  &__newDate{
+    margin-top:15px;
+  }
+
+  &__action {
+
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top:15px;
+
+
+  }
+
+  &__actionBtn {
+    border: 0;
+    outline: none;
+    padding: 8px 10px;
+    display: inline-block;
+    border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    margin-bottom:10px;
+    font-size:14px;
+    padding:10px;
+    border:1px solid;
+    font-weight: 600;
+    background: rgba(0,0,0,0);
+    line-height: 120%;
+
+    &:hover{
+      background: #333;
+      color:#fff;
+    }
+
+    &:last-child{
+      margin-bottom:0;
+    }
+
+    &:active{
+      background: darken(#333, 10%);
+    }
+
+
+
+    i {
+      font-size: 18px;
+      margin-right:3px;
+    }
+
+    &--accept {
+      border-color:$success;
+      color:$success;
+
+
+      &:hover {
+        background: $success;
+        color:#fff;
+      }
+
+      &:active{
+        background: darken($success, 10%);
+      }
+    }
+
+    &--changeDate {
+      border-color:$alert;
+      color:$alert;
+
+
+      &:hover {
+        background: $alert;
+        color:#fff;
+      }
+
+      &:active{
+        background: darken($alert, 10%);
+      }
+    }
+
+    &--info{
+      border-color:$info;
+      color:$info;
+
+
+      &:hover {
+        background: $info;
+        color:#fff;
+      }
+
+      &:active{
+        background: darken($info, 10%);
+      }
+    }
+
+    &--cancel{
+      border-color:$danger;
+      color:$danger;
+
+
+      &:hover {
+        background: $danger;
+        color:#fff;
+      }
+
+      &:active{
+        background: darken($danger, 10%);
+      }
+    }
+
+  }
+
+  hr {
+
+    border: 0;
+    border-top: 1px solid $lightMainColor;
+  }
+
+
+  table{
+    td{
+      font-weight: 400;
+      color:$textColor;
+      vertical-align: top;
+      &.bold{
+        font-weight: 600;
+      }
+    }
+  }
+
+  &__delete{
+    position: absolute;
+    top:0px;
+    right:0px;
+    background:rgba(0,0,0,0);
+    outline:none;
+    borer:0;
+    color:$danger;
+    border:0;
+    font-size:20px;
+    cursor: pointer;
+    transition:color 0.3s;
+    &:hover {
+      color: lighten($danger, 10%);
+    }
+
+    &:active{
+      color: darken($danger, 20%);
     }
   }
 }

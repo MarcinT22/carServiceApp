@@ -36,9 +36,7 @@
 <script>
     export default {
         name: "Home",
-        created(){
-            setTimeout(() => this.$store.state.isLoading=false, 500);
-        },
+
         methods:
         {
             changeZone(zone)
@@ -48,23 +46,28 @@
 
             goToStatus()
             {
-
+                this.$store.state.isLoading = true
                 this.changeZone('status')
                 this.$router.push('/login')
             },
 
             goToVisitWithMyCar()
             {
+                this.$store.state.isLoading = true
                 this.changeZone('myCar')
                 this.$router.push('/login')
             },
 
             goToVisit()
             {
+                this.$store.state.isLoading = true
                 this.changeZone('newCar')
                 this.$router.push('/NewCarVisit')
             }
-        }
+        },
+        created(){
+            setTimeout(() => this.$store.state.isLoading=false, 500);
+        },
 
     }
 </script>

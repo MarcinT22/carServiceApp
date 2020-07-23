@@ -33,7 +33,7 @@ class LoginCar extends FormRequest
     {
         return [
             'registration_number.required' => 'Numer rejestracyjny jest nieprawidłowy.',
-            'vin.required' => 'Podano nieprawidłowe znaki VIN',
+            'vin.required' => 'Podano nieprawidłowe znaki VIN.',
         ];
     }
 }

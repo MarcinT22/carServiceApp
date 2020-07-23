@@ -1,6 +1,29 @@
 .dashboard{
-  padding:20px 0;
+  padding:40px 0;
 
+
+
+  h1{
+    font-size:24px;
+    color:$textColor;
+    margin-bottom: 30px;
+    margin-top:0;
+    font-weight: 400;
+    text-align: left;
+
+    @media (max-width:$screen-sm)
+    {
+      font-size:20px;
+    }
+  }
+
+  &__title{
+    border-bottom:1px solid lighten($textColor, 60%);
+    padding:5px 0;
+    font-size:20px;
+    margin-bottom:20px;
+
+  }
 
 
   &__container{
@@ -15,6 +38,7 @@
     display: flex;
     flex-wrap: wrap;
     margin:0 -15px;
+
   }
 
   &__col{
@@ -32,5 +56,37 @@
     {
       width:100%;
     }
+
+    &--4{
+      width:25%;
+
+      @media (max-width:$screen-lg)
+      {
+        width:33.33%;
+      }
+
+
+      @media (max-width:$screen-md)
+      {
+        width:50%;
+      }
+      @media (max-width:$screen-sm)
+      {
+        width:100%;
+      }
+
+    }
+
+    &--notFlex{
+      display: block;
+    }
   }
+  &__empty{
+    font-size:16px;
+    color:#ccc;
+    font-weight: 600;
+
+
+  }
+
 }

@@ -1,18 +1,25 @@
 <template>
     <div class="dashboard">
         <div class="dashboard__container">
+            <h1>
+               Pulpit
+            </h1>
             <div class="dashboard__row">
                 <div class="dashboard__col">
                     <div class="block">
                         <h2>
                             Zgłoszenia oczekujące:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{data.amountNotAcceptedReportedCars}}
+                            {{numberOfNotAcceptedReportedCars}}
                         </div>
-                        <a href="#">
+                        </div>
+                        <router-link :to="{ name: 'ReportedCars' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
+
                     </div>
                 </div>
                 <div class="dashboard__col">
@@ -20,18 +27,21 @@
                         <h2>
                             Przyjęcia pojazdów:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
                             <span class="block__text">
                                 dziś:
                             </span>
-                            ---
+                            {{numberOfTodayDeliveries}}
                             <span class="block__text block__text--light">
-                                Łącznie: {{data.amountAcceptedReportedCars}}
+                                Łącznie: {{numberOfAcceptedReportedCars}}
                             </span>
                         </div>
-                        <a href="#">
+                        </div>
+                        <router-link :to="{ name: 'CarDeliveries' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="dashboard__col">
@@ -39,12 +49,15 @@
                         <h2>
                             Nowe zlecenia:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{data.amountDeliveredReportedCars}}
+                            {{numberOfNewEvents}}
                         </div>
-                        <a href="#">
+                        </div>
+                        <router-link :to="{ name: 'NewEvents' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="dashboard__col">
@@ -52,18 +65,21 @@
                         <h2>
                             Zaplanowane naprawy:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
                             <span class="block__text">
                                 dziś:
                             </span>
-                            ---
+                           {{numberOfTodayEvents}}
                             <span class="block__text block__text--light">
-                                Łącznie: {{data.amountEvents}} <span>|</span>W trakcie: {{ data.amountInProgressEvents}}
+                                Łącznie: {{numberOfAllEvents}} <span>|</span>W trakcie: {{ numberOfInProgressEvents}}
                             </span>
                         </div>
-                        <a href="#">
+                        </div>
+                        <router-link :to="{ name: 'RepairCalendar' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="dashboard__col">
@@ -71,12 +87,15 @@
                         <h2>
                             Pojazdy do wydania:
                         </h2>
+                        <div class="loading" v-if="isLoading"></div>
+                        <div class="loadingContainer" :class="{active:!isLoading}">
                         <div class="block__count">
-                            {{data.amountReadyCars}}
+                            {{numberOfReadyCars}}
                         </div>
-                        <a href="#">
+                        </div>
+                        <router-link :to="{ name: 'ReadyCars' }">
                             Zarządzaj
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -85,35 +104,39 @@
 </template>
 
 <script>
-    import axios from 'axios'
-
     const headers = {
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
     }
+    import axios from 'axios'
+
     export default {
         name: "Home",
         data() {
             return {
-                data: {
-                    amountNotAcceptedReportedCars: 0,
-                    amountAcceptedReportedCars: 0,
-                    amountDeliveredReportedCars: 0,
-                    amountEvents: 0,
-                    amountInProgressEvents: 0,
-                    amountReadyCars: 0,
-                }
+                numberOfNotAcceptedReportedCars: 0,
+                numberOfAcceptedReportedCars: 0,
+                numberOfTodayDeliveries:0,
+                numberOfNewEvents: 0,
+                numberOfAllEvents: 0,
+                numberOfTodayEvents: 0,
+                numberOfInProgressEvents: 0,
+                numberOfReadyCars: 0,
+                isLoading: true
             }
         },
         mounted() {
             axios.get('/getStatistics')
                 .then(response => {
-                    this.data.amountNotAcceptedReportedCars=response.data.amountNotAcceptedReportedCars
-                    this.data.amountAcceptedReportedCars=response.data.amountAcceptedReportedCars
-                    this.data.amountDeliveredReportedCars=response.data.amountDeliveredReportedCars
-                    this.data.amountEvents=response.data.amountEvents
-                    this.data.amountInProgressEvents=response.data.amountInProgressEvents
-                    this.data.amountReadyCars=response.data.amountReadyCars
+                    this.numberOfNotAcceptedReportedCars = response.data.numberOfNotAcceptedReportedCars
+                    this.numberOfAcceptedReportedCars = response.data.numberOfAcceptedReportedCars
+                    this.numberOfTodayDeliveries = response.data.numberOfTodayDeliveries
+                    this.numberOfNewEvents = response.data.numberOfNewEvents
+                    this.numberOfAllEvents = response.data.numberOfAllEvents
+                    this.numberOfTodayEvents = response.data.numberOfTodayEvents
+                    this.numberOfInProgressEvents = response.data.numberOfInProgressEvents
+                    this.numberOfReadyCars = response.data.numberOfReadyCars
+                    this.isLoading=false
                 })
                 .catch(error => {
                     console.log(error)

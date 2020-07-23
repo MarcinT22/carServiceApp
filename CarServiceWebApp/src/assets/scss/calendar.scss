@@ -1,0 +1,160 @@
+@import "config";
+
+.fc {
+  padding-bottom: 50px;
+}
+.fc-event {
+  border: 0;
+  padding: 5px;
+  background: $mainColor;
+}
+.fc-day-header {
+  color: #333;
+  font-size: 12px;
+}
+.fc-toolbar{
+  @media (max-width:767px)
+  {
+    flex-direction: column;
+  }
+}
+.fc-center{
+  @media (max-width:767px)
+  {
+    margin:5px 0;
+  }
+}
+
+.fc-toolbar h2 {
+  font-size: 18px;
+  @media (max-width:1024px)
+  {
+    font-size:14px;
+  }
+}
+.fc-button-primary:focus {
+  box-shadow: none !important;
+}
+.fc-button {
+  background: $mainColor;
+  border: 0;
+  font-size: 12px;
+  outline: none;
+  &:hover {
+    background: darken($mainColor, 10%);
+  }
+  &:focus,&:active {
+    background: darken($mainColor, 30%) !important;
+    opacity:0.65;
+  }
+  &-active {
+    background: darken($mainColor, 30%);
+    opacity: 0.65;
+  }
+
+}
+.fc-time-grid .fc-slats td {
+  font-size: 16px;
+  @media (max-width:1024px)
+  {
+    font-size:14px;
+  }
+  @media (max-width:767px)
+  {
+    font-size:12px;
+  }
+}
+.fc-time-grid-event .fc-time {
+  font-size: 12px;
+  font-weight: bold;
+}
+.fc-title {
+  font-size: 12px;
+}
+.fc-past{
+background: #edeee01c !important;
+
+}
+
+.fc-day-top.fc-past{
+  background: none !important;
+}
+
+.fc-day-top{
+  color:$textColor;
+}
+
+.fc-today{
+  background: lighten($mainColor, 32%) !important;
+}
+
+.fc-right{
+  h2{
+    font-weight: 400;
+  }
+}
+
+.fc-view{
+  table{
+    background:rgba(0,0,0,0);
+
+
+    th{
+      border:0;
+    }
+
+    td,th{
+     border:0;
+    }
+
+    th{
+      font-weight:600;
+      font-size:14px;
+
+      &.fc-day-header{
+        background: rgba(0,0,0,0);
+        padding:10px 0;
+        box-sizing: border-box;
+        color:#fff;
+        background: $textColor;
+        font-size:14px;
+        font-weight: 400;
+        border:1px solid #f0f1fd;
+
+      }
+    }
+
+    .fc-day{
+      background:#fff;
+      border:1px solid #f0f1fd;
+
+    }
+  }
+  .fc-event{
+    transition:background 0.3s;
+    background: lighten($danger, 20%);
+    cursor: pointer;
+
+    &:hover{
+      background: lighten($danger, 30%);
+    }
+  }
+}
+
+.legend{
+  margin-bottom:20px;
+  display: flex;
+  &__block{
+    margin-right:10px;
+    font-size:12px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__background{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    margin-right:5px;
+  }
+}

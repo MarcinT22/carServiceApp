@@ -35,6 +35,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         name: "Login",
         data() {
@@ -55,12 +56,21 @@
                         vin,
                     }
                 )
-                    .then(success => {
+                    .then(response => {
 
                         if (this.$store.getters.getZone == 'status') {
                             this.$router.push('/status')
                         } else {
-                            this.$router.push('/visit')
+                            axios.get('/checkIfCarIsReported/' + response.data.car.id)
+                                .then(response => {
+                                   if (response.data.isCarReported)
+                                   {
+                                       this.$store.state.messageType = 'isCarReported'
+                                       this.$router.push('/message')
+                                   }else{
+                                       this.$router.push('/visit')
+                                   }
+                                })
                         }
                     })
                     .catch(error => {

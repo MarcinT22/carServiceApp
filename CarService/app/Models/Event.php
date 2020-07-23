@@ -19,7 +19,7 @@ class Event extends Model
         'backgroundColor',
         'status_id',
         'calendar_id',
-        'reported_cars_id',
+        'reported_car_id',
         'price',
     ];
 
@@ -37,7 +37,7 @@ class Event extends Model
     {
         return $this->hasMany('App\Models\Alert');
     }
-    
+
     public function calendar()
     {
        return  $this->belongsTo('App\Models\Calendar');
