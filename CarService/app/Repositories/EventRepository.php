@@ -65,4 +65,5 @@ class EventRepository extends BaseRepository
     {
         return $this->model->where('reported_car_id', $reportedCarId)->orderBy('id', 'desc')->first();
     }
+
 }

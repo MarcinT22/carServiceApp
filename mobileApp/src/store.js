@@ -14,7 +14,10 @@ export default new Vuex.Store({
         isLoading: true,
         zone: null,
         blur: false,
-        messageType:null
+        messageType:null,
+        alerts:null,
+        numberOfAlerts:0,
+        showAlerts:false,
 
     },
 
@@ -69,7 +72,20 @@ export default new Vuex.Store({
             state.status = 'error'
         },
 
+        setAlerts(state,alerts)
+        {
+            state.alerts = alerts
+            state.numberOfAlerts =  alerts.length
+            if (alerts.length != 0)
+            {
+                state.showAlerts = true
+            }
 
+
+        },
+        setAlertsError() {
+            state.status = 'error'
+        },
 
 
     },
@@ -150,7 +166,6 @@ export default new Vuex.Store({
                     .then(response => {
                         commit('setStatus', response.data.data.status)
                         commit('setEventDetails',  response.data.data.eventDetails)
-
                         resolve(response)
 
                     })
@@ -161,6 +176,21 @@ export default new Vuex.Store({
             })
 
         },
+
+        getAlerts({commit}, reported_car_id)
+        {
+            return new Promise((resolve, reject) => {
+                axios.get('/getNewAlerts/' + reported_car_id)
+                    .then(response => {
+                        commit('setAlerts', response.data.alerts)
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('setAlertsError')
+                        reject(error)
+                    })
+            })
+        }
 
 
 
@@ -174,7 +204,10 @@ export default new Vuex.Store({
         getEventDetails: state => state.eventDetails,
         getReportedCar: state => state.reportedCar,
         isLoading: state => state.isLoading,
-        getMessageType: state => state.messageType
+        getMessageType: state => state.messageType,
+        getAlerts: state=>state.alerts,
+        getNumberOfAlerts: state=>state.numberOfAlerts,
+        showAlerts:state => state.showAlerts
 
     }
 })

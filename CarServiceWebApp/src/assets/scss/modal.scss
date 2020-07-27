@@ -142,8 +142,15 @@
 
     ol,ul{
       padding:0;
-      padding-left:15px;
+      padding-left:25px;
       margin:0;
+      li{
+        line-height: 140%;
+        margin-bottom:5px;
+        &:last-child{
+          margin-bottom:0;
+        }
+      }
     }
 
     &--marginTop{
@@ -186,6 +193,15 @@
 
     &--paddingBottom{
       padding-bottom:20px;
+    }
+
+    &--padding{
+      padding:15px;
+
+    }
+
+    &--hightlight{
+      background: #f2feff;
     }
 
     strong{

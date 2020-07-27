@@ -49,6 +49,7 @@ Route::put('reportedCars/{id}','Api\ReportedCarApiController@update');
 Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
 Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');
 
+
 Route::get('getNotAcceptedReportedCars','Api\ReportedCarApiController@getNotAccepted');
 Route::get('getAcceptedReportedCars','Api\ReportedCarApiController@getAccepted');
 Route::get('acceptReportedCar/{id}','Api\ReportedCarApiController@acceptDate');
@@ -71,7 +72,8 @@ Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStat
 Route::get('getNewEvents','Api\EventApiController@getNewEvents');
 Route::get('getSheduledEvents','Api\EventApiController@getSheduledEvents');
 Route::get('getReadyCars','Api\EventApiController@getReadyCars');
-
+Route::get('getNumberAcceptedAlerts/{event_id}','Api\EventApiController@getNumberOfAcceptedAlerts');
+Route::get('getNewAlerts/{event_id}','Api\EventApiController@getNewAlerts');
 
 
 
@@ -80,6 +82,10 @@ Route::post('alerts','Api\AlertApiController@store');
 Route::put('alerts/{id}','Api\AlertApiController@update');
 Route::delete('alerts/{id}','Api\AlertApiController@destroy');
 Route::get('alerts/{id}','Api\AlertApiController@find');
+Route::get('getAcceptedAlerts/{event_id}','Api\AlertApiController@getAcceptedAlerts');
+Route::put('notAcceptAlert/{id}','Api\AlertApiController@notAcceptAlert');
+Route::put('acceptAlert/{id}','Api\AlertApiController@acceptAlert');
+
 
 Route::get('calendars','Api\CalendarApiController@list');
 Route::post('calendars','Api\CalendarApiController@store');

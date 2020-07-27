@@ -166,60 +166,28 @@
                                     <textarea v-model="faultDescription"
                                               placeholder="Wprowadź opis..."></textarea>
                                     <div class="modal__action modal__action--noBorder modal__action--noPadding">
+                                        <template v-if="!alertIsLoading">
                                         <button class="modal__button modal__button--cancel modal__button--marginTop"
-                                                v-if="!alertIsLoading" @click="isNewFault = !isNewFault">
+                                                @click="isNewFault = !isNewFault">
                                             <i class="far fa-times-circle"></i> Anuluj
                                         </button>
                                         <button class="modal__button modal__button--accept modal__button--marginTop"
-                                                v-if="!alertIsLoading" @click="sendAlert">
+                                                v-if="faultDescription" @click="sendAlert(event.id,faultDescription)">
                                             <i class="far fa-bell"></i> Powiadom klienta
                                         </button>
+                                        </template>
                                         <div class="loading loading--static" v-if="alertIsLoading"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal__text modal__text--paddingBottom">
+                            <div class="modal__text modal__text--padding modal__text--hightlight" v-if="showAcceptedAlerts">
                                 <strong>
                                     Nowe usterki wykryte do naprawy:<br/>
                                 </strong>
                                 <div class="modal__scroll modal__scroll--marginTop">
                                     <ol>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds     asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
-                                        </li>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
-                                        </li>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
-                                        </li>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
-                                        </li>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
-                                        </li>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
-                                        </li>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
-                                        </li>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
-                                        </li>
-                                        <li>
-                                            asdasdasdasd dadfkjsklgf sdf asdfl ;lasdk fl ka;lsdk f;kad;lsfk lkd flks
-                                            dlfk ;lsdkflsdfl; ldksf ;lsdk fl lsd;f sdlfk sdf ds
+                                        <li v-for="acceptedAlert in getAcceptedAlerts">
+                                           {{acceptedAlert.description}}
                                         </li>
                                     </ol>
                                 </div>
@@ -307,21 +275,25 @@
                     this.status_id = 1
                     this.isNewFault = false
                     this.alertIsLoading = false
+                    this.$store.state.showAcceptedAlerts = false
+
                 }, 500);
             },
 
             show(event, option) {
-                document.body.classList.add('overflow');
-                this.isShow = true
-                this.event = event
-                this.option = option
                 if (option == 'repair') {
                     this.price = event.extendedProps.allDetails.price.toFixed(2);
                     this.status_id = event.extendedProps.allDetails.status_id
                     this.status = event.extendedProps.allDetails.status_id
                     this.description = event.extendedProps.allDetails.description
                     this.$store.dispatch('getStatusList')
+                    this.$store.dispatch('getAcceptedAlert',event.id)
                 }
+                document.body.classList.add('overflow');
+                this.isShow = true
+                this.event = event
+                this.option = option
+
             },
             cancelCarDelivery(id) {
                 this.isLoading = true
@@ -368,19 +340,31 @@
                         console.log(error)
                     })
             },
-            sendAlert() {
+            sendAlert(event_id ,alert) {
                 this.alertIsLoading = true
+                this.$store.dispatch('sendAlert',{
+                    event_id: event_id,
+                    description: alert,
+                })
+                    .then(()=>{
+                        setTimeout(() => {
+                            this.isNewFault = false
+                            this.alertIsLoading = false
+                            this.$store.dispatch('message', 'Wysłano powiadomienie do klienta.')
+                            this.faultDescription = null
+                        }, 500);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
 
-                setTimeout(() => {
-                    this.isNewFault = false
-                    this.alertIsLoading = false
-                    this.$store.dispatch('message', 'Wysłano powiadomienie do klienta.')
-                }, 500);
-            }
+            },
+
 
 
         },
-        computed: mapGetters(['getStatusesList']),
+        computed: mapGetters(['getStatusesList','getAcceptedAlerts','showAcceptedAlerts']),
+
 
 
     }

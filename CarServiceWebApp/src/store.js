@@ -11,10 +11,12 @@ export default new Vuex.Store({
         events: [],
         message: null,
         isMessage: false,
-        statusesList:[],
-        sheduledEvents:[],
-        acceptedReportedCars:[],
-        isLoading:true
+        statusesList: [],
+        sheduledEvents: [],
+        acceptedReportedCars: [],
+        isLoading: true,
+        acceptedAlerts: [],
+        showAcceptedAlerts:false,
     },
 
     mutations: {
@@ -41,34 +43,47 @@ export default new Vuex.Store({
                 this.message = null
             }, 4000)
         },
-        GET_STATUS_LIST_SUCCESS(state, statusesList)
-        {
+        GET_STATUS_LIST_SUCCESS(state, statusesList) {
             state.statusesList = statusesList
         },
-        GET_STATUS_LIST_ERROR(state)
-        {
+        GET_STATUS_LIST_ERROR(state) {
             state.status = 'error'
         },
-        GET_SHEDULED_EVENTS_SUCCESS(state, sheduledEvents)
-        {
+        GET_SHEDULED_EVENTS_SUCCESS(state, sheduledEvents) {
             state.sheduledEvents = sheduledEvents
-            this.state.isLoading=false
+            this.state.isLoading = false
         },
-        GET_SHEDULED_EVENTS_ERROR(state)
-        {
+        GET_SHEDULED_EVENTS_ERROR(state) {
             state.status = 'error'
-            this.state.isLoading=false
+            this.state.isLoading = false
         },
 
-        GET_ACCEPTED_REPORTED_CARS_SUCCESS(state, acceptedReportedCars)
-        {
+        GET_ACCEPTED_REPORTED_CARS_SUCCESS(state, acceptedReportedCars) {
             state.acceptedReportedCars = acceptedReportedCars
-            this.state.isLoading=false
+            this.state.isLoading = false
         },
-        GET_ACCEPTED_REPORTED_CARS_ERROR(state)
+        GET_ACCEPTED_REPORTED_CARS_ERROR(state) {
+            state.status = 'error'
+            this.state.isLoading = false
+        },
+
+        SEND_ALERT_SUCCESS(state, alert) {
+            state.status = 'success'
+        },
+        SEND_ALERT_ERROR(state) {
+            state.status = 'error'
+        },
+        GET_ACCEPTED_ALERTS_SUCCESS(state,acceptedAlerts)
+        {
+            state.status = 'success'
+            state.acceptedAlerts = acceptedAlerts
+            if (acceptedAlerts.length > 0) {
+                state.showAcceptedAlerts = true
+            }
+        },
+        GET_ACCEPTED_ALERTS_ERROR(state)
         {
             state.status = 'error'
-            this.state.isLoading=false
         }
 
     },
@@ -112,12 +127,12 @@ export default new Vuex.Store({
             })
         },
 
-        getStatusList({commit}){
+        getStatusList({commit}) {
 
-            return new Promise((resolve, reject)=>{
+            return new Promise((resolve, reject) => {
                 axios.get('/statuses')
-                    .then(response=>{
-                        let statusesList= response.data.data
+                    .then(response => {
+                        let statusesList = response.data.data
                         commit('GET_STATUS_LIST_SUCCESS', statusesList)
                         resolve(response)
                     })
@@ -130,9 +145,9 @@ export default new Vuex.Store({
         },
 
 
-        getSheduledEvents({commit}){
+        getSheduledEvents({commit}) {
             this.state.isLoading = true
-            return new Promise((resolve, reject)=>{
+            return new Promise((resolve, reject) => {
                 axios.get('/getSheduledEvents')
                     .then(response => {
                         let events = response.data.data;
@@ -142,8 +157,8 @@ export default new Vuex.Store({
                                 id: value.id,
                                 title: value.title,
                                 start: value.start,
-                                backgroundColor:value.status.color,
-                                allDetails:value
+                                backgroundColor: value.status.color,
+                                allDetails: value
                             }
                             sheduledEvents.push(event);
                         });
@@ -160,9 +175,9 @@ export default new Vuex.Store({
             })
         },
 
-        getAcceptedReportedCars({commit}){
+        getAcceptedReportedCars({commit}) {
             this.state.isLoading = true
-            return new Promise((resolve, reject)=>{
+            return new Promise((resolve, reject) => {
                 axios.get('/getAcceptedReportedCars')
                     .then(response => {
                         let events = response.data.data.reportedCars;
@@ -170,9 +185,9 @@ export default new Vuex.Store({
                         events.forEach((value, index) => {
                             let event = {
                                 id: value.id,
-                                title: value.car.brand+' '+value.car.model+' '+value.car.registration_number,
+                                title: value.car.brand + ' ' + value.car.model + ' ' + value.car.registration_number,
                                 start: value.new_reported_car_date || value.reported_car_date,
-                                allDetails:value
+                                allDetails: value
                             }
                             acceptedReportedCars.push(event);
                         });
@@ -187,10 +202,40 @@ export default new Vuex.Store({
                     })
 
             })
-        }
+        },
+
+        sendAlert({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios.post('/alerts', data)
+                    .then(response => {
+                        commit('SEND_ALERT_SUCCESS')
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('SEND_ALERT_ERROR')
+                        reject(error)
+                    })
+            })
+
+        },
+
+        getAcceptedAlert({commit},event_id) {
+            return new Promise((resolve, reject) => {
+                axios.get('/getAcceptedAlerts/'+event_id)
+                    .then(response => {
+                        let acceptedAlerts = response.data.data;
+                        commit('GET_ACCEPTED_ALERTS_SUCCESS', acceptedAlerts)
+                        resolve(response)
 
 
+                    })
+                    .catch(error => {
+                        commit('GET_ACCEPTED_ALERTS_ERROR')
+                        reject(error)
+                    })
 
+            })
+        },
 
 
     },
@@ -207,6 +252,8 @@ export default new Vuex.Store({
         getSheduledEvents: state => state.sheduledEvents,
         getAcceptedReportedCars: state => state.acceptedReportedCars,
         isLoading: state => state.isLoading,
+        getAcceptedAlerts: state => state.acceptedAlerts,
+        showAcceptedAlerts: state=>state.showAcceptedAlerts
 
 
     }

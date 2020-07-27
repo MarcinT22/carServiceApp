@@ -109,4 +109,6 @@ class ReportedCarRepository extends BaseRepository
         $this->model->find($id)->update(['is_delivered' => 1]);
     }
 
+
+
 }

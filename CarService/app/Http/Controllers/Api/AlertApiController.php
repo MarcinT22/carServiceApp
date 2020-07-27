@@ -48,4 +48,27 @@ class AlertApiController extends Controller
         $this->alertRepository->delete($id);
         return array("message"=>"success");
     }
+
+    public function getAcceptedAlerts($id)
+    {
+        $acceptedAlerts = $this->alertRepository->getAcceptedAlerts($id);
+        return new AlertResource($acceptedAlerts);
+    }
+
+    public function acceptAlert($id)
+    {
+        $data['is_accepted'] = 1;
+        $this->alertRepository->update($data, $id);
+        return array("message"=>"success");
+    }
+
+    public function notAcceptAlert($id)
+    {
+        $data['is_accepted'] = 0;
+        $this->alertRepository->update($data, $id);
+        return array("message"=>"success");
+    }
+
+
+
 }
