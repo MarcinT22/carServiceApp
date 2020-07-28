@@ -172,7 +172,6 @@
                         this.eventDetails = this.$store.getters.getEventDetails
                         this.show = true
 
-
                     })
                     .catch(error => {
                             this.$store.state.isLoading = false

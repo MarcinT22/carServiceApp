@@ -83,9 +83,27 @@ export default new Vuex.Store({
 
 
         },
-        setAlertsError() {
+        setAlertsError(state) {
             state.status = 'error'
         },
+        acceptAlert(state)
+        {
+            state.status = 'success'
+        },
+
+        acceptAlertError(state)
+        {
+            state.status = 'error'
+        },
+
+        notAcceptAlert(state)
+        {
+            state.status = 'success'
+        },
+        notAcceptAlertError(state)
+        {
+            state.status = 'error'
+        }
 
 
     },
@@ -190,8 +208,37 @@ export default new Vuex.Store({
                         reject(error)
                     })
             })
-        }
+        },
 
+        acceptAlert({commit}, id)
+        {
+            return new Promise((resolve, reject) => {
+                axios.put('/acceptAlert/' + id)
+                    .then(response => {
+                        commit('acceptAlert')
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('acceptAlertError')
+                        reject(error)
+                    })
+            })
+        },
+
+        notAcceptAlert({commit}, id)
+        {
+            return new Promise((resolve, reject) => {
+                axios.put('/notAcceptAlert/' + id)
+                    .then(response => {
+                        commit('notAcceptAlert')
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('notAcceptAlertError')
+                        reject(error)
+                    })
+            })
+        }
 
 
     },

@@ -31,11 +31,12 @@
 <style scoped lang="scss">
     @import "../assets/scss/config";
     .alert{
-        position: fixed;
+        position: absolute;
         top:15px;
         right:15px;
         opacity:0;
         visibility: hidden;
+        cursor: pointer;
         transition:opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         &.active{
             opacity: 1;
