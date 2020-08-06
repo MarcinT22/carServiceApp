@@ -146,6 +146,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit('authRequest')
                 axios.post('/reportedMyCar', data)
+
                     .then(response => {
                         const token = response.data.access_token;
                         localStorage.setItem('token', token)

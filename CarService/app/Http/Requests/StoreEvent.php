@@ -26,7 +26,7 @@ class StoreEvent extends FormRequest
         return [
             "status_id"=>"required",
             "calendar_id"=>"required",
-            "reported_cars_id"=>"required",
+            "reported_car_id"=>"required",
         ];
     }
 }

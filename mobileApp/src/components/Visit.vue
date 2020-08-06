@@ -119,6 +119,7 @@
                             this.$router.push('/message')
                     })
                     .catch(error => {
+
                             this.$store.state.isLoading = false
                             var errorsLabel = document.querySelectorAll(".form__error");
 

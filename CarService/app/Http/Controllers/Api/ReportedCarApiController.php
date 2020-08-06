@@ -77,7 +77,6 @@ class ReportedCarApiController extends Controller
 
         $data = $request->all();
         $checkIfCarIsReported = $this->reportedCarRepository->checkIfCarIsReported($data['car_id']);
-
         if (!$checkIfCarIsReported)
         {
             $reportedCarDate = Carbon::parse($data['reported_car_date'])->addDay(1);

@@ -91,17 +91,17 @@ Route::group([
     Route::put('notAcceptAlert/{id}','Api\AlertApiController@notAcceptAlert');
     Route::put('acceptAlert/{id}','Api\AlertApiController@acceptAlert');
     Route::get('getNewAlerts/{event_id}','Api\EventApiController@getNewAlerts');
-    Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStatus');
 
+    Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStatus');
 });
 
 
 
-//    Route::get('cars','Api\CarApiController@list');
-//    Route::post('cars','Api\CarApiController@store');
-//    Route::put('cars/{id}','Api\CarApiController@update');
-//    Route::delete('cars/{id}','Api\CarApiController@destroy');
-//    Route::get('cars/{id}','Api\CarApiController@find');
+    Route::get('cars','Api\CarApiController@list');
+    Route::post('cars','Api\CarApiController@store');
+    Route::put('cars/{id}','Api\CarApiController@update');
+    Route::delete('cars/{id}','Api\CarApiController@destroy');
+    Route::get('cars/{id}','Api\CarApiController@find');
 
 
 
