@@ -14,6 +14,7 @@
         </h1>
 
         <div class="alerts" v-for="(alert, index) in alerts" :id="'alert-'+index">
+            <div class="alerts__loading"></div>
             <div class="alerts__description">
                 {{alert.description}}
             </div>
@@ -74,20 +75,19 @@
         methods: {
             accept(id, index) {
                 document.getElementById('alert-' + index).classList.add('alerts--processing')
-                this.alerts.splice(index, 1);
-                // this.$store.dispatch('acceptAlert', id)
-                //     .then(() => {
-                //         this.alerts.splice(index, 1);
-                //
-                //     })
+                this.$store.dispatch('acceptAlert', id)
+                    .then(() => {
+                        this.alerts.splice(index, 1);
+                        document.getElementById('alert-' + index).classList.remove('alerts--processing')
+                    })
             },
 
             notAccept(id, index) {
+                document.getElementById('alert-' + index).classList.add('alerts--processing')
                 this.$store.dispatch('notAcceptAlert', id)
                     .then(() => {
-
                         this.alerts.splice(index, 1);
-
+                        document.getElementById('alert-' + index).classList.remove('alerts--processing')
                     })
             },
             goToHome() {
@@ -130,6 +130,12 @@
             &::after{
                 z-index: 2;
                 opacity: 1;
+            }
+
+            .alerts__loading{
+                opacity:1;
+                visibility: visible;
+                transition:opacity 0.3s, visibility 0.3s;
             }
         }
 
@@ -203,6 +209,26 @@
                     }
                 }
             }
+        }
+
+
+        &__loading{
+            position: absolute;
+            top:0;
+            right:0;
+            left:0;
+            bottom:0;
+            margin:auto;
+            width:25px;
+            height:25px;
+            border-radius: 100%;
+            border:4px solid #f3f3f3;
+            border-top-color:$mainColor;
+            z-index: 3;
+            animation: loading 0.7s linear infinite;
+            visibility: hidden;
+            opacity:0;
+
         }
     }
 

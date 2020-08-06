@@ -182,7 +182,7 @@
                             </div>
                             <div class="modal__text modal__text--padding modal__text--hightlight" v-if="showAcceptedAlerts">
                                 <strong>
-                                    Nowe usterki wykryte do naprawy:<br/>
+                                    Nowe usterki zatwierdzone przez klienta:<br/>
                                 </strong>
                                 <div class="modal__scroll modal__scroll--marginTop">
                                     <ol>

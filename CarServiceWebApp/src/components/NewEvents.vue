@@ -114,7 +114,6 @@
                     start: this.start
                 })
                     .then(response => {
-                        console.log(response)
                         this.newEvents.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
                         this.$store.dispatch('message', 'Zlecenie zostało dodane do kalendarza.')
