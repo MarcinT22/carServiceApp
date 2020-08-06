@@ -153,7 +153,7 @@
             },
             remove(id,index, today){
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
-                axios.delete('/reportedCars/' + id)
+                axios.delete('/deleteReportedCars/' + id)
                     .then(response => {
                         if (today == 1)
                         {

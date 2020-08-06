@@ -27,16 +27,19 @@ Route::group([
     Route::get('logout', 'Api\UserApiController@logout');
     Route::get('user', 'Api\UserApiController@user');
 
+
+    Route::get('getAcceptedReportedCars','Api\ReportedCarApiController@getAccepted');
+
     Route::get('getStatistics','Api\StatisticsApiController@getStatistics');
+
 
     Route::get('reportedCars','Api\ReportedCarApiController@list');
     Route::put('reportedCars/{id}','Api\ReportedCarApiController@update');
 
     Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');
 
-
     Route::get('getNotAcceptedReportedCars','Api\ReportedCarApiController@getNotAccepted');
-    Route::get('getAcceptedReportedCars','Api\ReportedCarApiController@getAccepted');
+
 
     Route::get('getCarDeliveries','Api\ReportedCarApiController@getCarDeliveries');
 
@@ -72,6 +75,8 @@ Route::group([
     Route::get('getSheduledEvents','Api\EventApiController@getSheduledEvents');
     Route::get('getReadyCars','Api\EventApiController@getReadyCars');
     Route::get('acceptReportedCar/{id}','Api\ReportedCarApiController@acceptDate');
+    Route::delete('deleteReportedCars/{id}','Api\ReportedCarApiController@destroy');
+
 
 });
 
@@ -81,24 +86,22 @@ Route::group([
 ], function() {
 
     Route::post('reportedMyCar','Api\ReportedCarApiController@storeWithMyCar');
-
-
+    Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
+    Route::get('checkIfCarIsReported/{id}','Api\ReportedCarApiController@checkIfCarIsReported');
     Route::put('notAcceptAlert/{id}','Api\AlertApiController@notAcceptAlert');
     Route::put('acceptAlert/{id}','Api\AlertApiController@acceptAlert');
     Route::get('getNewAlerts/{event_id}','Api\EventApiController@getNewAlerts');
     Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStatus');
-    Route::get('checkIfCarIsReported/{id}','Api\ReportedCarApiController@checkIfCarIsReported');
+
 });
 
 
 
-    Route::get('cars','Api\CarApiController@list');
-    Route::post('cars','Api\CarApiController@store');
-    Route::put('cars/{id}','Api\CarApiController@update');
-    Route::delete('cars/{id}','Api\CarApiController@destroy');
-    Route::get('cars/{id}','Api\CarApiController@find');
-    Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
-
+//    Route::get('cars','Api\CarApiController@list');
+//    Route::post('cars','Api\CarApiController@store');
+//    Route::put('cars/{id}','Api\CarApiController@update');
+//    Route::delete('cars/{id}','Api\CarApiController@destroy');
+//    Route::get('cars/{id}','Api\CarApiController@find');
 
 
 

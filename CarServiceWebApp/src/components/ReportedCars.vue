@@ -150,7 +150,7 @@
 
             remove(id, index) {
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
-                axios.delete('/reportedCars/' + id)
+                axios.delete('/deleteReportedCars/' + id)
                     .then(response => {
                         this.reportedCars.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
