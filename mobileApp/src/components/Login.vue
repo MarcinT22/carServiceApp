@@ -103,6 +103,7 @@
         },
         created() {
             setTimeout(() => this.$store.state.isLoading = false, 500);
+
         },
 
 

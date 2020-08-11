@@ -1,0 +1,71 @@
+.settings {
+  box-sizing: border-box;
+  background: #fff;
+  width:100%;
+  border-radius: 4px;
+  box-shadow:0 0 20px 0 rgba(100,100,100,0.1);
+
+
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding:20px;
+
+    @media (max-width: $screen-md) {
+
+      &:active {
+        .settings {
+          &__circle {
+            background: darken($settings, 10%);
+          }
+        }
+      }
+    }
+
+
+    @media (min-width: $screen-md+1px) {
+      &:hover {
+        .settings {
+          &__circle {
+            background: darken($settings, 10%);
+          }
+        }
+      }
+
+      &:active {
+        .settings {
+          &__circle {
+            background: darken($settings, 25%) !important;
+          }
+        }
+      }
+    }
+  }
+
+  &__circle {
+    font-size: 30px;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: $settings;
+    transition: color 0.3s, background 0.3s;
+  }
+
+  h2 {
+    color: $textColor;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 10px;
+  }
+}

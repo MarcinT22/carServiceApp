@@ -26,9 +26,9 @@
             <div class="menu__right">
                 <ul>
                     <li>
-                        <a href="#" class="menu__icon">
+                        <router-link :to="{name:'Settings'}" class="menu__icon">
                             <i class="fas fa-cog"></i>
-                        </a>
+                        </router-link>
                     </li>
                     <li>
                         <a href="#" class="menu__icon" @click="logout">
@@ -175,7 +175,7 @@
                         }
 
                         &:active{
-                            background: darken($lightMainColor, 10%);
+                            background: darken($lightMainColor, 10%) !important;
                         }
                     }
 
@@ -288,6 +288,32 @@
             i{
                 margin-right: 0 !important;
             }
+
+            &.active{
+                color: #4cb1ff;
+                background: #edf4ff;
+            }
+
+            @media (min-width: $screen-md+1px) {
+                &:hover {
+
+                    color: $mainColor !important;
+                    background: $lightMainColor !important;
+                }
+
+                &:active{
+                    background: darken($lightMainColor, 10%) !important;
+                }
+            }
+
+            @media (max-width: $screen-md) {
+                &:active {
+                    color: #fff !important;
+                    background: rgba(255, 255, 255, 0.15) !important;
+                }
+            }
+
+
         }
 
 

@@ -11,6 +11,8 @@ import CarDeliveriesCalendar from '@/components/CarDeliveriesCalendar'
 import NewEvents from '@/components/NewEvents'
 import RepairCalendar from '@/components/RepairCalendar'
 import ReadyCars from '@/components/ReadyCars'
+import Settings from '@/components/Settings'
+import StatusList from '@/components/StatusList'
 
 
 
@@ -78,6 +80,22 @@ let router = new Router({
       path: '/read-cars',
       name: 'ReadyCars',
       component: ReadyCars,
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings,
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/statusList',
+      name: 'StatusList',
+      component: StatusList,
       meta:{
         auth: true
       }

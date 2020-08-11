@@ -31,9 +31,14 @@
                     if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
                         this.$store.dispatch('logout')
                     }
-                    throw err;
+                    // throw err;
                 });
             });
+
+           if ( this.$router.currentRoute.name == 'Login' && this.$store.getters.isUserLogged)
+           {
+               this.$router.push('/')
+           }
         }
     }
 </script>
