@@ -17,6 +17,7 @@ export default new Vuex.Store({
         isLoading: true,
         acceptedAlerts: [],
         showAcceptedAlerts:false,
+        users:[],
     },
 
     mutations: {
@@ -85,7 +86,24 @@ export default new Vuex.Store({
         GET_ACCEPTED_ALERTS_ERROR(state)
         {
             state.status = 'error'
-        }
+        },
+
+        GET_USERS_SUCCESS(state, users) {
+            state.users = users
+            state.isLoading = false
+        },
+        GET_USERS_ERROR(state) {
+            state.status = 'error'
+            state.isLoading = false
+        },
+
+        DELETE_USER_SUCCESS(state) {
+            state.status = 'success'
+        },
+        DELETE_USER_ERROR(state) {
+            state.status = 'error'
+
+        },
 
     },
 
@@ -238,6 +256,44 @@ export default new Vuex.Store({
         },
 
 
+        getUsers({commit}) {
+            this.state.isLoading = true
+            return new Promise((resolve, reject) => {
+                axios.get('/getUsers/')
+                    .then(response => {
+                        let users = response.data.users;
+                        commit('GET_USERS_SUCCESS', users)
+                        resolve(response)
+
+
+                    })
+                    .catch(error => {
+                        commit('GET_USERS_ERROR')
+                        reject(error)
+                    })
+
+            })
+        },
+
+        deleteUser({commit}, {id, index}) {
+            return new Promise((resolve, reject) => {
+                axios.delete('/deleteUser/'+id)
+                    .then(response => {
+                        commit('DELETE_USER_SUCCESS')
+                        this.state.users.splice(index, 1)
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('DELETE_USER_ERROR')
+                        reject(error)
+                    })
+
+            })
+        },
+
+
+
+
     },
 
     getters: {
@@ -253,7 +309,8 @@ export default new Vuex.Store({
         getAcceptedReportedCars: state => state.acceptedReportedCars,
         isLoading: state => state.isLoading,
         getAcceptedAlerts: state => state.acceptedAlerts,
-        showAcceptedAlerts: state=>state.showAcceptedAlerts
+        showAcceptedAlerts: state=>state.showAcceptedAlerts,
+        getUsers:state=>state.users
 
 
     }

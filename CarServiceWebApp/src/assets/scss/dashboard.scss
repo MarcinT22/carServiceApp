@@ -89,4 +89,64 @@
 
   }
 
+  &__action{
+    padding-bottom:10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    &Btn{
+      text-decoration: none;
+      border: 0;
+      outline: none;
+      padding: 8px 10px;
+      display: inline-block;
+      border-radius: 4px;
+      color: #333;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      margin-bottom:10px;
+      font-size:14px;
+      padding:10px;
+      border:1px solid;
+      font-weight: 600;
+      background: rgba(0,0,0,0);
+      line-height: 120%;
+
+      &:hover{
+        background: #333;
+        color:#fff;
+      }
+
+      &:last-child{
+        margin-bottom:0;
+      }
+
+      &:active{
+        background: darken(#333, 10%);
+      }
+
+
+
+      i {
+        font-size: 18px;
+        margin-right:3px;
+      }
+      &--accept {
+        border-color:$success;
+        color:$success;
+
+
+        &:hover {
+          background: $success;
+          color:#fff;
+        }
+
+        &:active{
+          background: darken($success, 10%);
+        }
+      }
+    }
+  }
+
 }

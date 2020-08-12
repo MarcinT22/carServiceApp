@@ -16,16 +16,20 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('login', 'Api\UserApiController@login');
-Route::post('register', 'Api\UserApiController@register');
 Route::post('cars/login', 'Api\CarApiController@login');
 Route::get('getCarsModels','Api\CarApiController@getCarsModels');
 Route::post('reportedNewCar','Api\ReportedCarApiController@storeWithNewCars');
 
+
 Route::group([
     'middleware' => 'auth:api'
 ], function() {
+    Route::post('register', 'Api\UserApiController@register');
     Route::get('logout', 'Api\UserApiController@logout');
     Route::get('user', 'Api\UserApiController@user');
+
+    Route::get('getUsers', 'Api\UserApiController@getUsers');
+    Route::delete('deleteUser/{id}', 'Api\UserApiController@destroy');
 
 
     Route::get('getAcceptedReportedCars','Api\ReportedCarApiController@getAccepted');
@@ -96,12 +100,12 @@ Route::group([
 });
 
 
-
-    Route::get('cars','Api\CarApiController@list');
-    Route::post('cars','Api\CarApiController@store');
-    Route::put('cars/{id}','Api\CarApiController@update');
-    Route::delete('cars/{id}','Api\CarApiController@destroy');
-    Route::get('cars/{id}','Api\CarApiController@find');
+//
+//    Route::get('cars','Api\CarApiController@list');
+//    Route::post('cars','Api\CarApiController@store');
+//    Route::put('cars/{id}','Api\CarApiController@update');
+//    Route::delete('cars/{id}','Api\CarApiController@destroy');
+//    Route::get('cars/{id}','Api\CarApiController@find');
 
 
 

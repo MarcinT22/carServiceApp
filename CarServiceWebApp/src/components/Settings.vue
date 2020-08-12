@@ -7,12 +7,12 @@
             <div class="dashboard__row">
                 <div class="dashboard__col dashboard__col--4">
                    <div class="settings">
-                       <router-link :to="{ name: 'ReportedCars' }">
+                       <router-link :to="{ name: 'Users' }">
                             <div class="settings__circle">
                                 <i class="fas fa-user-friends"></i>
                             </div>
                            <h2>
-                               Użytkownicy
+                               Lista użytkowników
                            </h2>
                        </router-link>
                    </div>

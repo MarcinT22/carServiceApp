@@ -63,7 +63,7 @@
         overflow: hidden;
     }
 
-    a {
+    a, button {
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
 
@@ -97,6 +97,11 @@
             width:20px;
             height:20px;
             border-width: 4px;
+        }
+
+        &--normal{
+            position: static;
+            margin:0;
         }
 
         &--mCenter{

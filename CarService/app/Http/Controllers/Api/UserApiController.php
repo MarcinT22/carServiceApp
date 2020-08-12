@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUser;
 use App\Http\Requests\RegisterUser;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Calendar;
@@ -13,6 +14,14 @@ use Carbon\Carbon;
 
 class UserApiController extends Controller
 {
+
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function register(RegisterUser $request)
     {
 
@@ -65,5 +74,22 @@ class UserApiController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    public function getUsers()
+    {
+        $users = $this->userRepository->getAll();
+        return response()->json([
+            'users'=>$users
+        ]);
+
+    }
+
+    public function destroy($id)
+    {
+        $this->userRepository->delete($id);
+        return response()->json([
+            'message'=>'success'
+        ]);
     }
 }
