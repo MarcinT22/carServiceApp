@@ -114,12 +114,27 @@
     &--flex{
       display: flex;
       margin:0 -15px;
+
+      @media (max-width:$screen-sm)
+      {
+        flex-direction: column;
+      }
       div{
         width:50%;
         padding:0 15px;
 
+        @media (max-width:$screen-sm)
+        {
+          width:100%;
+        }
+
         &:last-child{
           border-left:2px solid $lightMainColor;
+          @media (max-width:$screen-sm)
+          {
+           border:0;
+            margin-top:10px;
+          }
         }
       }
     }
@@ -193,6 +208,7 @@
 
     &--paddingBottom{
       padding-bottom:20px;
+
     }
 
     &--padding{
@@ -202,6 +218,7 @@
 
     &--hightlight{
       background: #f2feff;
+      margin-bottom:20px;
     }
 
     strong{

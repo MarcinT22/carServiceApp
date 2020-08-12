@@ -61,6 +61,11 @@
                 this.visibleMenu = !this.visibleMenu;
                 document.body.classList.toggle("overflow");
             },
+            closeMenu()
+            {
+                this.visibleMenu = false;
+                document.body.classList.remove("overflow");
+            },
             logout() {
                 this.$store.dispatch('logout')
                     .then(() => {
@@ -69,6 +74,11 @@
             },
 
         },
+        watch: {
+            $route () {
+               this.closeMenu()
+            }
+        }
 
 
     }
@@ -289,10 +299,7 @@
                 margin-right: 0 !important;
             }
 
-            &.active{
-                color: #4cb1ff;
-                background: #edf4ff;
-            }
+
 
             @media (min-width: $screen-md+1px) {
                 &:hover {
@@ -308,8 +315,8 @@
 
             @media (max-width: $screen-md) {
                 &:active {
-                    color: #fff !important;
-                    background: rgba(255, 255, 255, 0.15) !important;
+                    color: $mainColor !important;
+                    background: $lightMainColor !important;
                 }
             }
 

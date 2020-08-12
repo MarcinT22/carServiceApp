@@ -7,7 +7,7 @@
 
             <div class="loading loading--allPage" v-if="isLoading"></div>
             <div class="loadingContainer" :class="{active:!isLoading}">
-                <div class="legend">
+                <div class="legend legend--top">
                     <div class="legend__block" v-for="status in getStatusesList">
                         <span class="legend__background" :style="{background:status.color}"></span> - {{status.name}}
                     </div>

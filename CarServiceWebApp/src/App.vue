@@ -98,6 +98,15 @@
             height:20px;
             border-width: 4px;
         }
+
+        &--mCenter{
+            @media (max-width:$screen-sm)
+            {
+                right:0;
+                left:0;
+                margin: auto;
+            }
+        }
     }
 
 

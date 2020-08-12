@@ -11,8 +11,11 @@
                         <div class="statusList__col">
 
                             <template  v-if="statusIndex != index">
+                                <div class="statusList__number">
+                                    {{index+1}}
+                                </div>
                             <span :style="{'background':status.color}"></span>
-                            <div>
+                            <div class="statusList__text">
                                 {{status.name}}
                             </div>
                             </template>
@@ -23,12 +26,52 @@
 
                         </div>
                         <div class="statusList__col">
-                            <button @click="edit(index)">
-                                Edytuj
-                            </button>
+                           <div class="statusList__action">
+                               <button @click="edit(index)" v-if="statusIndex != index"  class="statusList__button">
+                                   Edytuj
+                               </button>
+                               <template v-if="statusIndex === index && savingIndex != index">
+                                   <button @click="statusIndex = null"  class="statusList__button statusList__button--cancel">
+                                       Anuluj
+                                   </button>
+                                   <button @click="save(index,status.id,status.name,status.color)"  class="statusList__button statusList__button--save">
+                                       Zapisz
+                                   </button>
+                               </template>
+                               <div class="loading loading--static loading--mCenter" v-if="savingIndex === index"></div>
+                           </div>
+
                         </div>
                     </div>
+                    <ol>
+                        <li>
+                            <p>
+                                1 - Status wyświetlany podczas przyjęcia zlecenia do realizacji
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                2 - Status wyświetlany podczas realizacji zlecenia
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                3 - Status wyświetlany podczas wstrzymania zlecenia
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                4 - Status wyświetlany, gdy zlecenie zostało wykonane
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                5 - Status wyświetlany, gdy zlecenie zostało zakończone
+                            </p>
+                        </li>
+                    </ol>
                 </div>
+
 
 
             </div>
@@ -41,12 +84,14 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import axios from 'axios'
     export default {
         name: "StatusList",
         data()
         {
             return{
                 statusIndex:null,
+                savingIndex:null,
             }
         },
         computed: mapGetters(['getStatusesList','isLoading']),
@@ -58,6 +103,18 @@
             edit(index)
             {
                 this.statusIndex = index
+            },
+            save(index, id, name, color)
+            {
+                this.savingIndex = index
+                axios.put('/statuses/' + id, {
+                    name: name,
+                    color: color,
+                }).then(()=>{
+                    this.statusIndex = null
+                    this.$store.dispatch('message', 'Zapisano.')
+                    this.savingIndex = null
+                })
             }
         }
 
