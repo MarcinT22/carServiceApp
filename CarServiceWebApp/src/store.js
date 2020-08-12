@@ -40,31 +40,32 @@ export default new Vuex.Store({
             state.isMessage = true
             setTimeout(() => {
                 state.isMessage = false
-                this.message = null
+                state.message = null
             }, 4000)
         },
         GET_STATUS_LIST_SUCCESS(state, statusesList) {
             state.statusesList = statusesList
+            state.isLoading = false
         },
         GET_STATUS_LIST_ERROR(state) {
             state.status = 'error'
         },
         GET_SHEDULED_EVENTS_SUCCESS(state, sheduledEvents) {
             state.sheduledEvents = sheduledEvents
-            this.state.isLoading = false
+            state.isLoading = false
         },
         GET_SHEDULED_EVENTS_ERROR(state) {
             state.status = 'error'
-            this.state.isLoading = false
+            state.isLoading = false
         },
 
         GET_ACCEPTED_REPORTED_CARS_SUCCESS(state, acceptedReportedCars) {
             state.acceptedReportedCars = acceptedReportedCars
-            this.state.isLoading = false
+            state.isLoading = false
         },
         GET_ACCEPTED_REPORTED_CARS_ERROR(state) {
             state.status = 'error'
-            this.state.isLoading = false
+            state.isLoading = false
         },
 
         SEND_ALERT_SUCCESS(state, alert) {
@@ -128,7 +129,6 @@ export default new Vuex.Store({
         },
 
         getStatusList({commit}) {
-
             return new Promise((resolve, reject) => {
                 axios.get('/statuses')
                     .then(response => {
