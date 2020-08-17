@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || null,
-        user: localStorage.getItem('user') || null,
+        user: localStorage.getItem('user') || [],
         status: null,
         events: [],
         message: null,
@@ -105,9 +105,6 @@ export default new Vuex.Store({
 
         },
 
-        SET_USER(state, user) {
-            state.user = user
-        },
 
 
 
@@ -121,12 +118,13 @@ export default new Vuex.Store({
                     .then(response => {
 
                         const token = response.data.access_token;
+
                         const user = response.data.user;
+                        console.log(user)
                         localStorage.setItem('token', token)
-                        localStorage.setItem('user', response.data.user)
+                        localStorage.setItem('user',JSON.stringify(user))
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                         commit('LOGIN_SUCCESS', token)
-                        commit('SET_USER', response.data.user)
                         resolve(response)
 
                     })
@@ -321,7 +319,8 @@ export default new Vuex.Store({
         getAcceptedAlerts: state => state.acceptedAlerts,
         showAcceptedAlerts: state=>state.showAcceptedAlerts,
         getUsers:state=>state.users,
-        getUser:state => state.user
+        getUser:state => state.user,
+        isAdmin:state => JSON.parse(state.user).is_admin
 
 
     }

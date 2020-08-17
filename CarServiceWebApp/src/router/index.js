@@ -137,18 +137,8 @@ router.beforeEach((to, from, next)=>{
 
     }
     else{
-      console.log(store.getters.getUser)
-      // let user = JSON.parse(localStorage.getItem('user'))
-      next();
-      // if(to.matched.some(record => record.meta.isAdmin)) {
-      //   if (store.getters.getUser.is_admin == 1)
-      //   {
-      //     next()
-      //   }else{
-      //     next({name:'Home'})
-      //   }
-      // }
 
+        next()
     }
   }else{
     next()

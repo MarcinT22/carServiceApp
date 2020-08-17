@@ -2,7 +2,7 @@
     <div class="dashboard">
         <div class="dashboard__container">
             <h1>
-               Pulpit
+               Pulpit {{name}}
             </h1>
             <div class="dashboard__row">
                 <div class="dashboard__col">
@@ -122,7 +122,8 @@
                 numberOfTodayEvents: 0,
                 numberOfInProgressEvents: 0,
                 numberOfReadyCars: 0,
-                isLoading: true
+                isLoading: true,
+                name:localStorage.user
             }
         },
         mounted() {
@@ -141,6 +142,7 @@
                 .catch(error => {
                     console.log(error)
                 })
+            console.log(localStorage.user['name'])
         },
 
     }
