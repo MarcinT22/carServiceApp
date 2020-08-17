@@ -91,7 +91,8 @@ let router = new Router({
       name: 'Settings',
       component: Settings,
       meta:{
-        auth: true
+        auth: true,
+        isAdmin:true
       }
     },
     {
@@ -136,8 +137,17 @@ router.beforeEach((to, from, next)=>{
 
     }
     else{
-
-      next()
+      console.log(store.getters.getUser)
+      // let user = JSON.parse(localStorage.getItem('user'))
+      next();
+      // if(to.matched.some(record => record.meta.isAdmin)) {
+      //   if (store.getters.getUser.is_admin == 1)
+      //   {
+      //     next()
+      //   }else{
+      //     next({name:'Home'})
+      //   }
+      // }
 
     }
   }else{

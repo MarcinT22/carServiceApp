@@ -4,6 +4,9 @@
             <h1>
                 Nowy użytkownik
             </h1>
+            <div class="error" v-if="errors">
+                {{errors}}
+            </div>
             <div class="block block--baseline">
                 <form @submit.prevent="createUser">
                     <div class="block__field">
@@ -68,6 +71,7 @@
                 confirm_passwordError: null,
                 isAdmin: false,
                 isLoading: false,
+                errors:null,
 
             }
         },
@@ -98,7 +102,7 @@
                             this.$store.dispatch('message', 'Użytkownik został dodany.')
                         })
                         .catch(error => {
-                            console.log(error)
+                           this.errors = 'Nie można stworzyć użytkownika.'
                             this.isLoading = false
                         })
 

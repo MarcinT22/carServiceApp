@@ -48,10 +48,11 @@
             remove(id, index)
             {
                 document.getElementById('userId-' + index).classList.add('block__item--processing')
-                // this.$store.dispatch('deleteUser', {id, index})
-                //     .then(()=>{
-                //         document.getElementById('userId-' + index).classList.remove('block__item--processing')
-                //     })
+                this.$store.dispatch('deleteUser', {id, index})
+                    .then(()=>{
+                        document.getElementById('userId-' + index).classList.remove('block__item--processing')
+                        this.$store.dispatch('message', 'Użytkownik został usunięty.')
+                    })
             }
         }
     }
