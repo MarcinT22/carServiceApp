@@ -76,7 +76,7 @@
                             <input type="checkbox" v-model="isDelivered"> Pojazd został dostarczony do warsztatu
                         </label>
                         <div class="block__date" v-if="!isDelivered">
-                            <label class="margin">Data dostarczenia pojazdu</label>
+                            <label class="margin">Data dostarczenia pojazdu:</label>
                             <date-picker v-model="reported_car_date" :editable="false"
                                          :disabled-date="$disabledDatesOneDay"
                                          type="date" format="DD.MM.YYYY"
@@ -105,13 +105,12 @@
         data() {
             return {
                 showCars: false,
-                search: '',
+                search: null,
                 car: null,
                 isChosen: false,
-                description: '',
+                description: null,
                 reported_car_date: null,
                 isDelivered: true,
-                reported_car_date: null,
             }
         },
         created() {
@@ -144,6 +143,8 @@
             cancel() {
                 this.isChosen = false
                 this.car = null
+                this.reported_car_date = null
+                this.description = null
             }
         },
         computed: {
