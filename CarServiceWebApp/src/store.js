@@ -18,6 +18,7 @@ export default new Vuex.Store({
         acceptedAlerts: [],
         showAcceptedAlerts:false,
         users:[],
+        cars:[],
     },
 
     mutations: {
@@ -105,6 +106,17 @@ export default new Vuex.Store({
 
         },
 
+        GET_CARS_SUCCESS(state,cars){
+            state.cars = cars
+            state.isLoading = false
+        },
+
+        GET_CARS_ERRORS(state)
+        {
+            state.status = 'error'
+            state.isLoading = false
+        }
+
 
 
 
@@ -120,7 +132,6 @@ export default new Vuex.Store({
                         const token = response.data.access_token;
 
                         const user = response.data.user;
-                        console.log(user)
                         localStorage.setItem('token', token)
                         localStorage.setItem('user',JSON.stringify(user))
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
@@ -131,6 +142,7 @@ export default new Vuex.Store({
                     .catch(error => {
                         commit('LOGIN_ERROR')
                         localStorage.removeItem('token')
+                        localStorage.removeItem('user');
                         reject(error)
                     })
             })
@@ -141,6 +153,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit('LOGOUT');
                 localStorage.removeItem('token');
+                localStorage.removeItem('user');
                 delete axios.defaults.headers.common['Authorization']
                 resolve()
             })
@@ -299,6 +312,24 @@ export default new Vuex.Store({
             })
         },
 
+        getCars({commit}) {
+            this.state.isLoading = true
+            return new Promise((resolve, reject) => {
+                axios.get('/cars/')
+                    .then(response => {
+                        let cars = response.data.data;
+                        commit('GET_CARS_SUCCESS', cars)
+                        resolve(response)
+
+
+                    })
+                    .catch(error => {
+                        commit('GET_CARS_ERROR')
+                        reject(error)
+                    })
+
+            })
+        },
 
 
 
@@ -319,8 +350,8 @@ export default new Vuex.Store({
         getAcceptedAlerts: state => state.acceptedAlerts,
         showAcceptedAlerts: state=>state.showAcceptedAlerts,
         getUsers:state=>state.users,
-        getUser:state => state.user,
-        isAdmin:state => JSON.parse(state.user).is_admin
+        getCars:state=>state.cars
+
 
 
     }

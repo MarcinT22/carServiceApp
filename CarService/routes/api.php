@@ -30,7 +30,8 @@ Route::group([
 
     Route::get('getUsers', 'Api\UserApiController@getUsers');
     Route::delete('deleteUser/{id}', 'Api\UserApiController@destroy');
-
+    Route::get('user/{id}', 'Api\UserApiController@findUser');
+    Route::put('user/{id}','Api\UserApiController@update');
 
     Route::get('getAcceptedReportedCars','Api\ReportedCarApiController@getAccepted');
 
@@ -82,6 +83,13 @@ Route::group([
     Route::delete('deleteReportedCars/{id}','Api\ReportedCarApiController@destroy');
 
 
+    Route::get('cars','Api\CarApiController@list');
+    Route::post('cars','Api\CarApiController@store');
+    Route::put('cars/{id}','Api\CarApiController@update');
+    Route::delete('cars/{id}','Api\CarApiController@destroy');
+    Route::get('cars/{id}','Api\CarApiController@find');
+
+
 });
 
 
@@ -100,12 +108,7 @@ Route::group([
 });
 
 
-//
-//    Route::get('cars','Api\CarApiController@list');
-//    Route::post('cars','Api\CarApiController@store');
-//    Route::put('cars/{id}','Api\CarApiController@update');
-//    Route::delete('cars/{id}','Api\CarApiController@destroy');
-//    Route::get('cars/{id}','Api\CarApiController@find');
+
 
 
 

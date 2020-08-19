@@ -19,7 +19,8 @@
                                 <table>
                                     <tr>
                                         <td class="bold">Model:</td>
-                                        <td> {{newEvent.reported_car.car.brand}} {{newEvent.reported_car.car.model}}</td>
+                                        <td> {{newEvent.reported_car.car.brand}} {{newEvent.reported_car.car.model}}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="bold">Rok:</td>
@@ -45,37 +46,37 @@
                                         <i class="fas fa-info-circle"></i> Opis usterki
                                     </button>
                                     <button href="#" class="block__actionBtn block__actionBtn--changeDate"
-                                            @click="showDateInput = index, start=null"  v-if="showDateInput != index">
+                                            @click="showDateInput = index, start=null" v-if="showDateInput != index">
                                         <i class="far fa-calendar-alt"></i> Zaplanuj naprawę
                                     </button>
                                 </div>
                                 <template v-if="showDateInput === index">
                                     <hr>
-                                    <div  class="block__newDate">
-                                    <div class="block__text">
-                                        <strong>Wybierz datę naprawy pojazdu:</strong>
-                                    </div>
-                                    <div class="block__date">
+                                    <div class="block__newDate">
+                                        <div class="block__text">
+                                            <strong>Wybierz datę naprawy pojazdu:</strong>
+                                        </div>
+                                        <div class="block__date">
 
-                                        <date-picker v-model="start" :editable="false"
-                                                     :disabled-date="$disabledDatesOneDay"
-                                                     type="date" format="DD.MM.YYYY"
-                                                     placeholder="Wybierz datę"
-                                                     id="date"></date-picker>
+                                            <date-picker v-model="start" :editable="false"
+                                                         :disabled-date="$disabledDatesOneDay"
+                                                         type="date" format="DD.MM.YYYY"
+                                                         placeholder="Wybierz datę"
+                                                         id="date"></date-picker>
 
+                                        </div>
+                                        <div class="block__action">
+                                            <button class="block__actionBtn block__actionBtn--cancel"
+                                                    @click="showDateInput = null">
+                                                <i class="far fa-times-circle"></i> Anuluj
+                                            </button>
+                                            <button class="block__actionBtn block__actionBtn--accept"
+                                                    @click="addToCalendar(newEvent.id, index)" v-if="start">
+                                                <i class="far fa-check-circle"></i> Dodaj do kalendarza
+                                            </button>
+                                        </div>
                                     </div>
-                                   <div class="block__action">
-                                       <button class="block__actionBtn block__actionBtn--cancel"
-                                               @click="showDateInput = null">
-                                           <i class="far fa-times-circle"></i> Anuluj
-                                       </button>
-                                       <button class="block__actionBtn block__actionBtn--accept"
-                                               @click="addToCalendar(newEvent.id, index)" v-if="start">
-                                           <i class="far fa-check-circle"></i> Dodaj do kalendarza
-                                       </button>
-                                   </div>
-                                </div>
-                            </template>
+                                </template>
                             </div>
 
                         </div>
@@ -99,15 +100,15 @@
 
     export default {
         name: "NewEvents",
-        data(){
-            return{
+        data() {
+            return {
                 isLoading: true,
-                newEvents:0,
+                newEvents: 0,
                 showDateInput: null,
                 start: null,
             }
         },
-        methods:{
+        methods: {
             addToCalendar(id, index) {
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
                 axios.put('/events/' + id, {
@@ -126,7 +127,9 @@
             },
             remove(id, index) {
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
-                axios.delete('/events/' + id)
+                axios.put('/events/' + id, {
+                    status_id: 5
+                })
                     .then(response => {
                         this.newEvents.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
@@ -138,8 +141,7 @@
                     })
             },
 
-            showDescription(description)
-            {
+            showDescription(description) {
                 this.$refs['descriptionModal'].show(description)
             }
 
@@ -154,6 +156,7 @@
                     console.log(error)
                 })
         },
+
         components: {DatePicker, DescriptionModal},
     }
 </script>

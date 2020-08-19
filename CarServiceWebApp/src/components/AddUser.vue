@@ -25,14 +25,14 @@
                     </div>
                     <div class="block__field">
                         <label for="password">Hasło</label>
-                        <input type="text" v-model="password" id="password" :class="{'error':passwordError}"/>
+                        <input type="password" v-model="password" id="password" :class="{'error':passwordError}"/>
                         <div class="block__error" v-if="passwordError">
                             {{passwordError}}
                         </div>
                     </div>
                     <div class="block__field">
                         <label for="confirm_password">Powtórz hasła</label>
-                        <input type="text" v-model="confirm_password" id="confirm_password"
+                        <input type="password" v-model="confirm_password" id="confirm_password"
                                :class="{'error':confirm_passwordError}"/>
                         <div class="block__error" v-if="confirm_passwordError">
                             {{confirm_passwordError}}

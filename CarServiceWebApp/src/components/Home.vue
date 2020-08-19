@@ -2,7 +2,8 @@
     <div class="dashboard">
         <div class="dashboard__container">
             <h1>
-               Pulpit {{name}}
+               Pulpit
+
             </h1>
             <div class="dashboard__row">
                 <div class="dashboard__col">
@@ -123,10 +124,11 @@
                 numberOfInProgressEvents: 0,
                 numberOfReadyCars: 0,
                 isLoading: true,
-                name:localStorage.user
+                name:[],
             }
         },
         mounted() {
+
             axios.get('/getStatistics')
                 .then(response => {
                     this.numberOfNotAcceptedReportedCars = response.data.numberOfNotAcceptedReportedCars
@@ -142,7 +144,7 @@
                 .catch(error => {
                     console.log(error)
                 })
-            console.log(localStorage.user['name'])
+
         },
 
     }

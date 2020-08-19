@@ -18,14 +18,14 @@
                     </router-link>
                 </li>
                 <li>
-                    <a href="#" class="highlight">
+                    <router-link :to="{name:'NewReportedCar'}" class="highlight">
                         <i class="fas fa-plus-circle"></i>Nowe zgłoszenie
-                    </a>
+                    </router-link>
                 </li>
             </ul>
             <div class="menu__right">
                 <ul>
-                    <li>
+                    <li v-if="isAdmin">
                         <router-link :to="{name:'Settings'}" class="menu__icon">
                             <i class="fas fa-cog"></i>
                         </router-link>
@@ -54,6 +54,7 @@
         data() {
             return {
                 visibleMenu: false,
+                isAdmin:JSON.parse(localStorage.getItem('user')).is_admin
             }
         },
         methods: {

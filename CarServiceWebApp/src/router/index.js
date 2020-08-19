@@ -15,134 +15,173 @@ import Settings from '@/components/Settings'
 import StatusList from '@/components/StatusList'
 import Users from '@/components/Users'
 import AddUser from '@/components/AddUser'
-
+import EditUser from '@/components/EditUser'
+import NewReportedCar from '@/components/NewReportedCar'
 
 
 Vue.use(Router)
 
 let router = new Router({
-  mode: 'history',
-  linkExactActiveClass: 'active',
-  routes: [
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/',
-      name: 'Home',
-      component: Home,
-      meta:{
-        auth: true
-      }
-    },
-    {
-      path: '/reported-cars',
-      name: 'ReportedCars',
-      component: ReportedCars,
-      meta:{
-        auth: true
-      }
-    },
+    mode: 'history',
+    linkExactActiveClass: 'active',
+    routes: [
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/',
+            name: 'Home',
+            component: Home,
+            meta: {
+                auth: true,
+                isAdmin: 0
+            }
+        },
+        {
+            path: '/reported-cars',
+            name: 'ReportedCars',
+            component: ReportedCars,
+            meta: {
+                auth: true,
+                isAdmin: 0
+            }
+        },
 
-    {
-      path: '/car-deliveries',
-      name: 'CarDeliveries',
-      component: CarDeliveries,
-      meta:{
-        auth: true
-      }
-    },
-    {
-      path: '/car-deliveries-calendar',
-      name: 'CarDeliveriesCalendar',
-      component: CarDeliveriesCalendar,
-      meta:{
-        auth: true
-      }
-    },
-    {
-      path: '/new-events',
-      name: 'NewEvents',
-      component: NewEvents,
-      meta:{
-        auth: true
-      }
-    },
-    {
-      path: '/repair-calendar',
-      name: 'RepairCalendar',
-      component: RepairCalendar,
-      meta:{
-        auth: true
-      }
-    },
-    {
-      path: '/read-cars',
-      name: 'ReadyCars',
-      component: ReadyCars,
-      meta:{
-        auth: true
-      }
-    },
-    {
-      path: '/settings',
-      name: 'Settings',
-      component: Settings,
-      meta:{
-        auth: true,
-        isAdmin:true
-      }
-    },
-    {
-      path: '/statusList',
-      name: 'StatusList',
-      component: StatusList,
-      meta:{
-        auth: true
-      }
-    },
-    {
-      path: '/users',
-      name: 'Users',
-      component: Users,
-      meta:{
-        auth: true
-      }
-    },
-    {
-      path: '/addUser',
-      name: 'AddUser',
-      component: AddUser,
-      meta:{
-        auth: true
-      }
-    },
+        {
+            path: '/car-deliveries',
+            name: 'CarDeliveries',
+            component: CarDeliveries,
+            meta: {
+                auth: true,
+                isAdmin: 0
+            }
+        },
+        {
+            path: '/car-deliveries-calendar',
+            name: 'CarDeliveriesCalendar',
+            component: CarDeliveriesCalendar,
+            meta: {
+                auth: true,
+                isAdmin: 0
+            }
+        },
+        {
+            path: '/new-events',
+            name: 'NewEvents',
+            component: NewEvents,
+            meta: {
+                auth: true,
+                isAdmin: 0
+            }
+        },
+        {
+            path: '/repair-calendar',
+            name: 'RepairCalendar',
+            component: RepairCalendar,
+            meta: {
+                auth: true,
+                isAdmin: 0
+            }
+        },
+        {
+            path: '/read-cars',
+            name: 'ReadyCars',
+            component: ReadyCars,
+            meta: {
+                auth: true,
+                isAdmin: 0
 
-    { path: "*",
-      component: Error
-    }
-  ],
+            }
+        },
+        {
+            path: '/settings',
+            name: 'Settings',
+            component: Settings,
+            meta: {
+                auth: true,
+                isAdmin: 1
+            }
+        },
+        {
+            path: '/status-list',
+            name: 'StatusList',
+            component: StatusList,
+            meta: {
+                auth: true,
+                isAdmin: 1
+            }
+        },
+        {
+            path: '/users',
+            name: 'Users',
+            component: Users,
+            meta: {
+                auth: true,
+                isAdmin: 1
+            }
+        },
+        {
+            path: '/add-user',
+            name: 'AddUser',
+            component: AddUser,
+            meta: {
+                auth: true,
+                isAdmin: 1
+            }
+        },
+        {
+            path: '/edit-user/:id',
+            name: 'EditUser',
+            component: EditUser,
+            meta: {
+                auth: true,
+                isAdmin: 1
+            }
+        }, {
+            path: '/new-reported-car',
+            name: 'NewReportedCar',
+            component: NewReportedCar,
+            meta: {
+                auth: true,
+                isAdmin: 0
+            }
+        },
+
+        {
+            path: "*",
+            component: Error
+        }
+    ],
 
 })
 
 
+router.beforeEach((to, from, next) => {
 
-router.beforeEach((to, from, next)=>{
-  if (to.matched.some(record => record.meta.auth)){
-    if (!store.getters.isUserLogged){
+    if (to.matched.some(record => record.meta.auth)) {
+        const record = to.matched.find(record => record.meta);
+        if (!store.getters.isUserLogged) {
 
-      next({name:'Login'})
+            next({name: 'Login'})
 
-    }
-    else{
+        } else {
+            if (record.meta.isAdmin == 1) {
+                if (record.meta.isAdmin == JSON.parse(localStorage.getItem('user')).is_admin) {
+                    next();
+                } else {
+                    next({name: 'Home'})
+                }
+            } else {
+                next();
+            }
 
+        }
+
+    } else {
         next()
     }
-  }else{
-    next()
-  }
 })
 
 export default router

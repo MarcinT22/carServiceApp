@@ -85,9 +85,28 @@ class UserApiController extends Controller
 
     }
 
+    public function findUser($id)
+    {
+        $user = $this->userRepository->find($id);
+        return response()->json([
+            'user'=>$user
+        ]);
+    }
+
     public function destroy($id)
     {
         $this->userRepository->delete($id);
+        return response()->json([
+            'message'=>'success'
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
+        $this->userRepository->update($data, $id);
         return response()->json([
             'message'=>'success'
         ]);

@@ -13,12 +13,18 @@
                     <label for="email">Login</label>
                     <div class="loginForm__field">
                         <i class="fas fa-user loginForm__icon"></i>
-                        <input id="email" type="email" class="loginForm__input" v-model="email"/>
+                        <input id="email" type="email" class="loginForm__input" v-model="email"  :class="{'error':emailError}"/>
+                        <div class="loginForm__error" v-if="emailError">
+                            {{emailError}}
+                        </div>
                     </div>
                     <label for="password">Hasło</label>
                     <div class="loginForm__field">
                         <i class="fas fa-lock loginForm__icon"></i>
-                        <input id="password" type="password" class="loginForm__input" v-model="password"/>
+                        <input id="password" type="password" class="loginForm__input" v-model="password"  :class="{'error':passwordError}"/>
+                        <div class="loginForm__error" v-if="passwordError">
+                            {{passwordError}}
+                        </div>
                     </div>
 
                     <div class="loginForm__action">
@@ -36,35 +42,50 @@
         name: "Login",
         data() {
             return {
-                email: "",
-                password: "",
+                email: null,
+                password: null,
                 isLoading: false,
                 isError: false,
                 errorMessage: null,
+                emailError:null,
+                passwordError:null,
             }
         },
         methods: {
             login() {
+                this.emailError=null
+                this.passwordError=null
                 this.isError = false
                 this.isLoading = true
-                let email = this.email
-                let password = this.password
-                this.$store.dispatch('login', {
-                        email,
-                        password,
+                if (this.email && this.password) {
+                    let email = this.email
+                    let password = this.password
+                    this.$store.dispatch('login', {
+                            email,
+                            password,
+                        }
+                    )
+                        .then(() => {
+                            this.isLoading = false
+                            this.$router.push('/')
+                        })
+                        .catch(error => {
+                            this.isLoading = false
+                            this.isError = true
+                            this.errorMessage = "Nieprawidłowe dane użytkownika";
+                        })
+                } else {
+                    if (!this.email) {
+                        this.emailError = 'Adres e-mail jest wymagany';
                     }
-                )
-                    .then(() => {
-                        this.isLoading = false
-                        this.$router.push('/')
-                    })
-                    .catch(error => {
-                        this.isLoading = false
-                        this.isError = true
-                        this.errorMessage = "Nieprawidłowe dane użytkownika";
-                    })
+                    if (!this.password) {
+                        this.passwordError = 'Hasło jest wymagane';
+                    }
+                    this.isLoading = false
+                }
             }
-        }
+
+        },
     }
 </script>
 
@@ -161,7 +182,7 @@
             }
 
             &.error {
-                border: 2px solid #930316;
+                border: 2px solid #631921;
             }
         }
 
@@ -214,8 +235,8 @@
 
     .loginForm__error {
         font-size: 12px;
-        color: #930316;
-        font-weight: bold;
+        color: #631921;
+        font-weight: 600;
         margin-top: 5px;
     }
 

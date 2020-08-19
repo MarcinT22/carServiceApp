@@ -18,7 +18,7 @@
                         </div>
                         <div class="block__itemCol">
                            <div class="block__action block__action--row" v-if="!isLoading">
-                               <button class="block__actionBtn block__actionBtn--info">
+                               <button class="block__actionBtn block__actionBtn--info" @click="$router.push('/edit-user/'+user.id)">
                                    <i class="fas fa-edit"></i> Edytuj
                                </button>
                                <button class="block__actionBtn block__actionBtn--cancel" @click="remove(user.id, index)">
