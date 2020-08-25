@@ -85,6 +85,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="block__error block__error--large" v-if="isError">
+                    {{errorMessage}}
+                </div>
+                <div class="block__action" v-if="isChosen && !isError && !isAdding && description">
+                    <button class="block__actionBtn block__actionBtn--accept" @click="addNewReportedCar">
+                        Dodaj zgłoszenie
+                    </button>
+                </div>
+                <div class="loading loading--normal" v-if="isAdding"></div>
 
             </div>
         </div>
@@ -98,6 +107,8 @@
     import DatePicker from 'vue2-datepicker';
     import 'vue2-datepicker/index.css';
     import 'vue2-datepicker/locale/pl';
+    import moment from 'moment'
+    import axios from 'axios'
 
     export default {
         name: "NewReportedCar",
@@ -111,11 +122,13 @@
                 description: null,
                 reported_car_date: null,
                 isDelivered: true,
+                isError:false,
+                errorMessage:null,
+                isAdding:false
             }
         },
         created() {
             this.$store.dispatch('getCars')
-
         },
         methods: {
             inputChange() {
@@ -145,6 +158,50 @@
                 this.car = null
                 this.reported_car_date = null
                 this.description = null
+                this.isError = false
+                this.errorMessage= null
+                this.isDelivered = true
+            },
+            addNewReportedCar() {
+                this.isAdding = true
+                this.$store.state.isLoading = true
+                let car_id = this.car.id
+                let description = this.description
+                let reported_car_date
+                let is_delivered
+                if (this.isDelivered) {
+                    is_delivered = 1
+                    reported_car_date = moment(String(new Date())).format('DD.MM.YYYY')
+                }else{
+                    let is_delivered = 0
+                    reported_car_date = this.reported_car_date
+                }
+                let is_accepted = 1
+                this.$store.dispatch('addNewReportedCar', {
+                        car_id,
+                        description,
+                        reported_car_date,
+                        is_accepted
+                    }
+                ).then((response) => {
+                    if (response.data.data.message)
+                    {
+                        this.isError = true
+                        this.errorMessage = 'Nie można zgłosić samochodu, ponieważ został już zgłoszony wcześniej.'
+
+                    }else{
+                        if (this.isDelivered)
+                        {
+                            axios.get('/confirmCarDelivery/' + response.data.data.reportedCar.id)
+                        }
+                        this.$store.dispatch('message', 'Zgłoszenie zostało dodane.')
+                        this.cancel()
+
+                    }
+
+                    this.isAdding = false
+
+                })
             }
         },
         computed: {

@@ -43,7 +43,7 @@
                             <input type="checkbox" v-model="isAdmin" id="admin"/> Administrator
                         </label>
                     </div>
-                    <button v-if="!isLoading">
+                    <button v-if="!isLoading" class="block__actionBtn block__actionBtn--accept">
                         Dodaj użytkownika
                     </button>
                     <div class="loading loading--normal" v-if="isLoading"></div>

@@ -21,7 +21,7 @@
                                 <input type="checkbox" v-model="isAdmin" id="admin"/> Administrator
                             </label>
                         </div>
-                        <button v-if="!isSaving">
+                        <button v-if="!isSaving" class="block__actionBtn block__actionBtn--accept">
                             Zapisz
                         </button>
                         <div class="loading loading--normal" v-if="isSaving"></div>

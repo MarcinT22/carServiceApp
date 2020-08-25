@@ -90,15 +90,19 @@ class ReportedCarApiController extends Controller
 
             $reportedCar = $this->reportedCarRepository->create($reportedCarData);
 
+            return new ReportedCarResource([
+                'reportedCar'=>$reportedCar
+            ]);
 
-
+        }else{
+            return new ReportedCarResource([
+                'message'=>'The car has already been reported'
+            ]);
         }
-        return new ReportedCarResource([
-            'reportedCar'=>$reportedCar
-        ]);
 
 
     }
+
     public function update(Request $request, $id)
     {
 
