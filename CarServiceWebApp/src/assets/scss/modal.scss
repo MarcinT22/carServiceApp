@@ -30,8 +30,12 @@
     max-width: 900px;
     width: 100%;
     margin: auto;
-    padding:50px 15px;
+    padding: 50px 15px;
     box-sizing: border-box;
+
+    @media (max-width: $screen-md) {
+      padding: 20px 15px;
+    }
   }
 
   &__block {
@@ -47,7 +51,7 @@
 
   &__header {
 
-    color:$textColor;
+    color: $textColor;
     font-size: 16px;
     padding: 10px;
     font-weight: 600;
@@ -56,10 +60,10 @@
     align-items: center;
     position: relative;
     background: #fff;
-    border-bottom:1px solid $lightMainColor;
+    border-bottom: 1px solid $lightMainColor;
 
     i {
-      font-size:18px;
+      font-size: 18px;
       margin-right: 10px;
     }
 
@@ -70,22 +74,23 @@
     right: 5px;
     color: $menuTextColor;
     transition: color 0.3s;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     border-radius: 100%;
     width: 38px;
     height: 38px;
     border-radius: 100%;
     transition: background 0.3s, color 0.3s;
 
-    &:hover{
+    &:hover {
       background: $lightMainColor;
-      color:$mainColor !important;
+      color: $mainColor !important;
     }
-    &:active{
+
+    &:active {
       background: darken($lightMainColor, 10%);
     }
 
-    i{
+    i {
       font-size: 22px;
       display: block;
       display: flex;
@@ -107,73 +112,72 @@
   &__content {
     background: #fff;
     box-sizing: border-box;
-    padding:20px 15px;
+    padding: 20px 15px;
     position: relative;
 
 
-    &--flex{
+    &--flex {
       display: flex;
-      margin:0 -15px;
+      margin: 0 -15px;
 
-      @media (max-width:$screen-sm)
-      {
+      @media (max-width: $screen-sm) {
         flex-direction: column;
       }
-      div{
-        width:50%;
-        padding:0 15px;
 
-        @media (max-width:$screen-sm)
-        {
-          width:100%;
+      div {
+        width: 50%;
+        padding: 0 15px;
+
+        @media (max-width: $screen-sm) {
+          width: 100%;
         }
 
-        &:last-child{
-          border-left:2px solid $lightMainColor;
-          @media (max-width:$screen-sm)
-          {
-           border:0;
-            margin-top:10px;
+        &:last-child {
+          border-left: 2px solid $lightMainColor;
+          @media (max-width: $screen-sm) {
+            border: 0;
+            margin-top: 10px;
           }
         }
       }
     }
 
 
-    &--notPaddingTop{
-      padding-top:0;
+    &--notPaddingTop {
+      padding-top: 0;
     }
 
   }
 
-  &__scroll{
+  &__scroll {
     max-height: 200px;
     overflow: hidden;
     overflow-y: auto;
-    margin-bottom:0;
-    padding-right:10px;
-    padding-left:0 !important;
-    border:0 !important;
+    margin-bottom: 0;
+    padding-right: 10px;
+    padding-left: 0 !important;
+    border: 0 !important;
 
-    ol,ul{
-      padding:0;
-      padding-left:25px;
-      margin:0;
-      li{
+    ol, ul {
+      padding: 0;
+      padding-left: 25px;
+      margin: 0;
+
+      li {
         line-height: 140%;
-        margin-bottom:5px;
-        &:last-child{
-          margin-bottom:0;
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 0;
         }
       }
     }
 
-    &--marginTop{
-      margin-top:10px;
+    &--marginTop {
+      margin-top: 10px;
     }
 
-    &::-webkit-scrollbar-track
-    {
+    &::-webkit-scrollbar-track {
 
       border-radius: 4px;
       background: #fff;
@@ -181,58 +185,57 @@
 
     }
 
-    &::-webkit-scrollbar
-    {
+    &::-webkit-scrollbar {
       width: 8px;
       background-color: #F5F5F5;
     }
 
-    &::-webkit-scrollbar-thumb
-    {
-      border-radius:4px;
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
       background: $textColor;
 
 
-      &:hover{
+      &:hover {
         background: lighten($textColor, 10%);
       }
 
     }
   }
 
-  &__text{
-    font-size:14px;
+  &__text {
+    font-size: 14px;
     font-weight: 400;
     line-height: 160%;
-    color:$textColor;
+    color: $textColor;
 
-    &--paddingBottom{
-      padding-bottom:20px;
-
-    }
-
-    &--padding{
-      padding:15px;
+    &--paddingBottom {
+      padding-bottom: 20px;
 
     }
 
-    &--hightlight{
+    &--padding {
+      padding: 15px;
+
+    }
+
+    &--hightlight {
       background: #f2feff;
-      margin-bottom:20px;
+      margin-bottom: 20px;
     }
 
-    strong{
+    strong {
       font-weight: 600;
     }
 
-    table{
-      tr{
-        td{
-          padding:5px;
-          padding-left:0;
+    table {
+      tr {
+        td {
+          padding: 5px;
+          padding-left: 0;
         }
-        td{
-          &:first-child{
+
+        td {
+          &:first-child {
             font-weight: 600
           }
         }
@@ -240,74 +243,94 @@
     }
   }
 
-  textarea{
+  textarea {
     resize: none;
-    width:100%;
-    height:150px;
-    margin-top:10px;
-    outline:none;
-    border:1px solid #dde5f2;
-    color:$textColor;
-    padding:10px;
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+    outline: none;
+    border: 1px solid #dde5f2;
+    color: $textColor;
+    padding: 10px;
     box-sizing: border-box;
-    font-size:14px;
+    font-size: 14px;
   }
-  input,select{
-    height:40px;
-    width:100%;
-    margin-top:5px;
-    outline:none;
-    border:1px solid #dde5f2;
-    color:$textColor;
-    padding:10px;
+
+  input, select {
+    height: 40px;
+    width: 100%;
+    margin-top: 5px;
+    outline: none;
+    border: 1px solid #dde5f2;
+    color: $textColor;
+    padding: 10px;
     box-sizing: border-box;
-    font-size:14px;
+    font-size: 14px;
   }
 
 
-  &__details{
+  &__details {
     display: flex;
     margin: 0 -15px;
-    div{
-      width:50%;
-      padding:0 15px;
+
+    @media (max-width:$screen-md)
+    {
+     flex-direction: column;
+    }
+
+    div {
+      width: 50%;
+      padding: 0 15px;
+      @media (max-width:$screen-md)
+      {
+       width:100%;
+        margin-top:10px;
+        box-sizing: border-box;
+      }
     }
   }
 
 
+  hr {
+    border: 0;
+    border-top: 1px solid $lightMainColor;
+  }
 
-    hr{
-      border:0;
-      border-top:1px solid $lightMainColor;
-    }
 
-
-  &__action{
+  &__action {
     background: #fff;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding:10px;
-    padding-right:15px;
-    border-top:1px solid $lightMainColor;
-    min-height:40px;
+    padding: 10px;
+    padding-right: 15px;
+    border-top: 1px solid $lightMainColor;
+    min-height: 40px;
     position: relative;
 
-    &--noBorder{
-      border:0;
+    &--noBorder {
+      border: 0;
     }
 
-    &--noPadding{
-      padding:0;
+    &--noPadding {
+      padding: 0;
+
+
+    }
+
+    @media (max-width: $screen-md) {
+      justify-content: center;
+      flex-direction: column-reverse;
+      padding:10px 15px;
     }
 
   }
 
-  &__relative{
+  &__relative {
     position: relative;
   }
 
-  &__button{
+  &__button {
     border: 0;
     outline: none;
     padding: 8px 10px;
@@ -316,123 +339,138 @@
     color: #333;
     cursor: pointer;
     transition: background 0.3s, color 0.3s;
-    font-size:14px;
-    padding:10px;
-    border:1px solid;
+    font-size: 14px;
+    padding: 10px;
+    border: 1px solid;
     font-weight: 600;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     line-height: 120%;
-    margin-left:15px;
+    margin-left: 15px;
+
+    @media (max-width: $screen-md) {
+      width: 100%;
+      max-width: 290px;
+      margin: 0;
+      margin-top: 10px;
+      padding:10px;
+      box-sizing: border-box;
+    }
 
 
-    &:hover{
+    &:hover {
       background: #333;
-      color:#fff;
+      color: #fff;
     }
 
-    &:last-child{
-      margin-bottom:0;
+    &:last-child {
+      margin-bottom: 0;
     }
 
-    &:active{
+    &:active {
       background: darken(#333, 10%);
     }
 
-    &--marginTop{
-      margin-top:10px;
+    &--marginTop {
+      margin-top: 10px;
     }
-
 
 
     i {
       font-size: 18px;
-      margin-right:3px;
+      margin-right: 3px;
     }
 
     &--accept {
-      border-color:$success;
-      color:$success;
+      border-color: $success;
+      color: $success;
 
 
       &:hover {
         background: $success;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($success, 10%);
       }
     }
 
     &--changeDate {
-      border-color:$alert;
-      color:$alert;
+      border-color: $alert;
+      color: $alert;
 
 
       &:hover {
         background: $alert;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($alert, 10%);
       }
     }
 
-    &--info{
-      border-color:$info;
-      color:$info;
+    &--info {
+      border-color: $info;
+      color: $info;
 
 
       &:hover {
         background: $info;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($info, 10%);
       }
     }
 
-    &--cancel{
-      border-color:$danger;
-      color:$danger;
+    &--cancel {
+      border-color: $danger;
+      color: $danger;
 
 
       &:hover {
         background: $danger;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($danger, 10%);
       }
     }
 
-    &--danger{
-      margin-left:0;
-      border-color:$danger;
-      color:$danger;
+    &--danger {
+      margin-left: 0;
+      border-color: $danger;
+      color: $danger;
       padding: 5px 5px;
-      font-size:12px;
+      font-size: 12px;
+      @media (max-width:$screen-md)
+      {
+       padding:10px;
+        font-size:14px;
         i{
-          font-size:14px;
+          font-size:18px !important;
         }
+      }
+
+
+      i {
+        font-size: 14px;
+      }
 
       &:hover {
         background: $danger;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($danger, 10%);
       }
     }
 
   }
-
-
-
 
 
 }

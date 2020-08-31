@@ -47,12 +47,16 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
     @import "assets/scss/config";
 
+    #app{
+        height:100%;
+    }
     html, body {
         padding: 0;
         margin: 0;
         font-family: 'Poppins', sans-serif;
         font-weight: 400;
         background: #f9f9f9;
+        height:100%;
     }
 
     input,button, textarea{
