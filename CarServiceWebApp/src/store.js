@@ -125,6 +125,16 @@ export default new Vuex.Store({
         NEW_REPORTED_CAR_ERROR(state)
         {
             state.status = 'success'
+        },
+
+        ADD_CAR_SUCCESS(state)
+        {
+            state.status = 'success'
+        },
+
+        ADD_CAR_ERROR(state)
+        {
+            state.status = 'success'
         }
 
 
@@ -349,6 +359,22 @@ export default new Vuex.Store({
                     })
                     .catch(error => {
                         commit('NEW_REPORTED_CAR_ERROR')
+                        reject(error)
+                    })
+            })
+
+        },
+
+        addCar({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios.post('/cars', data)
+                    .then(response => {
+                        commit('ADD_CAR_SUCCESS')
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        console.log('error')
+                        commit('ADD_CAR_ERROR')
                         reject(error)
                     })
             })

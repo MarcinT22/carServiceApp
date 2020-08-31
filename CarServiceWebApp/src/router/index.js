@@ -17,6 +17,7 @@ import Users from '@/components/Users'
 import AddUser from '@/components/AddUser'
 import EditUser from '@/components/EditUser'
 import NewReportedCar from '@/components/NewReportedCar'
+import AddCar from '@/components/AddCar'
 
 
 Vue.use(Router)
@@ -139,10 +140,20 @@ let router = new Router({
                 auth: true,
                 isAdmin: 1
             }
-        }, {
+        },
+        {
             path: '/new-reported-car',
             name: 'NewReportedCar',
             component: NewReportedCar,
+            meta: {
+                auth: true,
+                isAdmin: 0
+            }
+        },
+        {
+            path: '/add-car',
+            name: 'AddCar',
+            component: AddCar,
             meta: {
                 auth: true,
                 isAdmin: 0

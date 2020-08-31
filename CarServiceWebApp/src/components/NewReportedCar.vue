@@ -5,9 +5,9 @@
                 Nowe zgłoszenie
             </h1>
             <div class="dashboard__right" v-if="!isChosen">
-                <button class="dashboard__actionBtn dashboard__actionBtn--accept"><i class="fas fa-plus-circle"></i>
+                <router-link :to="{name:'AddCar'}" class="dashboard__actionBtn dashboard__actionBtn--accept"><i class="fas fa-plus-circle"></i>
                     Dodaj nowy samochód
-                </button>
+                </router-link>
             </div>
             <div class="block block--baseline block--noOverflow">
 

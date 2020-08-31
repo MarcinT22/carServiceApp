@@ -28,4 +28,6 @@ class StoreCar extends FormRequest
             return array_merge($this->carRules());
 
     }
+
+
 }
