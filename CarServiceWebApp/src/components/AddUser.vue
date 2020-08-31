@@ -44,7 +44,7 @@
                         </label>
                     </div>
                     <button v-if="!isLoading" class="block__actionBtn block__actionBtn--accept">
-                        Dodaj użytkownika
+                        <i class="fas fa-user-plus"></i> Dodaj użytkownika
                     </button>
                     <div class="loading loading--normal" v-if="isLoading"></div>
                 </form>
