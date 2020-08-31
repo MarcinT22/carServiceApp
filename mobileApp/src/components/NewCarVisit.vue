@@ -204,8 +204,10 @@
                             for (let error in errors) {
                                 if (error != 'reported_car_date') {
                                     let field = document.getElementById(error);
-                                    field.parentElement.insertAdjacentHTML('beforeend', "<div class='form__error'>Proszę wprowadzić prawidłowe dane</div>");
-                                    field.parentElement.classList.add('error');
+                                    if (field) {
+                                        field.parentElement.insertAdjacentHTML('beforeend', "<div class='form__error'>Proszę wprowadzić prawidłowe dane</div>");
+                                        field.parentElement.classList.add('error');
+                                    }
                                 } else {
                                     let datefield = document.getElementById('dateField')
                                     datefield.classList.add('error')
