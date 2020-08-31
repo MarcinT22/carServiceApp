@@ -37,7 +37,7 @@ class RegisterUser extends FormRequest
             'name.required' => 'Nazwa użytkownika jest wymagana',
             'email.required' => 'Prawidłowy adres e-mail jest wymagany',
             'password.required' => 'Hasło jest wymagane',
-            'confirm_password.required' => 'Prawidłowe powtócrzenie hasła jest wymagane',
+            'confirm_password.required' => 'Prawidłowe powtórzenie hasła jest wymagane',
         ];
     }
 }

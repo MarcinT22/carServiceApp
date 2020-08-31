@@ -77,7 +77,6 @@ class ReportedCarApiController extends Controller
 
         $data = $request->all();
         $checkIfCarIsReported = $this->reportedCarRepository->checkIfCarIsReported($data['car_id']);
-
         if (!$checkIfCarIsReported)
         {
             $reportedCarDate = Carbon::parse($data['reported_car_date'])->addDay(1);
@@ -91,15 +90,19 @@ class ReportedCarApiController extends Controller
 
             $reportedCar = $this->reportedCarRepository->create($reportedCarData);
 
+            return new ReportedCarResource([
+                'reportedCar'=>$reportedCar
+            ]);
 
-
+        }else{
+            return new ReportedCarResource([
+                'message'=>'The car has already been reported'
+            ]);
         }
-        return new ReportedCarResource([
-            'reportedCar'=>$reportedCar
-        ]);
 
 
     }
+
     public function update(Request $request, $id)
     {
 
@@ -171,5 +174,8 @@ class ReportedCarApiController extends Controller
 
         return array("message"=>"success");
     }
+
+
+
 
 }

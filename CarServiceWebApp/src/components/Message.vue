@@ -13,20 +13,6 @@
     import {mapGetters} from 'vuex'
     export default {
         name: "Message",
-        data(){
-          return{
-              showMessage:false,
-              message:null,
-          }
-        },
-        methods:{
-            show(message)
-            {
-                this.showMessage= true
-                this.message=message
-                setTimeout(() => this.showMessage = false, 5000);
-            }
-        },
         computed: mapGetters(['isMessage','getMessage']),
     }
 </script>

@@ -3,6 +3,7 @@
         <div class="dashboard__container">
             <h1>
                Pulpit
+
             </h1>
             <div class="dashboard__row">
                 <div class="dashboard__col">
@@ -122,10 +123,12 @@
                 numberOfTodayEvents: 0,
                 numberOfInProgressEvents: 0,
                 numberOfReadyCars: 0,
-                isLoading: true
+                isLoading: true,
+                name:[],
             }
         },
         mounted() {
+
             axios.get('/getStatistics')
                 .then(response => {
                     this.numberOfNotAcceptedReportedCars = response.data.numberOfNotAcceptedReportedCars
@@ -141,8 +144,8 @@
                 .catch(error => {
                     console.log(error)
                 })
-        }
 
+        },
 
     }
 </script>

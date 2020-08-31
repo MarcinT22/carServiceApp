@@ -13,7 +13,7 @@
                     <div class="dashboard__col dashboard__col--4 dashboard__col--notFlex"
                          v-for="(todaysCarDelivery, index) in todaysCarDeliveries">
                         <div class="block block--baseline" :id="'blockProcessingIndex-'+index">
-                            <button class="block__delete" @click="remove(todaysCarDelivery.id, index)">
+                            <button class="block__delete" @click="remove(todaysCarDelivery.id, index, 1)">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                             <div class="block__data">
@@ -65,7 +65,7 @@
                     <div class="dashboard__col dashboard__col--4 dashboard__col--notFlex"
                          v-for="(remainingCarDelivery, index) in remainingCarDeliveries">
                         <div class="block block--baseline" :id="'blockProcessingIndex-'+index">
-                            <button class="block__delete" @click="remove(remainingCarDelivery.id, index)">
+                            <button class="block__delete" @click="remove(remainingCarDelivery.id, index, 0)">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                             <div class="block__data">
@@ -151,11 +151,17 @@
             showDescription(description) {
                 this.$refs['descriptionModal'].show(description)
             },
-            remove(id,index){
+            remove(id,index, today){
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
-                axios.delete('/reportedCars/' + id)
+                axios.delete('/deleteReportedCars/' + id)
                     .then(response => {
-                        this.todaysCarDeliveries.splice(index, 1);
+                        if (today == 1)
+                        {
+                            this.todaysCarDeliveries.splice(index, 1);
+                        }else{
+                            this.remainingCarDeliveries.splice(index, 1);
+                        }
+
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
                         this.$store.dispatch('message', 'Usunięto.')
                     })

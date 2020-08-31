@@ -31,9 +31,14 @@
                     if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
                         this.$store.dispatch('logout')
                     }
-                    throw err;
+                    // throw err;
                 });
             });
+
+           if ( this.$router.currentRoute.name == 'Login' && this.$store.getters.isUserLogged)
+           {
+               this.$router.push('/')
+           }
         }
     }
 </script>
@@ -58,7 +63,7 @@
         overflow: hidden;
     }
 
-    a {
+    a, button {
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
 
@@ -92,6 +97,20 @@
             width:20px;
             height:20px;
             border-width: 4px;
+        }
+
+        &--normal{
+            position: static;
+            margin:0;
+        }
+
+        &--mCenter{
+            @media (max-width:$screen-sm)
+            {
+                right:0;
+                left:0;
+                margin: auto;
+            }
         }
     }
 

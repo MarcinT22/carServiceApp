@@ -22,6 +22,7 @@ class CreateCarsTable extends Migration
             $table->string('fuel');
             $table->string('registration_number')->unique();
             $table->string('vin')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }

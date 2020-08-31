@@ -178,6 +178,7 @@
         padding-bottom: 50px;
         max-width: 380px;
         box-sizing: border-box;
+        position: relative;
     }
 
     h1 {

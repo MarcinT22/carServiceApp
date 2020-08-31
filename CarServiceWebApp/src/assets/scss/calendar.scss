@@ -144,11 +144,31 @@ background: #edeee01c !important;
 .legend{
   margin-bottom:20px;
   display: flex;
+  flex-wrap: wrap;
+  @media(max-width:$screen-sm)
+  {
+   flex-direction: column;
+    margin-top:-20px;
+  }
+
+  &--top{
+    @media(max-width:$screen-sm)
+    {
+      display: none;
+    }
+  }
+
   &__block{
     margin-right:10px;
     font-size:12px;
     display: flex;
     align-items: center;
+    color:$textColor;
+
+    @media (max-width:$screen-sm)
+    {
+      font-size:14px;
+    }
   }
 
   &__background{

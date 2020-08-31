@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEvent;
+use App\Repositories\AlertRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\StatusRepository;
 use Illuminate\Http\Request;
@@ -15,11 +16,13 @@ class EventApiController extends Controller
 {
     protected $eventRepository;
     protected $statusRepository;
+    protected $alertRepository;
 
-    public function __construct(EventRepository $eventRepository, StatusRepository $statusRepository)
+    public function __construct(EventRepository $eventRepository, StatusRepository $statusRepository, AlertRepository $alertRepository)
     {
         $this->eventRepository = $eventRepository;
         $this->statusRepository = $statusRepository;
+        $this->alertRepository = $alertRepository;
     }
 
     public function find($id)
@@ -86,5 +89,30 @@ class EventApiController extends Controller
     {
         $readyCars = $this->eventRepository->getReadyCars();
         return new EventResource($readyCars);
+    }
+
+
+    public function getNumberOfAcceptedAlerts($id)
+    {
+        $event = $this->eventRepository->getEventDetails($id);
+        $numberOfAcceptedAlerts = $this->alertRepository->getAcceptedAlerts($event->id)->count();
+        return array(
+            "numberOfAcceptedAlerts" => $numberOfAcceptedAlerts,
+        );
+    }
+
+    public function getNewAlerts($id)
+    {
+        $event = $this->eventRepository->getEventDetails($id);
+        if (!isset($event))
+        {
+            $alerts = [];
+        }else{
+            $alerts = $this->alertRepository->getAlertsByEventId($event->id);
+        }
+
+        return array(
+            "alerts" => $alerts,
+        );
     }
 }

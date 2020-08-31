@@ -35,7 +35,10 @@ class CarApiController extends Controller
 
     public function list()
     {
-        return new CarCollectionResource($this->carRepository->getAll());
+        $cars = $this->carRepository->getAll()->sortBy(function($car) {
+            return sprintf('%-12s%s', $car->brand, $car->model);
+        });
+        return new CarCollectionResource($cars);
     }
 
     public function store(StoreCar $request){

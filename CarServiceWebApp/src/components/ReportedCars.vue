@@ -2,7 +2,7 @@
     <div class="dashboard">
         <div class="dashboard__container">
             <h1>
-                Zgłoszenia oczekujące <span v-if="reportedCars.length">({{reportedCars.length}})</span><span v-else>(0)</span>
+                Zgłoszenia oczekujące <span v-if="reportedCars.length > 0">({{reportedCars.length}})</span>
             </h1>
 
             <div class="loading loading--allPage" v-if="isLoading"></div>
@@ -150,7 +150,7 @@
 
             remove(id, index) {
                 document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
-                axios.delete('/reportedCars/' + id)
+                axios.delete('/deleteReportedCars/' + id)
                     .then(response => {
                         this.reportedCars.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')

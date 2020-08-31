@@ -28,6 +28,10 @@
                     <rect x="0" y="0" width="1024" height="1024" fill="rgba(0, 0, 0, 0)"/>
                 </svg>
                 <p>Samochód został już zgłoszony.</p>
+                <button class="btn tap-effect" @click="goToStatus">
+                    Sprawdź status
+                </button>
+                <AlertsInfo></AlertsInfo>
             </template>
             <template v-else>
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg"
@@ -54,6 +58,7 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import AlertsInfo from '@/components/AlertsInfo'
 
     export default {
         name: "Message",
@@ -66,11 +71,18 @@
                         this.$router.push('/')
                     })
             },
+            goToStatus(){
+                this.$store.state.isLoading = true
+                this.$router.push('/status')
+            }
         },
         created() {
 
             setTimeout(() => this.$store.state.isLoading = false, 500);
         },
+        components:{
+            AlertsInfo
+        }
     }
 </script>
 

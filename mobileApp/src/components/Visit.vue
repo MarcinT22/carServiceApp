@@ -1,6 +1,6 @@
 <template>
     <div class="visit">
-        <template v-if="!isReported">
+        <template>
         <h1>
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  aria-hidden="true" focusable="false" width="0.89em" height="1em"
@@ -59,17 +59,6 @@
 
         </form>
         </template>
-        <template v-else>
-            <h1>
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372z" fill="#626262"/><path d="M464 336a48 48 0 1 0 96 0a48 48 0 1 0-96 0zm72 112h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V456c0-4.4-3.6-8-8-8z" fill="#626262"/><rect x="0" y="0" width="1024" height="1024" fill="rgba(0, 0, 0, 0)" /></svg>
-            </h1>
-            <p class="visit__text">
-                Samochód został już zgłoszony do serwisu.
-            </p>
-            <button class="btn tap-effect" @click="goToHome">
-                OK
-            </button>
-        </template>
     </div>
 </template>
 
@@ -105,7 +94,7 @@
                     monthBeforeYear: true,
 
                 },
-                isReported:null,
+
             }
         },
         methods: {
@@ -130,6 +119,7 @@
                             this.$router.push('/message')
                     })
                     .catch(error => {
+
                             this.$store.state.isLoading = false
                             var errorsLabel = document.querySelectorAll(".form__error");
 
@@ -161,7 +151,7 @@
         },
         created() {
             setTimeout(() => this.$store.state.isLoading = false, 500);
-            this.isReported=false
+
 
 
         },

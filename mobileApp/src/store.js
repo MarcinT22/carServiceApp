@@ -14,7 +14,10 @@ export default new Vuex.Store({
         isLoading: true,
         zone: null,
         blur: false,
-        messageType:null
+        messageType:null,
+        alerts:null,
+        numberOfAlerts:0,
+        showAlerts:false,
 
     },
 
@@ -69,7 +72,38 @@ export default new Vuex.Store({
             state.status = 'error'
         },
 
+        setAlerts(state,alerts)
+        {
+            state.alerts = alerts
+            state.numberOfAlerts =  alerts.length
+            if (alerts.length != 0)
+            {
+                state.showAlerts = true
+            }
 
+
+        },
+        setAlertsError(state) {
+            state.status = 'error'
+        },
+        acceptAlert(state)
+        {
+            state.status = 'success'
+        },
+
+        acceptAlertError(state)
+        {
+            state.status = 'error'
+        },
+
+        notAcceptAlert(state)
+        {
+            state.status = 'success'
+        },
+        notAcceptAlertError(state)
+        {
+            state.status = 'error'
+        }
 
 
     },
@@ -112,6 +146,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit('authRequest')
                 axios.post('/reportedMyCar', data)
+
                     .then(response => {
                         const token = response.data.access_token;
                         localStorage.setItem('token', token)
@@ -150,7 +185,6 @@ export default new Vuex.Store({
                     .then(response => {
                         commit('setStatus', response.data.data.status)
                         commit('setEventDetails',  response.data.data.eventDetails)
-
                         resolve(response)
 
                     })
@@ -162,6 +196,50 @@ export default new Vuex.Store({
 
         },
 
+        getAlerts({commit}, reported_car_id)
+        {
+            return new Promise((resolve, reject) => {
+                axios.get('/getNewAlerts/' + reported_car_id)
+                    .then(response => {
+                        commit('setAlerts', response.data.alerts)
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('setAlertsError')
+                        reject(error)
+                    })
+            })
+        },
+
+        acceptAlert({commit}, id)
+        {
+            return new Promise((resolve, reject) => {
+                axios.put('/acceptAlert/' + id)
+                    .then(response => {
+                        commit('acceptAlert')
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('acceptAlertError')
+                        reject(error)
+                    })
+            })
+        },
+
+        notAcceptAlert({commit}, id)
+        {
+            return new Promise((resolve, reject) => {
+                axios.put('/notAcceptAlert/' + id)
+                    .then(response => {
+                        commit('notAcceptAlert')
+                        resolve(response)
+                    })
+                    .catch(error => {
+                        commit('notAcceptAlertError')
+                        reject(error)
+                    })
+            })
+        }
 
 
     },
@@ -174,7 +252,10 @@ export default new Vuex.Store({
         getEventDetails: state => state.eventDetails,
         getReportedCar: state => state.reportedCar,
         isLoading: state => state.isLoading,
-        getMessageType: state => state.messageType
+        getMessageType: state => state.messageType,
+        getAlerts: state=>state.alerts,
+        getNumberOfAlerts: state=>state.numberOfAlerts,
+        showAlerts:state => state.showAlerts
 
     }
 })

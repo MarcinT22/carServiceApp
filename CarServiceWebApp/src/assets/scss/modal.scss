@@ -114,12 +114,27 @@
     &--flex{
       display: flex;
       margin:0 -15px;
+
+      @media (max-width:$screen-sm)
+      {
+        flex-direction: column;
+      }
       div{
         width:50%;
         padding:0 15px;
 
+        @media (max-width:$screen-sm)
+        {
+          width:100%;
+        }
+
         &:last-child{
           border-left:2px solid $lightMainColor;
+          @media (max-width:$screen-sm)
+          {
+           border:0;
+            margin-top:10px;
+          }
         }
       }
     }
@@ -137,6 +152,26 @@
     overflow-y: auto;
     margin-bottom:0;
     padding-right:10px;
+    padding-left:0 !important;
+    border:0 !important;
+
+    ol,ul{
+      padding:0;
+      padding-left:25px;
+      margin:0;
+      li{
+        line-height: 140%;
+        margin-bottom:5px;
+        &:last-child{
+          margin-bottom:0;
+        }
+      }
+    }
+
+    &--marginTop{
+      margin-top:10px;
+    }
+
     &::-webkit-scrollbar-track
     {
 
@@ -173,6 +208,17 @@
 
     &--paddingBottom{
       padding-bottom:20px;
+
+    }
+
+    &--padding{
+      padding:15px;
+
+    }
+
+    &--hightlight{
+      background: #f2feff;
+      margin-bottom:20px;
     }
 
     strong{
@@ -247,8 +293,19 @@
     min-height:40px;
     position: relative;
 
+    &--noBorder{
+      border:0;
+    }
+
+    &--noPadding{
+      padding:0;
+    }
+
   }
 
+  &__relative{
+    position: relative;
+  }
 
   &__button{
     border: 0;
@@ -279,6 +336,10 @@
 
     &:active{
       background: darken(#333, 10%);
+    }
+
+    &--marginTop{
+      margin-top:10px;
     }
 
 

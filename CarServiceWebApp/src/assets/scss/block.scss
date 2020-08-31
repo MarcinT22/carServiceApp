@@ -1,7 +1,7 @@
 .block {
   width: 100%;
   border-radius: 4px;
-  box-shadow:0 0 20px 0 rgba(100,100,100,0.1);
+  box-shadow: 0 0 20px 0 rgba(100, 100, 100, 0.1);
   padding: 30px 15px;
   box-sizing: border-box;
   display: flex;
@@ -14,11 +14,14 @@
   overflow: hidden;
 
 
-
   &--baseline {
     align-items: baseline;
     justify-content: start;
 
+  }
+
+  &--noOverflow {
+    overflow: inherit;
   }
 
   &--processing {
@@ -70,6 +73,15 @@
     color: $textColor;
     text-align: center;
     font-weight: 500;
+
+    &.left {
+      text-align: left;
+    }
+
+    &.small {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
   }
 
   &__count {
@@ -99,17 +111,17 @@
     max-width: 200px;
     margin: 0 auto;
     border-radius: 4px;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     transition: background 0.3s, color 0.3s;
     margin-top: 10px;
     border: 1px solid $mainColor;
 
     &:hover {
       background: $mainColor;
-      color:#fff;
+      color: #fff;
     }
 
-    &:active{
+    &:active {
       background: darken($mainColor, 10%);
     }
   }
@@ -117,23 +129,24 @@
   &__text {
     font-size: 14px;
     font-weight: 400;
-    color:$textColor;
+    color: $textColor;
 
-    strong{
+    strong {
       font-weight: 500;
     }
 
-    &--center{
+    &--center {
       text-align: center;
     }
-    span{
+
+    span {
       color: $lightText;
       font-weight: 400;
-      font-size:16px;
+      font-size: 16px;
       display: block;
 
-      &.highlight{
-        color:$textColor;
+      &.highlight {
+        color: $textColor;
         font-weight: 600;
       }
     }
@@ -152,15 +165,15 @@
 
   &__data {
     font-size: 14px;
-    width:100%;
+    width: 100%;
   }
 
-  &__date{
-   padding-top:10px;
+  &__date {
+    padding-top: 10px;
   }
 
-  &__newDate{
-    margin-top:15px;
+  &__newDate {
+    margin-top: 15px;
   }
 
   &__action {
@@ -169,7 +182,14 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin-top:15px;
+    margin-top: 15px;
+
+    &--row {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+    }
 
 
   }
@@ -183,94 +203,97 @@
     color: #333;
     cursor: pointer;
     transition: background 0.3s, color 0.3s;
-    margin-bottom:10px;
-    font-size:14px;
-    padding:10px;
-    border:1px solid;
+    font-size: 14px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid;
     font-weight: 600;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     line-height: 120%;
 
-    &:hover{
+    &:hover {
       background: #333;
-      color:#fff;
+      color: #fff;
     }
 
-    &:last-child{
-      margin-bottom:0;
+    &:last-child {
+      margin-bottom: 0;
     }
 
-    &:active{
+    &:active {
       background: darken(#333, 10%);
     }
 
 
-
     i {
       font-size: 18px;
-      margin-right:3px;
+      margin-right: 3px;
     }
 
     &--accept {
-      border-color:$success;
-      color:$success;
+      border-color: $success;
+      color: $success;
 
 
       &:hover {
         background: $success;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($success, 10%);
       }
     }
 
     &--changeDate {
-      border-color:$alert;
-      color:$alert;
+      border-color: $alert;
+      color: $alert;
 
 
       &:hover {
         background: $alert;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($alert, 10%);
       }
     }
 
-    &--info{
-      border-color:$info;
-      color:$info;
+    &--info {
+      border-color: $info;
+      color: $info;
 
 
       &:hover {
         background: $info;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($info, 10%);
       }
     }
 
-    &--cancel{
-      border-color:$danger;
-      color:$danger;
+    &--cancel {
+      border-color: $danger;
+      color: $danger;
 
 
       &:hover {
         background: $danger;
-        color:#fff;
+        color: #fff;
       }
 
-      &:active{
+      &:active {
         background: darken($danger, 10%);
       }
     }
 
+    &--margin {
+      margin: 0;
+      margin-left: 5px;
+    }
   }
 
   hr {
@@ -280,35 +303,263 @@
   }
 
 
-  table{
-    td{
+  table {
+    td {
       font-weight: 400;
-      color:$textColor;
+      color: $textColor;
       vertical-align: top;
-      &.bold{
+
+      &.bold {
         font-weight: 600;
       }
     }
   }
 
-  &__delete{
+  &__delete {
     position: absolute;
-    top:0px;
-    right:0px;
-    background:rgba(0,0,0,0);
-    outline:none;
-    borer:0;
-    color:$danger;
-    border:0;
-    font-size:20px;
+    top: 0px;
+    right: 0px;
+    background: rgba(0, 0, 0, 0);
+    outline: none;
+    borer: 0;
+    color: $danger;
+    border: 0;
+    font-size: 20px;
     cursor: pointer;
-    transition:color 0.3s;
+    transition: color 0.3s;
+
     &:hover {
       color: lighten($danger, 10%);
     }
 
-    &:active{
+    &:active {
       color: darken($danger, 20%);
     }
   }
+
+
+  &__item {
+    width: 100%;
+    border-bottom: 1px solid #dde5f2;
+    padding: 10px 5px;
+    padding-right: 0;
+    box-sizing: border-box;
+    color: $textColor;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: $screen-sm) {
+      flex-direction: column;
+      padding: 20px 5px;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    &Col {
+      width: 70%;
+      @media (max-width: $screen-sm) {
+        width: 100%;
+      }
+
+      &:last-child {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        @media (max-width: $screen-sm) {
+          width: 100%;
+        }
+      }
+    }
+
+    &--processing {
+      position: relative;
+
+      .block__action {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+
+      &::after {
+        content: '';
+        display: block;
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        border: 5px solid $lightMainColor;
+        border-top-color: $mainColor;
+        position: absolute;
+        right: 15px;
+        bottom: 10px;
+        margin: auto;
+        z-index: 6;
+        animation: loading 0.5s ease-in-out infinite;
+
+      }
+
+    }
+  }
+
+  &__field {
+    margin-bottom: 15px;
+    position: relative;
+
+    &--border {
+      padding: 15px;
+      border: 1px solid #dde5f2;
+    }
+
+    form {
+      max-width: 500px;
+    }
+
+    label {
+      font-size: 14px;
+      color: $textColor;
+      font-weight: 400;
+      margin-bottom: 5px;
+
+      &.large {
+        font-size: 18px;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      &.margin {
+        display: block;
+      }
+    }
+
+    input[type='text'], input[type='email'], input[type='password'] {
+      width: 100%;
+      box-sizing: border-box;
+      height: 35px;
+      padding: 5px;
+      border: 1px solid #dde5f2;
+      color: $textColor;
+      outline: none;
+      border-radius: 4px;
+      transition: border-color 0.3s ease-in-out;
+
+      &.error {
+        border-color: $danger;
+      }
+
+      &.uppercase {
+        text-transform: uppercase;
+
+        &::placeholder {
+          text-transform: none;
+        }
+      }
+
+    }
+
+    textarea {
+      resize: none;
+      width: 100%;
+      height: 150px;
+      outline: none;
+      border: 1px solid #dde5f2;
+      color: $textColor;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+
+  }
+
+
+  &__error {
+    color: $danger;
+    font-size: 13px;
+    margin-top: 3px;
+
+    &--large {
+      border: 1px solid $danger;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+  }
+
+
+  &__highlight {
+    background: $success;
+    display: inline-block;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 3px;
+    border-radius: 4px;
+    font-weight: 400;
+  }
+
+
+  &__border {
+    border: 1px solid lighten($textColor, 40%);
+    padding: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__cancel {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 25px;
+    color: $danger;
+    transition: color 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      color: darken($danger, 10%);
+    }
+  }
+
+  &__relative {
+    position: relative;
+  }
+
+
+  &__list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    border: 1px solid #dde5f2;
+    border-top: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #fff;
+    z-index: 10;
+    max-height: 295px;
+    overflow: hidden;
+    overflow-y: auto;
+
+    li {
+      padding: 7px 10px;
+      font-size: 13px;
+      color: $textColor;
+      cursor: pointer;
+      border-bottom: 1px solid lighten(#dde5f2, 5%);
+
+      &:hover {
+        background: lighten(#dde5f2, 5%);
+      }
+    }
+  }
+
+
+
+
 }

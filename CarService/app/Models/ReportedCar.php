@@ -16,14 +16,15 @@ class ReportedCar extends Model
         'description',
         'reported_car_date',
         'is_delivered',
-        'is_accepted'
+        'is_accepted',
+
     ];
 
     public function car()
     {
         return $this->belongsTo('App\Models\Car');
     }
-    
+
     public function event()
     {
         return $this->hasOne('App\Models\Event');

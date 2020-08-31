@@ -147,17 +147,51 @@
                                 <strong>
                                     Opis usterki:<br/>
                                 </strong>
-                                <p class="modal__scroll">
+                                <div class="modal__scroll">
                                     {{event.extendedProps.allDetails.reported_car.description}}
-                                </p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="modal__content modal__content--notPaddingTop">
                             <div class="modal__text modal__text--paddingBottom">
-                               <div class="modal__button modal__button--danger">
-                                   <i class="far fa-bell"></i> Wykryto dodatkową usterkę
-                               </div>
+                                <button class="modal__button modal__button--danger" v-if="status != 5 && !isNewFault"
+                                        @click="isNewFault = !isNewFault">
+                                    <i class="far fa-bell"></i> Wykryto nową usterkę
+                                </button>
+                                <div class="modal__text" v-if="isNewFault">
+                                    <strong>
+                                        Opis wykrytej usterki:<br/>
+                                    </strong>
+                                    <textarea v-model="faultDescription"
+                                              placeholder="Wprowadź opis..."></textarea>
+                                    <div class="modal__action modal__action--noBorder modal__action--noPadding">
+                                        <template v-if="!alertIsLoading">
+                                        <button class="modal__button modal__button--cancel modal__button--marginTop"
+                                                @click="isNewFault = !isNewFault">
+                                            <i class="far fa-times-circle"></i> Anuluj
+                                        </button>
+                                        <button class="modal__button modal__button--accept modal__button--marginTop"
+                                                v-if="faultDescription" @click="sendAlert(event.id,faultDescription)">
+                                            <i class="far fa-bell"></i> Powiadom klienta
+                                        </button>
+                                        </template>
+                                        <div class="loading loading--static" v-if="alertIsLoading"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal__text modal__text--padding modal__text--hightlight" v-if="showAcceptedAlerts">
+                                <strong>
+                                    Nowe usterki zatwierdzone przez klienta:<br/>
+                                </strong>
+                                <div class="modal__scroll modal__scroll--marginTop">
+                                    <ol>
+                                        <li v-for="acceptedAlert in getAcceptedAlerts">
+                                           {{acceptedAlert.description}}
+                                        </li>
+                                    </ol>
+                                </div>
+
                             </div>
                             <div class="modal__text">
                                 <strong>
@@ -222,8 +256,11 @@
                 description: null,
                 price: '0.00',
                 status_id: 1,
-                status:1,
-                isLoading:false
+                status: 1,
+                isLoading: false,
+                alertIsLoading: false,
+                isNewFault: false,
+                faultDescription: null,
 
 
             }
@@ -236,20 +273,27 @@
                     this.description = null
                     this.price = '0.00'
                     this.status_id = 1
+                    this.isNewFault = false
+                    this.alertIsLoading = false
+                    this.$store.state.showAcceptedAlerts = false
+
                 }, 500);
             },
+
             show(event, option) {
-                document.body.classList.add('overflow');
-                this.isShow = true
-                this.event = event
-                this.option = option
                 if (option == 'repair') {
                     this.price = event.extendedProps.allDetails.price.toFixed(2);
                     this.status_id = event.extendedProps.allDetails.status_id
                     this.status = event.extendedProps.allDetails.status_id
                     this.description = event.extendedProps.allDetails.description
                     this.$store.dispatch('getStatusList')
+                    this.$store.dispatch('getAcceptedAlert',event.id)
                 }
+                document.body.classList.add('overflow');
+                this.isShow = true
+                this.event = event
+                this.option = option
+
             },
             cancelCarDelivery(id) {
                 this.isLoading = true
@@ -295,11 +339,32 @@
                     .catch(error => {
                         console.log(error)
                     })
-            }
+            },
+            sendAlert(event_id ,alert) {
+                this.alertIsLoading = true
+                this.$store.dispatch('sendAlert',{
+                    event_id: event_id,
+                    description: alert,
+                })
+                    .then(()=>{
+                        setTimeout(() => {
+                            this.isNewFault = false
+                            this.alertIsLoading = false
+                            this.$store.dispatch('message', 'Wysłano powiadomienie do klienta.')
+                            this.faultDescription = null
+                        }, 500);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
+            },
+
 
 
         },
-        computed: mapGetters(['getStatusesList']),
+        computed: mapGetters(['getStatusesList','getAcceptedAlerts','showAcceptedAlerts']),
+
 
 
     }

@@ -16,8 +16,8 @@ class CreateAlertsTable extends Migration
         Schema::create('alerts', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('event_id')->unsigned();
-            $table->string('description');
-            $table->boolean('is_accepted')->default(0);
+            $table->text('description');
+            $table->boolean('is_accepted')->nullable();
             $table->timestamps();
 
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');

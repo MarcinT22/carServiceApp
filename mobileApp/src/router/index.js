@@ -9,6 +9,7 @@ import NewCarVisit from '@/components/NewCarVisit'
 import Status from '@/components/Status'
 import Message from '@/components/Message'
 import NotConnection from '@/components/NotConnection'
+import Alerts from '@/components/Alerts'
 
 Vue.use(Router)
 
@@ -71,6 +72,14 @@ let router = new Router({
               auth: false
           }
       },
+    {
+      path: '/alerts',
+      name: 'Alerts',
+      component: Alerts,
+      meta:{
+        auth: true
+      }
+    },
     { path: "*",
       component: Home
     }
