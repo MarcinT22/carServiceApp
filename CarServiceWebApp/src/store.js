@@ -296,10 +296,11 @@ export default new Vuex.Store({
         },
 
 
+
         getUsers({commit}) {
             this.state.isLoading = true
             return new Promise((resolve, reject) => {
-                axios.get('/getUsers/')
+                axios.get('/getUsers')
                     .then(response => {
                         let users = response.data.users;
                         commit('GET_USERS_SUCCESS', users)
@@ -334,7 +335,7 @@ export default new Vuex.Store({
         getCars({commit}) {
             this.state.isLoading = true
             return new Promise((resolve, reject) => {
-                axios.get('/cars/')
+                axios.get('/cars')
                     .then(response => {
                         let cars = response.data.data;
                         commit('GET_CARS_SUCCESS', cars)

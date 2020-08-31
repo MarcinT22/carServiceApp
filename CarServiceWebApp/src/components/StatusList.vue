@@ -97,7 +97,6 @@
         computed: mapGetters(['getStatusesList','isLoading']),
         created() {
             this.$store.dispatch('getStatusList')
-            this.$store.dispatch('getSheduledEvents')
         },
         methods:{
             edit(index)
