@@ -19,6 +19,8 @@ export default new Vuex.Store({
         showAcceptedAlerts:false,
         users:[],
         cars:[],
+        error:null,
+
     },
 
     mutations: {
@@ -148,7 +150,6 @@ export default new Vuex.Store({
                 commit('AUTH_REQUEST')
                 axios.post('/login', user)
                     .then(response => {
-
                         const token = response.data.access_token;
 
                         const user = response.data.user;
@@ -165,6 +166,7 @@ export default new Vuex.Store({
                         localStorage.removeItem('user');
                         reject(error)
                     })
+
             })
 
         },

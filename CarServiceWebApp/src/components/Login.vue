@@ -53,6 +53,7 @@
         },
         methods: {
             login() {
+
                 this.emailError=null
                 this.passwordError=null
                 this.isError = false
@@ -83,6 +84,17 @@
                     }
                     this.isLoading = false
                 }
+
+
+                if (this.$store.state.error === 401)
+                {
+                  setTimeout(()=>{
+                      this.isLoading = false
+                      this.isError = true
+                      this.errorMessage = "Nieprawidłowe dane użytkownika";
+                  },500)
+                }
+
             }
 
         },
