@@ -22,7 +22,7 @@
                             </label>
                         </div>
                         <button v-if="!isSaving" class="block__actionBtn block__actionBtn--accept">
-                            Zapisz
+                            <i class="far fa-save"></i> Zapisz
                         </button>
                         <div class="loading loading--normal" v-if="isSaving"></div>
                     </form>
