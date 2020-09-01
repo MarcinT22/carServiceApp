@@ -19,7 +19,7 @@ export default new Vuex.Store({
         showAcceptedAlerts:false,
         users:[],
         cars:[],
-        error:null,
+
 
     },
 

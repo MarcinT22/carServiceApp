@@ -3,7 +3,6 @@
         <div class="dashboard__container">
             <h1>
                Pulpit
-
             </h1>
             <div class="dashboard__row">
                 <div class="dashboard__col">
@@ -105,10 +104,6 @@
 </template>
 
 <script>
-    const headers = {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-    }
     import axios from 'axios'
 
     export default {
@@ -127,7 +122,7 @@
                 name:[],
             }
         },
-        mounted() {
+        created() {
 
             axios.get('/getStatistics')
                 .then(response => {
@@ -140,9 +135,6 @@
                     this.numberOfInProgressEvents = response.data.numberOfInProgressEvents
                     this.numberOfReadyCars = response.data.numberOfReadyCars
                     this.isLoading=false
-                })
-                .catch(error => {
-                    console.log(error)
                 })
 
         },

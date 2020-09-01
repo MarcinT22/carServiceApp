@@ -88,6 +88,7 @@
 
                 if (this.$store.state.error === 401)
                 {
+
                   setTimeout(()=>{
                       this.isLoading = false
                       this.isError = true

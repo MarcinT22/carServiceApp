@@ -26,9 +26,9 @@
         components: {Message, Menu},
         computed: mapGetters(['isUserLogged']),
         created: function () {
-            axios.interceptors.response.use(undefined, function (err) {
+            axios.interceptors.response.use(undefined, function (error) {
                 return new Promise(function (resolve, reject) {
-                    if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+                    if (error.status === 401) {
                         this.$store.dispatch('logout')
                     }
                     // throw err;
