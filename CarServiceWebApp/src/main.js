@@ -15,7 +15,7 @@ const token = localStorage.getItem('token')
 
 
 
-if (token) {
+if (token  && token !== '') {
   axios.defaults.headers.common['Authorization'] = 'Bearer '+token
 }
 
