@@ -53,6 +53,7 @@
         },
         methods: {
             login() {
+
                 this.emailError=null
                 this.passwordError=null
                 this.isError = false
@@ -74,6 +75,15 @@
                             this.isError = true
                             this.errorMessage = "Nieprawidłowe dane użytkownika";
                         })
+                    if (this.$store.state.error === 401)
+                    {
+
+                        setTimeout(()=>{
+                            this.isLoading = false
+                            this.isError = true
+                            this.errorMessage = "Nieprawidłowe dane użytkownika";
+                        },500)
+                    }
                 } else {
                     if (!this.email) {
                         this.emailError = 'Adres e-mail jest wymagany';
@@ -83,6 +93,10 @@
                     }
                     this.isLoading = false
                 }
+
+
+
+
             }
 
         },
@@ -97,25 +111,26 @@
         background: url('../assets/image/login-background.jpg') no-repeat;
         background-size: cover;
         background-position: center;
-        height: 100vh;
         position: relative;
+        height:100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &__container {
             padding: 15px;
+            box-sizing: border-box;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
+
         }
 
         &__content {
             background: rgba(255, 255, 255, 0.35);
             max-width: 400px;
+            width:100%;
             padding: 70px 60px;
             width: 100%;
             box-sizing: border-box;

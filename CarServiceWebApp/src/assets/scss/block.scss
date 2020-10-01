@@ -18,6 +18,19 @@
     align-items: baseline;
     justify-content: start;
 
+    @media (max-width:$screen-md)
+    {
+      justify-content: center;
+      align-items: center;
+      form{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
   }
 
   &--noOverflow {
@@ -184,10 +197,29 @@
     text-align: center;
     margin-top: 15px;
 
+    @media (max-width:$screen-md)
+    {
+      justify-content: center;
+      width:100%;
+      max-width:290px;
+      margin:0 auto;
+    }
+
     &--row {
       flex-direction: row;
       align-items: center;
       justify-content: center;
+
+      @media (max-width:$screen-md)
+      {
+        flex-direction: column;
+        margin-top:10px;
+
+
+        button{
+          margin-top:10px !important;
+        }
+      }
 
     }
 
@@ -210,6 +242,13 @@
     font-weight: 600;
     background: rgba(0, 0, 0, 0);
     line-height: 120%;
+
+    @media (max-width:$screen-md)
+    {
+      width:100%;
+      max-width:290px;
+
+    }
 
     &:hover {
       background: #333;
@@ -348,7 +387,7 @@
     display: flex;
     align-items: center;
 
-    @media (max-width: $screen-sm) {
+    @media (max-width: $screen-md) {
       flex-direction: column;
       padding: 20px 5px;
     }
@@ -360,7 +399,7 @@
 
     &Col {
       width: 70%;
-      @media (max-width: $screen-sm) {
+      @media (max-width: $screen-md) {
         width: 100%;
       }
 
@@ -369,7 +408,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        @media (max-width: $screen-sm) {
+        @media (max-width: $screen-md) {
           width: 100%;
         }
       }
@@ -408,6 +447,11 @@
     margin-bottom: 15px;
     position: relative;
 
+    @media (max-width:$screen-md)
+    {
+      width:100%;
+    }
+
     &--border {
       padding: 15px;
       border: 1px solid #dde5f2;
@@ -415,6 +459,7 @@
 
     form {
       max-width: 500px;
+
     }
 
     label {
@@ -427,6 +472,11 @@
         font-size: 18px;
         margin-bottom: 5px;
         display: block;
+
+        @media (max-width:$screen-md)
+        {
+          font-size:16px;
+        }
       }
 
       &.margin {
@@ -484,6 +534,13 @@
       border: 1px solid $danger;
       padding: 15px;
       box-sizing: border-box;
+
+      @media (max-width:$screen-md)
+      {
+       text-align: center;
+        margin: auto;
+
+      }
     }
   }
 

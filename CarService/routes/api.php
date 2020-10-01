@@ -62,6 +62,7 @@ Route::group([
     Route::delete('alerts/{id}','Api\AlertApiController@destroy');
     Route::get('alerts/{id}','Api\AlertApiController@find');
     Route::get('getAcceptedAlerts/{event_id}','Api\AlertApiController@getAcceptedAlerts');
+    Route::get('getPendingAlerts/{event_id}','Api\AlertApiController@getPendingAlerts');
 
     Route::post('statuses','Api\StatusApiController@store');
     Route::put('statuses/{id}','Api\StatusApiController@update');

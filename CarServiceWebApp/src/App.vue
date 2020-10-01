@@ -26,9 +26,9 @@
         components: {Message, Menu},
         computed: mapGetters(['isUserLogged']),
         created: function () {
-            axios.interceptors.response.use(undefined, function (err) {
+            axios.interceptors.response.use(undefined, function (error) {
                 return new Promise(function (resolve, reject) {
-                    if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+                    if (error.status === 401) {
                         this.$store.dispatch('logout')
                     }
                     // throw err;
@@ -47,12 +47,16 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
     @import "assets/scss/config";
 
+    #app{
+        height:100%;
+    }
     html, body {
         padding: 0;
         margin: 0;
         font-family: 'Poppins', sans-serif;
         font-weight: 400;
         background: #f9f9f9;
+        height:100%;
     }
 
     input,button, textarea{

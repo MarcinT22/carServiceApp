@@ -9,15 +9,25 @@ import axios from 'axios'
 import moment from 'moment'
 
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+axios.defaults.baseURL = 'https://api.car-service.marcin-topolski.pl/api';
 
 const token = localStorage.getItem('token')
 
 
 
-if (token) {
+if (token  && token !== '') {
   axios.defaults.headers.common['Authorization'] = 'Bearer '+token
 }
+
+axios.interceptors.response.use(function (response) {
+  return response
+}, function (error) {
+  if (error.response.status === 401) {
+    store.dispatch('logout')
+    store.state.error = 401
+  }
+  return Promise.reject(error)
+})
 
 
 Vue.prototype.$formatDate = function (date) {

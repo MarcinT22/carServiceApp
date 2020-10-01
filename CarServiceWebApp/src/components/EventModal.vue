@@ -180,6 +180,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="modal__text modal__text--padding modal__text--pending" v-if="showPendingAlerts">
+                                <strong>
+                                    Nowe usterki oczekujące na akceptację przez klienta:<br/>
+                                </strong>
+                                <div class="modal__scroll modal__scroll--marginTop">
+                                    <ol>
+                                        <li v-for="pendingAlert in getPendingAlerts">
+                                            {{pendingAlert.description}}
+                                        </li>
+                                    </ol>
+                                </div>
+
+                            </div>
+
                             <div class="modal__text modal__text--padding modal__text--hightlight" v-if="showAcceptedAlerts">
                                 <strong>
                                     Nowe usterki zatwierdzone przez klienta:<br/>
@@ -276,6 +290,9 @@
                     this.isNewFault = false
                     this.alertIsLoading = false
                     this.$store.state.showAcceptedAlerts = false
+                    this.$store.state.acceptedAlerts = []
+                    this.$store.state.showPendingAlerts = false
+                    this.$store.state.pendingAlerts = []
 
                 }, 500);
             },
@@ -287,12 +304,15 @@
                     this.status = event.extendedProps.allDetails.status_id
                     this.description = event.extendedProps.allDetails.description
                     this.$store.dispatch('getStatusList')
-                    this.$store.dispatch('getAcceptedAlert',event.id)
+                      this.$store.dispatch('getPendingAlerts',event.id)
+                      this.$store.dispatch('getAcceptedAlerts',event.id)
                 }
                 document.body.classList.add('overflow');
                 this.isShow = true
                 this.event = event
                 this.option = option
+
+
 
             },
             cancelCarDelivery(id) {
@@ -352,6 +372,7 @@
                             this.alertIsLoading = false
                             this.$store.dispatch('message', 'Wysłano powiadomienie do klienta.')
                             this.faultDescription = null
+                            this.$store.dispatch('getPendingAlerts',event_id)
                         }, 500);
                     })
                     .catch(error => {
@@ -362,8 +383,9 @@
 
 
 
+
         },
-        computed: mapGetters(['getStatusesList','getAcceptedAlerts','showAcceptedAlerts']),
+        computed: mapGetters(['getStatusesList','getAcceptedAlerts','getPendingAlerts','showAcceptedAlerts','showPendingAlerts']),
 
 
 

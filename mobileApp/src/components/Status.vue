@@ -55,9 +55,8 @@
                                 <template v-else>
                                     {{formatDate(getReportedCar.reported_car_date)}}
                                 </template>
-                            </strong>
-
-                            w godzinach<br/>8:00 - 17:00
+                            </strong><br />
+                            w godzinach pracy warsztatu.<br/>
                         </div>
 
                         <button class="btn tap-effect" @click="goToHome">
@@ -81,7 +80,7 @@
                             Przepraszamy, dostarczenie pojazdu w dniu<br/><strong>{{formatDate(getReportedCar.reported_car_date)}}r.</strong>
                             jest niemożliwe.<br/><br/>
                             Proponujemy dostarczyć pojazd dnia<br/><strong>{{formatDate(getReportedCar.new_reported_car_date)}}r.</strong><br/>w
-                            godzinach 8:00 - 17:00.
+                            godzinach pracy warsztatu.
 
                             <div class="status__buttons">
                                 <button @click="acceptNewDate(getReportedCar.id)">Akceptuję</button>

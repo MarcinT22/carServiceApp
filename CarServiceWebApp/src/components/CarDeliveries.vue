@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="dashboard__title">
-                    W kolejnych dniach <span
+                   Pozostałe <span
                         v-if="remainingCarDeliveries">({{remainingCarDeliveries.length}})</span>
                 </div>
                 <div class="dashboard__row">
@@ -108,6 +108,11 @@
                                             @click="showDescription(remainingCarDelivery.description)">
                                         <i class="fas fa-info-circle"></i> Opis usterki
                                     </button>
+                                    <button @click="confirmRemainingCarDelivery(remainingCarDelivery.id, index)"
+                                            class="block__actionBtn block__actionBtn--accept">
+                                        <i class="far fa-check-circle"></i> Odebrano
+                                    </button>
+
                                 </div>
                             </div>
 
@@ -141,6 +146,18 @@
                 axios.get('/confirmCarDelivery/' + id)
                     .then(response => {
                         this.todaysCarDeliveries.splice(index, 1);
+                        document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
+                        this.$store.dispatch('message', 'Samochód został dostarczony do warsztatu.')
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+            confirmRemainingCarDelivery(id, index) {
+                document.getElementById('blockProcessingIndex-' + index).classList.add('block--processing')
+                axios.get('/confirmCarDelivery/' + id)
+                    .then(response => {
+                        this.remainingCarDeliveries.splice(index, 1);
                         document.getElementById('blockProcessingIndex-' + index).classList.remove('block--processing')
                         this.$store.dispatch('message', 'Samochód został dostarczony do warsztatu.')
                     })
