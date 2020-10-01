@@ -116,8 +116,11 @@
                              type="date" format="DD.MM.YYYY" :lang="lang"
                              id="date"></date-picker>
             </div>
-
+            <div class="form__error form__error--center" v-if="isError">
+                Uzupełnij wszystkie pola.
+            </div>
             <button class="btn tap-effect">Umów wizytę</button>
+
 
         </form>
         <div class="blur" :class="{active:this.$store.state.blur}" @click="closeModal"></div>
@@ -159,11 +162,13 @@
                 showBrandsList: false,
                 showModelsList: false,
                 showFuelsList: false,
+                isError:false
 
             }
         },
         methods: {
             setVisitWithNewCar() {
+                this.isError = false
                 this.$store.state.isLoading = true
                 let brand = this.brand
                 let model = this.model
@@ -201,6 +206,9 @@
                             }
 
                             let errors = error.response.data.errors;
+                            this.isError = true
+
+
                             for (let error in errors) {
                                 if (error != 'reported_car_date') {
                                     let field = document.getElementById(error);
@@ -217,6 +225,8 @@
                                     datefield.appendChild(errorText);
                                 }
                             }
+
+
 
                         }
                     )

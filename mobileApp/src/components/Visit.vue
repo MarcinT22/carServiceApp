@@ -54,7 +54,9 @@
                              type="date" format="DD.MM.YYYY" :lang="lang"
                 ></date-picker>
             </div>
-
+            <div class="form__error form__error--center" v-if="isError">
+                Uzupełnij wszystkie pola.
+            </div>
             <button class="btn tap-effect">Umów wizytę</button>
 
         </form>
@@ -94,6 +96,7 @@
                     monthBeforeYear: true,
 
                 },
+                isError:false
 
             }
         },
@@ -104,6 +107,7 @@
             },
 
             setVisit() {
+                this.isError = false
                 this.$store.state.isLoading = true
                 let car_id = this.car_id
                 let description = this.description
@@ -130,6 +134,7 @@
                             }
 
                             let errors = error.response.data.errors;
+                        this.isError = true
                             for (let error in errors) {
                                 if (error != 'reported_car_date') {
                                     let field = document.getElementById(error);
