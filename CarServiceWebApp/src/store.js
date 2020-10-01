@@ -17,6 +17,8 @@ export default new Vuex.Store({
         isLoading: true,
         acceptedAlerts: [],
         showAcceptedAlerts:false,
+        pendingAlerts: [],
+        showPendingAlerts:false,
         users:[],
         cars:[],
 
@@ -87,6 +89,19 @@ export default new Vuex.Store({
             }
         },
         GET_ACCEPTED_ALERTS_ERROR(state)
+        {
+            state.status = 'error'
+        },
+
+        GET_PENDING_ALERTS_SUCCESS(state,pendingAlerts)
+        {
+            state.status = 'success'
+            state.pendingAlerts = pendingAlerts
+            if (pendingAlerts.length > 0) {
+                state.showPendingAlerts = true
+            }
+        },
+        GET_PENDING_ALERTS_ERROR(state)
         {
             state.status = 'error'
         },
@@ -280,7 +295,7 @@ export default new Vuex.Store({
 
         },
 
-        getAcceptedAlert({commit},event_id) {
+        getAcceptedAlerts({commit},event_id) {
             return new Promise((resolve, reject) => {
                 axios.get('/getAcceptedAlerts/'+event_id)
                     .then(response => {
@@ -291,6 +306,23 @@ export default new Vuex.Store({
                     })
                     .catch(error => {
                         commit('GET_ACCEPTED_ALERTS_ERROR')
+                        reject(error)
+                    })
+
+            })
+        },
+
+        getPendingAlerts({commit},event_id) {
+            return new Promise((resolve, reject) => {
+                axios.get('/getPendingAlerts/'+event_id)
+                    .then(response => {
+                        let pendingAlerts = response.data.data;
+                        commit('GET_PENDING_ALERTS_SUCCESS', pendingAlerts)
+                        resolve(response)
+
+                    })
+                    .catch(error => {
+                        commit('GET_PENDING_ALERTS_ERROR')
                         reject(error)
                     })
 
@@ -401,7 +433,9 @@ export default new Vuex.Store({
         getAcceptedReportedCars: state => state.acceptedReportedCars,
         isLoading: state => state.isLoading,
         getAcceptedAlerts: state => state.acceptedAlerts,
+        getPendingAlerts: state => state.pendingAlerts,
         showAcceptedAlerts: state=>state.showAcceptedAlerts,
+        showPendingAlerts: state=>state.showPendingAlerts,
         getUsers:state=>state.users,
         getCars:state=>state.cars
 
