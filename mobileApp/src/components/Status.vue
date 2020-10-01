@@ -40,6 +40,7 @@
                             Pojazd nie został zgłoszony do naprawy
                         </div>
                     </template>
+                    <AlertsInfo></AlertsInfo>
                         <button class="btn tap-effect" @click="goToHome">
                             OK
                         </button>
@@ -103,7 +104,7 @@
             </div>
 
         </template>
-        <AlertsInfo></AlertsInfo>
+
     </div>
 </template>
 
@@ -196,6 +197,7 @@
         &__block {
             margin: 40px 0;
             padding: 20px;
+            margin-bottom:0;
             box-sizing: border-box;
             border-radius: 10px;
             background: #333;
