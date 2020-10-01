@@ -116,8 +116,11 @@
                              type="date" format="DD.MM.YYYY" :lang="lang"
                              id="date"></date-picker>
             </div>
-
+            <div class="form__error form__error--center" v-if="isError">
+                Uzupełnij wszystkie pola.
+            </div>
             <button class="btn tap-effect">Umów wizytę</button>
+
 
         </form>
         <div class="blur" :class="{active:this.$store.state.blur}" @click="closeModal"></div>
@@ -159,11 +162,13 @@
                 showBrandsList: false,
                 showModelsList: false,
                 showFuelsList: false,
+                isError:false
 
             }
         },
         methods: {
             setVisitWithNewCar() {
+                this.isError = false
                 this.$store.state.isLoading = true
                 let brand = this.brand
                 let model = this.model
@@ -201,11 +206,14 @@
                             }
 
                             let errors = error.response.data.errors;
+                            this.isError = true
+
+
                             for (let error in errors) {
                                 if (error != 'reported_car_date') {
                                     let field = document.getElementById(error);
                                     if (field) {
-                                        field.parentElement.insertAdjacentHTML('beforeend', "<div class='form__error'>Proszę wprowadzić prawidłowe dane</div>");
+                                        field.parentElement.insertAdjacentHTML('beforeend', "<div class='form__error'>Proszę wprowadzić prawidłowe dane.</div>");
                                         field.parentElement.classList.add('error');
                                     }
                                 } else {
@@ -213,10 +221,12 @@
                                     datefield.classList.add('error')
                                     var errorText = document.createElement("div")
                                     errorText.classList.add('form__error')
-                                    errorText.appendChild(document.createTextNode('Proszę wybrać datę'));
+                                    errorText.appendChild(document.createTextNode('Proszę wybrać datę.'));
                                     datefield.appendChild(errorText);
                                 }
                             }
+
+
 
                         }
                     )
