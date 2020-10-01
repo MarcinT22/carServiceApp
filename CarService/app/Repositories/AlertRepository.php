@@ -17,6 +17,14 @@ class AlertRepository extends BaseRepository{
             ->get();
     }
 
+    public function getPendingAlerts($id)
+    {
+        return $this->model
+            ->where('event_id',$id)
+            ->whereNull('is_accepted')
+            ->get();
+    }
+
     public function getAlertsByEventId($event_id)
     {
         return $this->model

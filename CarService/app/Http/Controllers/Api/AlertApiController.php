@@ -55,6 +55,12 @@ class AlertApiController extends Controller
         return new AlertResource($acceptedAlerts);
     }
 
+    public function getPendingAlerts($id)
+    {
+        $pendingAlerts = $this->alertRepository->getPendingAlerts($id);
+        return new AlertResource($pendingAlerts);
+    }
+
     public function acceptAlert($id)
     {
         $data['is_accepted'] = 1;
