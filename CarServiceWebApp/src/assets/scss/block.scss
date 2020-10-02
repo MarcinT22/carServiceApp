@@ -203,6 +203,7 @@
       width:100%;
       max-width:290px;
       margin:0 auto;
+      margin-top: 15px;
     }
 
     &--row {
@@ -455,6 +456,7 @@
     &--border {
       padding: 15px;
       border: 1px solid #dde5f2;
+      box-sizing: border-box;
     }
 
     form {

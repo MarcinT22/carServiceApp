@@ -7,6 +7,21 @@
                         Pulpit
                     </router-link>
                 </li>
+                <li class="menu__mobile">
+                    <router-link :to="{name:'ReportedCars'}">
+                        Zgłoszenia oczekujące
+                    </router-link>
+                </li>
+                <li  class="menu__mobile">
+                    <router-link :to="{name:'CarDeliveries'}">
+                       Przyjęcia pojazdów
+                    </router-link>
+                </li>
+                <li  class="menu__mobile">
+                    <router-link :to="{name:'NewEvents'}">
+                        Nowe zlecenia
+                    </router-link>
+                </li>
                 <li>
                     <router-link :to="{name:'CarDeliveriesCalendar'}">
                         Kalendarz przyjęć
@@ -15,6 +30,11 @@
                 <li>
                     <router-link :to="{name:'RepairCalendar'}">
                         Kalendarz napraw
+                    </router-link>
+                </li>
+                <li  class="menu__mobile">
+                    <router-link :to="{name:'ReadyCars'}">
+                        Pojazdy do wydania
                     </router-link>
                 </li>
                 <li>
@@ -97,6 +117,7 @@
         z-index: 2;
         @media (max-width: $screen-md) {
             padding: 25px 0;
+            z-index: 3;
         }
 
         &__container {
@@ -110,6 +131,15 @@
             align-items: center;
             justify-content: space-between;
 
+        }
+
+        &__mobile{
+            display: none;
+
+            @media (max-width:$screen-md)
+            {
+                display: block;
+            }
         }
 
 
