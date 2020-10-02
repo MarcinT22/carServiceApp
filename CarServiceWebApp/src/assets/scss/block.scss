@@ -456,6 +456,7 @@
     &--border {
       padding: 15px;
       border: 1px solid #dde5f2;
+      box-sizing: border-box;
     }
 
     form {
