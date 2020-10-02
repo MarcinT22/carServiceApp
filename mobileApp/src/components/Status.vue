@@ -22,7 +22,7 @@
                         <div class="status__block" :style="{background:status.color}">
                             {{status.name}}
                         </div>
-                        <div class="status__message status__message--left" v-if="status.id == 4">
+                        <div class="status__message status__message--left status__message--paddingTop" v-if="status.id == 4">
                             <strong>
                                 Opis naprawy:
                             </strong>
@@ -240,6 +240,10 @@
 
             &--left{
                 text-align: left;
+            }
+
+            &--paddingTop{
+                padding-top:20px;
             }
 
             .icon {
