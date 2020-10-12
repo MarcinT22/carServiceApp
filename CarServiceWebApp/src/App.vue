@@ -26,14 +26,14 @@
         components: {Message, Menu},
         computed: mapGetters(['isUserLogged']),
         created: function () {
-            axios.interceptors.response.use(undefined, function (error) {
-                return new Promise(function (resolve, reject) {
-                    if (error.status === 401) {
-                        this.$store.dispatch('logout')
-                    }
-                    // throw err;
-                });
-            });
+            // axios.interceptors.response.use(undefined, function (error) {
+            //     return new Promise(function (resolve, reject) {
+            //         if (error.status === 401) {
+            //             this.$store.dispatch('logout')
+            //         }
+            //         // throw err;
+            //     });
+            // });
 
            if ( this.$router.currentRoute.name == 'Login' && this.$store.getters.isUserLogged)
            {
