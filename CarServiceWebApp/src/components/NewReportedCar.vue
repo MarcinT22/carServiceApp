@@ -144,7 +144,7 @@
                 setTimeout(() => {
                     this.showCars = false
                     this.search = ''
-                }, 100)
+                }, 300)
             },
 
             chooseCar(car) {

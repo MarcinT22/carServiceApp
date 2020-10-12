@@ -146,17 +146,20 @@
             hiddenBrandsList() {
                 setTimeout(() => {
                     this.showBrandsList = false
-                }, 100)
+                    document.body.classList.remove('overflow');
+                }, 300)
             },
             hiddenModelsList() {
                 setTimeout(() => {
                     this.showModelsList = false
-                }, 100)
+                    document.body.classList.remove('overflow');
+                }, 300)
             },
             hiddenFuelsList() {
                 setTimeout(() => {
                     this.showFuelsList = false
-                }, 100)
+                    document.body.classList.remove('overflow');
+                }, 300)
             },
             addCar() {
                 this.yearError = false
