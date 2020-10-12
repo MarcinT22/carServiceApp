@@ -75,15 +75,15 @@
                             this.isError = true
                             this.errorMessage = "Nieprawidłowe dane użytkownika";
                         })
-                    if (this.$store.state.error === 401)
-                    {
-
-                        setTimeout(()=>{
-                            this.isLoading = false
-                            this.isError = true
-                            this.errorMessage = "Nieprawidłowe dane użytkownika";
-                        },500)
-                    }
+                    // if (this.$store.state.error === 401)
+                    // {
+                    //
+                    //     setTimeout(()=>{
+                    //         this.isLoading = false
+                    //         this.isError = true
+                    //         this.errorMessage = "Nieprawidłowe dane użytkownika";
+                    //     },1000)
+                    // }
                 } else {
                     if (!this.email) {
                         this.emailError = 'Adres e-mail jest wymagany';

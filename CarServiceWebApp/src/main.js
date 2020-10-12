@@ -19,15 +19,15 @@ if (token  && token !== '') {
   axios.defaults.headers.common['Authorization'] = 'Bearer '+token
 }
 
-axios.interceptors.response.use(function (response) {
-  return response
-}, function (error) {
-  if (error.response.status === 401) {
-    store.dispatch('logout')
-    store.state.error = 401
-  }
-  return Promise.reject(error)
-})
+// axios.interceptors.response.use(function (response) {
+//   return response
+// }, function (error) {
+//   if (error.response.status === 401) {
+//     store.dispatch('logout')
+//     store.state.error = 401
+//   }
+//   return Promise.reject(error)
+// })
 
 
 Vue.prototype.$formatDate = function (date) {
