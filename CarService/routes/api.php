@@ -26,7 +26,7 @@ Route::group([
 ], function() {
     Route::post('register', 'Api\UserApiController@register');
     Route::get('logout', 'Api\UserApiController@logout');
-    Route::get('user', 'Api\UserApiController@user');
+//    Route::get('user', 'Api\UserApiController@user');
 
     Route::get('getUsers', 'Api\UserApiController@list');
     Route::delete('deleteUser/{id}', 'Api\UserApiController@destroy');
