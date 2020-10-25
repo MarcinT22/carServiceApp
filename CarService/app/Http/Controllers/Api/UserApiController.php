@@ -85,7 +85,7 @@ class UserApiController extends Controller
 
     }
 
-    public function findUser($id)
+    public function find($id)
     {
         $user = $this->userRepository->find($id);
         return response()->json([

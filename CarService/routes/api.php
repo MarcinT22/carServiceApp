@@ -30,7 +30,7 @@ Route::group([
 
     Route::get('getUsers', 'Api\UserApiController@getUsers');
     Route::delete('deleteUser/{id}', 'Api\UserApiController@destroy');
-    Route::get('user/{id}', 'Api\UserApiController@findUser');
+    Route::get('user/{id}', 'Api\UserApiController@find');
     Route::put('user/{id}','Api\UserApiController@update');
 
     Route::get('getAcceptedReportedCars','Api\ReportedCarApiController@getAccepted');
