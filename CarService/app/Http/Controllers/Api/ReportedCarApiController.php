@@ -39,7 +39,7 @@ class ReportedCarApiController extends Controller
         return new ReportedCarCollectionResource($this->reportedCarRepository->getAll());
     }
 
-    public function storeWithNewCars(StoreReportedCar $request){
+    public function storeWithNewCar(StoreReportedCar $request){
         $data = $request->all();
 
         $carData = [

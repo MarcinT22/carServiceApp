@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'Api\UserApiController@login');
 Route::post('cars/login', 'Api\CarApiController@login');
 Route::get('getCarsModels','Api\CarApiController@getCarsModels');
-Route::post('reportedNewCar','Api\ReportedCarApiController@storeWithNewCars');
+Route::post('reportedNewCar','Api\ReportedCarApiController@storeWithNewCar');
 
 
 Route::group([
