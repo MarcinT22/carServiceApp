@@ -71,7 +71,7 @@ class AlertApiController extends Controller
         return array("message"=>"success");
     }
 
-    public function notAcceptAlert($id)
+    public function doNotAcceptAlert($id)
     {
         $data['is_accepted'] = 0;
         $this->alertRepository->update($data, $id);

@@ -101,7 +101,7 @@ Route::group([
     Route::post('reportedMyCar','Api\ReportedCarApiController@storeWithMyCar');
     Route::delete('reportedCars/{id}','Api\ReportedCarApiController@destroy');
     Route::get('checkIfCarIsReported/{id}','Api\ReportedCarApiController@checkIfCarIsReported');
-    Route::put('notAcceptAlert/{id}','Api\AlertApiController@notAcceptAlert');
+    Route::put('notAcceptAlert/{id}','Api\AlertApiController@doNotAcceptAlert');
     Route::put('acceptAlert/{id}','Api\AlertApiController@acceptAlert');
     Route::get('getNewAlerts/{event_id}','Api\AlertApiController@getNewAlerts');
 
