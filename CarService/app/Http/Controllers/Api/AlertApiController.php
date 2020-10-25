@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAlert;
 use App\Repositories\AlertRepository;
+use App\Repositories\EventRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\Alert as AlertResource;
 use App\Http\Resources\AlertCollection as AlertCollectionResource;
@@ -12,10 +13,12 @@ use App\Http\Resources\AlertCollection as AlertCollectionResource;
 class AlertApiController extends Controller
 {
     protected $alertRepository;
+    protected $eventRepository;
 
-    public function __construct(AlertRepository $alertRepository)
+    public function __construct(AlertRepository $alertRepository, EventRepository $eventRepository)
     {
         $this->alertRepository = $alertRepository;
+        $this->eventRepository = $eventRepository;
     }
 
     public function find($id)
@@ -75,6 +78,20 @@ class AlertApiController extends Controller
         return array("message"=>"success");
     }
 
+    public function getNewAlerts($id)
+    {
+        $event = $this->eventRepository->getEventDetails($id);
+        if (!isset($event))
+        {
+            $alerts = [];
+        }else{
+            $alerts = $this->alertRepository->getAlertsByEventId($event->id);
+        }
+
+        return array(
+            "alerts" => $alerts,
+        );
+    }
 
 
 }
