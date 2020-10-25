@@ -103,7 +103,7 @@ Route::group([
     Route::get('checkIfCarIsReported/{id}','Api\ReportedCarApiController@checkIfCarIsReported');
     Route::put('notAcceptAlert/{id}','Api\AlertApiController@notAcceptAlert');
     Route::put('acceptAlert/{id}','Api\AlertApiController@acceptAlert');
-    Route::get('getNewAlerts/{event_id}','Api\EventApiController@getNewAlerts');
+    Route::get('getNewAlerts/{event_id}','Api\AlertApiController@getNewAlerts');
 
     Route::get('getEventStatus/{reportedCarId}','Api\EventApiController@getEventStatus');
 });

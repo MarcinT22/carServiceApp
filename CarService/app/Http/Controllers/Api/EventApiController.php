@@ -92,27 +92,14 @@ class EventApiController extends Controller
     }
 
 
-    public function getNumberOfAcceptedAlerts($id)
-    {
-        $event = $this->eventRepository->getEventDetails($id);
-        $numberOfAcceptedAlerts = $this->alertRepository->getAcceptedAlerts($event->id)->count();
-        return array(
-            "numberOfAcceptedAlerts" => $numberOfAcceptedAlerts,
-        );
-    }
+//    public function getNumberOfAcceptedAlerts($id)
+//    {
+//        $event = $this->eventRepository->getEventDetails($id);
+//        $numberOfAcceptedAlerts = $this->alertRepository->getAcceptedAlerts($event->id)->count();
+//        return array(
+//            "numberOfAcceptedAlerts" => $numberOfAcceptedAlerts,
+//        );
+//    }
 
-    public function getNewAlerts($id)
-    {
-        $event = $this->eventRepository->getEventDetails($id);
-        if (!isset($event))
-        {
-            $alerts = [];
-        }else{
-            $alerts = $this->alertRepository->getAlertsByEventId($event->id);
-        }
 
-        return array(
-            "alerts" => $alerts,
-        );
-    }
 }
