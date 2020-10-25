@@ -76,7 +76,7 @@ class UserApiController extends Controller
         return response()->json($request->user());
     }
 
-    public function getUsers()
+    public function list()
     {
         $users = $this->userRepository->getAll();
         return response()->json([

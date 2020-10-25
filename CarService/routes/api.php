@@ -28,7 +28,7 @@ Route::group([
     Route::get('logout', 'Api\UserApiController@logout');
     Route::get('user', 'Api\UserApiController@user');
 
-    Route::get('getUsers', 'Api\UserApiController@getUsers');
+    Route::get('getUsers', 'Api\UserApiController@list');
     Route::delete('deleteUser/{id}', 'Api\UserApiController@destroy');
     Route::get('user/{id}', 'Api\UserApiController@find');
     Route::put('user/{id}','Api\UserApiController@update');
