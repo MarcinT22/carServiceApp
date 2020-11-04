@@ -61,10 +61,10 @@ class EventApiController extends Controller
     }
 
 
-    public function getEventStatus($reportedCarId)
+    public function getEventStatus($id)
     {
 
-        $eventDetails = $this->eventRepository->getEventDetails($reportedCarId);
+        $eventDetails = $this->eventRepository->getEventDetails($id);
         $status = $this->statusRepository->find($eventDetails['status_id']);
 
         return new EventResource([
