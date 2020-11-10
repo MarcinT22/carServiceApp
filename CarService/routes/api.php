@@ -26,7 +26,6 @@ Route::group([
 ], function() {
     Route::post('register', 'Api\UserApiController@register');
     Route::get('logout', 'Api\UserApiController@logout');
-//    Route::get('user', 'Api\UserApiController@user');
 
     Route::get('getUsers', 'Api\UserApiController@list');
     Route::delete('deleteUser/{id}', 'Api\UserApiController@destroy');
@@ -44,8 +43,6 @@ Route::group([
     Route::get('reportedCars/{id}','Api\ReportedCarApiController@find');
 
     Route::get('getNotAcceptedReportedCars','Api\ReportedCarApiController@getNotAccepted');
-
-
     Route::get('getCarDeliveries','Api\ReportedCarApiController@getCarDeliveries');
 
     Route::get('confirmCarDelivery/{id}','Api\ReportedCarApiController@confirmCarDelivery');
