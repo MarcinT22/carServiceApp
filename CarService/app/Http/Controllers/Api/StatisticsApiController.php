@@ -31,7 +31,7 @@ class StatisticsApiController extends Controller
         $numberOfInProgressEvents = $this->eventRepository->getNumberOfInProgressEvents();
         $numberOfReadyCars = $this->eventRepository->getReadyCars()->count();
 
-        return array(
+        return response()->json([
             "numberOfNotAcceptedReportedCars" => $numberOfNotAcceptedReportedCars,
             "numberOfAcceptedReportedCars" => $numberOfAcceptedReportedCars,
             "numberOfTodayDeliveries"=>$numberOfTodayDeliveries,
@@ -40,7 +40,7 @@ class StatisticsApiController extends Controller
             "numberOfTodayEvents" => $numberOfTodayEvents,
             "numberOfInProgressEvents" => $numberOfInProgressEvents,
             "numberOfReadyCars" => $numberOfReadyCars,
-        );
+      ]  );
 
     }
 }

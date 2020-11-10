@@ -110,13 +110,13 @@ class ReportedCarApiController extends Controller
         $newReportedCarDate = Carbon::parse($data['new_reported_car_date'])->addDay(1);
         $data['new_reported_car_date'] = $newReportedCarDate->format('Y-m-d');
         $this->reportedCarRepository->update($data, $id);
-        return array("message"=>"success");
+        return response()->json(["message" => "success"]);
     }
 
     public function destroy($id)
     {
         $this->reportedCarRepository->delete($id);
-        return array("message"=>"success");
+        return response()->json(["message" => "success"]);
     }
 
     public function getNotAccepted()
@@ -140,13 +140,13 @@ class ReportedCarApiController extends Controller
     public function acceptDate($id)
     {
         $reportedCars = $this->reportedCarRepository->acceptDate($id);
-        return array("message"=>"success");
+        return response()->json(["message" => "success"]);
     }
 
     public function checkIfCarIsReported($id)
     {
         $isCarReported = $this->reportedCarRepository->checkIfCarIsReported($id);
-        return array("isCarReported"=>$isCarReported);
+        return response()->json(["isCarReported" => $isCarReported]);
 
     }
 
@@ -172,7 +172,7 @@ class ReportedCarApiController extends Controller
         ];
          $this->eventRepository->create($event);
 
-        return array("message"=>"success");
+        return response()->json(["message" => "success"]);
     }
 
 

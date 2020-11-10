@@ -40,12 +40,12 @@ class CalendarApiController extends Controller
 
         $data = $request->all();
         $this->calendarRepository->update($data, $id);
-        return array("message"=>"success");
+        return response()->json(["message"=>"success"]);
     }
 
     public function destroy($id)
     {
         $this->calendarRepository->delete($id);
-        return array("message"=>"success");
+        return response()->json(["message"=>"success"]);
     }
 }

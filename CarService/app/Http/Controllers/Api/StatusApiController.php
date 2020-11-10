@@ -40,12 +40,12 @@ class StatusApiController extends Controller
 
         $data = $request->all();
         $this->statusRepository->update($data, $id);
-        return array("message"=>"success");
+        return response()->json(["message" => "success"]);
     }
 
     public function destroy($id)
     {
         $this->statusRepository->delete($id);
-        return array("message"=>"success");
+        return response()->json(["message" => "success"]);
     }
 }

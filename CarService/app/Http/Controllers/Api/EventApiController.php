@@ -51,13 +51,13 @@ class EventApiController extends Controller
             $data['start'] = (Carbon::parse($data['start'])->addDay(1))->format('Y-m-d');
         }
         $this->eventRepository->update($data, $id);
-        return array("message" => "success");
+        return response()->json(["message" => "success"]);
     }
 
     public function destroy($id)
     {
         $this->eventRepository->delete($id);
-        return array("message" => "success");
+        return response()->json(["message" => "success"]);
     }
 
 
@@ -92,14 +92,7 @@ class EventApiController extends Controller
     }
 
 
-//    public function getNumberOfAcceptedAlerts($id)
-//    {
-//        $event = $this->eventRepository->getEventDetails($id);
-//        $numberOfAcceptedAlerts = $this->alertRepository->getAcceptedAlerts($event->id)->count();
-//        return array(
-//            "numberOfAcceptedAlerts" => $numberOfAcceptedAlerts,
-//        );
-//    }
+
 
 
 }

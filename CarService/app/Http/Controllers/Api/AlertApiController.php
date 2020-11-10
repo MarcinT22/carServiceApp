@@ -43,13 +43,13 @@ class AlertApiController extends Controller
 
         $data = $request->all();
         $this->alertRepository->update($data, $id);
-        return array("message"=>"success");
+        return response()->json(["message"=>"success"]);
     }
 
     public function destroy($id)
     {
         $this->alertRepository->delete($id);
-        return array("message"=>"success");
+        return response()->json(["message"=>"success"]);
     }
 
     public function getAcceptedAlerts($id)
@@ -68,14 +68,14 @@ class AlertApiController extends Controller
     {
         $data['is_accepted'] = 1;
         $this->alertRepository->update($data, $id);
-        return array("message"=>"success");
+        return response()->json(["message"=>"success"]);
     }
 
     public function doNotAcceptAlert($id)
     {
         $data['is_accepted'] = 0;
         $this->alertRepository->update($data, $id);
-        return array("message"=>"success");
+        return response()->json(["message"=>"success"]);
     }
 
     public function getNewAlerts($id)
@@ -88,9 +88,7 @@ class AlertApiController extends Controller
             $alerts = $this->alertRepository->getAlertsByEventId($event->id);
         }
 
-        return array(
-            "alerts" => $alerts,
-        );
+        return response()->json(["alerts"=>$alerts]);
     }
 
 
