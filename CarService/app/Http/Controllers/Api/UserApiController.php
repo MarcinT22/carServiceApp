@@ -100,13 +100,20 @@ class UserApiController extends Controller
     public function update(Request $request, $id)
     {
 
-        $data = $request->all();
-        if (isset($data['password'] )) {
+        if ($request->get('password') == null) {
+            $data = $request->except('password');
+        }
+        else {
+            $data = $request->all();
             $data['password'] = bcrypt($data['password']);
         }
+
         $this->userRepository->update($data, $id);
         return response()->json([
             'message'=>'success'
         ]);
+
+
+
     }
 }
