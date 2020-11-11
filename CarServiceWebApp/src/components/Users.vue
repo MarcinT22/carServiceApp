@@ -3,6 +3,7 @@
         <div class="dashboard__container">
             <h1>
              Lista użytkowników
+
             </h1>
             <div class="loading loading--allPage" v-if="isLoading"></div>
             <div class="loadingContainer" :class="{active:!isLoading}">
@@ -21,7 +22,8 @@
                                <button class="block__actionBtn block__actionBtn--margin block__actionBtn--info" @click="$router.push('/edit-user/'+user.id)">
                                    <i class="fas fa-edit"></i> Edytuj
                                </button>
-                               <button class="block__actionBtn block__actionBtn--margin block__actionBtn--cancel" @click="remove(user.id, index)">
+
+                               <button v-if="user.id != userId" class="block__actionBtn block__actionBtn--margin block__actionBtn--cancel" @click="remove(user.id, index)">
                                    <i class="fas fa-trash-alt"></i> Usuń
                                </button>
 
@@ -40,6 +42,11 @@
     import {mapGetters} from 'vuex'
     export default {
         name: "Users",
+        data(){
+            return{
+                userId:JSON.parse(localStorage.getItem('user')).id
+            }
+        },
         computed: mapGetters(['isLoading','getUsers']),
         created() {
             this.$store.dispatch('getUsers')

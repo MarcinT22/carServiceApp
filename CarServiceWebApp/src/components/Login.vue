@@ -73,17 +73,8 @@
                         .catch(error => {
                             this.isLoading = false
                             this.isError = true
-                            this.errorMessage = "Nieprawidłowe dane użytkownika";
+                            this.errorMessage = "Nieprawidłowe dane logowania";
                         })
-                    // if (this.$store.state.error === 401)
-                    // {
-                    //
-                    //     setTimeout(()=>{
-                    //         this.isLoading = false
-                    //         this.isError = true
-                    //         this.errorMessage = "Nieprawidłowe dane użytkownika";
-                    //     },1000)
-                    // }
                 } else {
                     if (!this.email) {
                         this.emailError = 'Adres e-mail jest wymagany';

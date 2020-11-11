@@ -21,20 +21,20 @@
                             </template>
                             <template  v-if="statusIndex === index">
                             <input type="color" v-model="status.color" class="statusList__colorInput">
-                            <input type="text" v-model="status.name" class="statusList__input">
+                            <input type="text" v-model="name" class="statusList__input">
                             </template>
 
                         </div>
                         <div class="statusList__col">
                            <div class="statusList__action">
-                               <button @click="edit(index)" v-if="statusIndex != index"  class="statusList__button">
+                               <button @click="edit(index, status.name)" v-if="statusIndex != index"  class="statusList__button">
                                    Edytuj
                                </button>
                                <template v-if="statusIndex === index && savingIndex != index">
                                    <button @click="statusIndex = null"  class="statusList__button statusList__button--cancel">
                                        Anuluj
                                    </button>
-                                   <button @click="save(index,status.id,status.name,status.color)"  class="statusList__button statusList__button--save">
+                                   <button @click="save(index,status.id, name,status.color)" v-if="name" class="statusList__button statusList__button--save">
                                        Zapisz
                                    </button>
                                </template>
@@ -92,6 +92,7 @@
             return{
                 statusIndex:null,
                 savingIndex:null,
+                name:null,
             }
         },
         computed: mapGetters(['getStatusesList','isLoading']),
@@ -99,9 +100,10 @@
             this.$store.dispatch('getStatusList')
         },
         methods:{
-            edit(index)
+            edit(index, name)
             {
                 this.statusIndex = index
+                this.name = name
             },
             save(index, id, name, color)
             {
@@ -110,9 +112,14 @@
                     name: name,
                     color: color,
                 }).then(()=>{
-                    this.statusIndex = null
-                    this.$store.dispatch('message', 'Zapisano.')
-                    this.savingIndex = null
+                    this.$store.dispatch('getStatusList')
+                        .then(()=>{
+                            this.statusIndex = null
+                            this.$store.dispatch('message', 'Zapisano.')
+                            this.savingIndex = null
+                        })
+
+
                 })
             }
         }
