@@ -101,7 +101,9 @@ class UserApiController extends Controller
     {
 
         $data = $request->all();
-        $data['password'] = bcrypt($data['password']);
+        if (isset($data['password'] )) {
+            $data['password'] = bcrypt($data['password']);
+        }
         $this->userRepository->update($data, $id);
         return response()->json([
             'message'=>'success'
