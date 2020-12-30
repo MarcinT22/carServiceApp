@@ -98,6 +98,15 @@ class CarApiController extends Controller
 
     }
 
+    public function logout(Request $request)
+    {
+        $request->car()->token()->revoke();
+        return response()->json([
+            'message' => 'Logged out'
+        ]);
+    }
+
+
     public function getCarsModels(){
 
         $carModelsJson = file_get_contents(base_path('app/Storage/carModels.json'));
@@ -105,6 +114,8 @@ class CarApiController extends Controller
         return json_decode($carModelsJson , true);
 
     }
+
+
 
 
 
